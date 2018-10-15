@@ -2,14 +2,11 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,9 +27,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         animalList = findViewById(R.id.animalList);
 
         List<String> farmList = new ArrayList<>();
-        farmList.add("farm 1");
-        farmList.add("farm 2");
-        farmList.add("farm 3");
+        farmList.add(0,"Select a farm...");
+        farmList.add("Farm 1");
+        farmList.add("Farm 2");
+        farmList.add("Farm 3");
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,farmList);
@@ -42,7 +40,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
@@ -51,10 +48,12 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         // parent.getItemAtPosition(pos)
         String farmName = (String) parent.getItemAtPosition(pos);
 
-
-        if(farmName.equals("farm 2")){
+        if(farmName.equals("Select a farm...")){
+            animalList.setVisibility(View.INVISIBLE);
+        }else{
+            animalList.setVisibility(View.VISIBLE);
             // preparing list data
-            prepareListData();
+            prepareListData(pos);
 
             listAdapter = new AnimalListAdapter(this, listDataHeader, listDataChild);
 
@@ -62,27 +61,28 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             animalList.setAdapter(listAdapter);
             listAdapter.notifyDataSetChanged();
         }
+
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
         // do nothing
     }
 
-    private void prepareListData() {
+    private void prepareListData(int pos) {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
 
         String[] ID = {"201","202","203"};
 
-        listDataHeader.add("Animal 1");
-        listDataHeader.add("Animal 2");
-        listDataHeader.add("Animal 3");
+        for (int i = 1; i < pos+1; i++){
+            listDataHeader.add("Animal " + Integer.toString(i));
+        }
 
-        for (int i = 0; i < ID.length; i++){
-            List<String> top250 = new ArrayList<String>();
+        for (int i = 0; i < pos; i++){
+            List<String> details = new ArrayList<String>();
             // Adding child data ;
-            top250.add("ID : " + ID[i] + "\n" +  "Name : " + "Boar");
-            listDataChild.put(listDataHeader.get(i), top250);
+            details.add("ID : " + ID[i] + "\n" +  "Name : " + "Boar");
+            listDataChild.put(listDataHeader.get(i), details);
         }
 
     }

@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AnimalListAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
-    private List<String> _listDataHeader; // header titles
-    // child data in format of header title, child title
+    private List<String> _listDataHeader;
     private HashMap<String, List<String>> _listDataChild;
 
     public AnimalListAdapter(Context context, List<String> listDataHeader,
@@ -50,6 +51,24 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = convertView
                 .findViewById(R.id.lblListItem);
+
+        Button timeline = convertView.findViewById(R.id.timelineBtn);
+        timeline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(_context, "Timeline in development",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Button samples = convertView.findViewById(R.id.samplesBtn);
+        samples.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(_context, "Samples in development",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         txtListChild.setText(childText);
         return convertView;
