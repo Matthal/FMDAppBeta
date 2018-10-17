@@ -14,7 +14,7 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="101dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:hint="Farm name"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="72dp"
@@ -32,7 +32,7 @@
         android:layout_marginEnd="85dp"
         android:layout_marginRight="85dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:hint="N. of animals"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="161dp" />
