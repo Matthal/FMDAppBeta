@@ -2,11 +2,20 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +28,8 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
+    private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,11 +37,27 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         Spinner spinner = findViewById(R.id.farmSpinner);
         animalList = findViewById(R.id.animalList);
 
-        List<String> farmList = new ArrayList<>();
+        final List<String> farmList = new ArrayList<>();
         farmList.add(0,"Select a farm...");
-        farmList.add("Farm 1");
-        farmList.add("Farm 2");
-        farmList.add("Farm 3");
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference farmsRef = mDatabase.child("farms");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Farm farm = snapshot.getValue(Farm.class);
+                    farmList.add(farm.name);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("DBError", "Failed to read value.", error.toException());
+            }
+        };
+        farmsRef.addListenerForSingleValueEvent(valueEventListener);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,farmList);
@@ -71,6 +98,30 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     private void prepareListData(int pos) {
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
+        final List<String> details = new ArrayList<String>();
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        final DatabaseReference farmsRef = mDatabase.child("animals");
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Animal animal = snapshot.getValue(Animal.class);
+                    listDataHeader.add(animal.name);
+                    details.add("ID : " + snapshot.getKey() +  "\n" +  "Name : " + animal.type);
+                    listDataChild.put(listDataHeader.get(0), details);
+                    System.out.println(listDataChild);
+                    listAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("DBError", "Failed to read value.", error.toException());
+            }
+        };
+        farmsRef.addListenerForSingleValueEvent(valueEventListener);
 
         String[] ID = {"201","202","203"};
 
@@ -79,7 +130,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         }
 
         for (int i = 0; i < pos; i++){
-            List<String> details = new ArrayList<String>();
+            //List<String> details = new ArrayList<String>();
             // Adding child data ;
             details.add("ID : " + ID[i] + "\n" +  "Name : " + "Boar");
             listDataChild.put(listDataHeader.get(i), details);

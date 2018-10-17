@@ -29,12 +29,14 @@ public class FarmCreation extends Activity {
             @Override
             public void onClick(View v) {
 
-                mDatabase = FirebaseDatabase.getInstance().getReference("farms");
-
+                /*mDatabase = FirebaseDatabase.getInstance().getReference("farms");
                 String farmId = mDatabase.push().getKey();
-
                 Farm farm = new Farm(name.getText().toString(), Integer.parseInt(animals.getText().toString()));
+                mDatabase.child(farmId).setValue(farm);*/
 
+                mDatabase = FirebaseDatabase.getInstance().getReference("animals");
+                String farmId = mDatabase.push().getKey();
+                Animal farm = new Animal("boar","-LP0QEUlxfiIIHWybnXY");
                 mDatabase.child(farmId).setValue(farm);
 
                 Toast.makeText(getBaseContext(), "Diagnosis algorithm in development",
