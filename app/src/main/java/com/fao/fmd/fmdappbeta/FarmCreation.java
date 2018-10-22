@@ -1,10 +1,13 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
@@ -22,8 +25,14 @@ public class FarmCreation extends Activity {
 
         Button cFarm = findViewById(R.id.createFarm);
 
-        final EditText name = findViewById(R.id.farmName);
-        final EditText animals = findViewById(R.id.nAnimals);
+        final EditText name = findViewById(R.id.vetName);
+        final EditText owner = findViewById(R.id.owner);
+
+        Spinner spinner = findViewById(R.id.country);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, CountryDetails.country);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         cFarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,7 +41,7 @@ public class FarmCreation extends Activity {
                 /*mDatabase = FirebaseDatabase.getInstance().getReference("farms");
                 String farmId = mDatabase.push().getKey();
                 Farm farm = new Farm(name.getText().toString(), Integer.parseInt(animals.getText().toString()));
-                mDatabase.child(farmId).setValue(farm);*/
+                mDatabase.child(farmId).setValue(farm);
 
                 mDatabase = FirebaseDatabase.getInstance().getReference("animals");
                 String farmId = mDatabase.push().getKey();
@@ -40,7 +49,11 @@ public class FarmCreation extends Activity {
                 mDatabase.child(farmId).setValue(farm);
 
                 Toast.makeText(getBaseContext(), "Diagnosis algorithm in development",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();*/
+
+                Intent intent = new Intent(FarmCreation.this, AnimalCreation.class);
+                startActivity(intent);
+
             }
         });
 

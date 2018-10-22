@@ -110,7 +110,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                     listDataHeader.add(animal.name);
                     details.add("ID : " + snapshot.getKey() +  "\n" +  "Name : " + animal.type);
                     listDataChild.put(listDataHeader.get(0), details);
-                    System.out.println(listDataChild);
                     listAdapter.notifyDataSetChanged();
                 }
             }
@@ -123,18 +122,11 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         };
         farmsRef.addListenerForSingleValueEvent(valueEventListener);
 
-        String[] ID = {"201","202","203"};
-
-        for (int i = 1; i < pos+1; i++){
-            listDataHeader.add("Animal " + Integer.toString(i));
-        }
-
         for (int i = 0; i < pos; i++){
-            //List<String> details = new ArrayList<String>();
-            // Adding child data ;
-            details.add("ID : " + ID[i] + "\n" +  "Name : " + "Boar");
+            listDataHeader.add("Animal " + Integer.toString(i+1));
             listDataChild.put(listDataHeader.get(i), details);
         }
+
 
     }
 

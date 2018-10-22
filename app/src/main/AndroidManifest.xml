@@ -17,7 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".FarmCreation" />
-        <activity android:name=".FarmList"></activity>
+        <activity android:name=".FarmList" />
+        <activity android:name=".AnimalCreation"></activity>
     </application>
 
 </manifest>
