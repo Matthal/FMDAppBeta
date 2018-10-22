@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -23,6 +24,7 @@ public class MainActivity extends Activity {
 
         Button cFarm = findViewById(R.id.newFarm);
         Button lFarm = findViewById(R.id.listFarm);
+        Button dBtn = findViewById(R.id.diagn);
 
         cFarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +39,14 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, FarmList.class);
                 startActivity(intent);
+            }
+        });
+
+        dBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Diagnostics in development",
+                        Toast.LENGTH_LONG).show();
             }
         });
     }

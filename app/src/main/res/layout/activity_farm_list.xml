@@ -22,6 +22,41 @@
         android:layout_alignStart="@+id/farmSpinner"
         android:layout_alignParentTop="true"
         android:layout_marginTop="75dp"
-        android:layout_alignLeft="@+id/farmSpinner"/>
+        android:layout_alignLeft="@+id/farmSpinner"
+        android:layout_above="@+id/newAnimal"/>
+
+
+    <Button
+        android:id="@+id/newAnimal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:text="Add an animal" />
+
+    <Button
+        android:id="@+id/newTrace"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="131dp"
+        android:layout_marginLeft="131dp"
+        android:layout_marginBottom="0dp"
+        android:text="Add tracings" />
+
+    <Button
+        android:id="@+id/farmTL"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="258dp"
+        android:layout_marginLeft="258dp"
+        android:layout_marginBottom="0dp"
+        android:text="Farm timeline" />
 
 </RelativeLayout>

@@ -1,14 +1,17 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,6 +39,32 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         setContentView(R.layout.activity_farm_list);
         Spinner spinner = findViewById(R.id.farmSpinner);
         animalList = findViewById(R.id.animalList);
+
+        Button addAnimal = findViewById(R.id.newAnimal);
+        Button addTrace = findViewById(R.id.newTrace);
+        Button farmTL = findViewById(R.id.farmTL);
+
+        addAnimal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FarmList.this, AnimalCreation.class);
+                startActivity(intent);
+            }
+        });
+        addTrace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Tracings in development",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        farmTL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getBaseContext(), "Timeline in development",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
 
         final List<String> farmList = new ArrayList<>();
         farmList.add(0,"Select a farm...");
@@ -122,7 +151,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         };
         farmsRef.addListenerForSingleValueEvent(valueEventListener);
 
-        for (int i = 0; i < pos; i++){
+        for (int i = 0; i < 10; i++){
             listDataHeader.add("Animal " + Integer.toString(i+1));
             listDataChild.put(listDataHeader.get(i), details);
         }
