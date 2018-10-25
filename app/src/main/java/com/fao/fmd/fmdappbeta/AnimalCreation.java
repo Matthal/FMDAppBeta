@@ -29,8 +29,8 @@ public class AnimalCreation extends Activity {
         addAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Diagnosis algorithm in development",
-                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(AnimalCreation.this, LesionAgeing.class);
+                startActivity(intent);
             }
         });
     }

@@ -18,7 +18,9 @@
         </activity>
         <activity android:name=".FarmCreation" />
         <activity android:name=".FarmList" />
-        <activity android:name=".AnimalCreation"></activity>
+        <activity android:name=".AnimalCreation" />
+        <activity android:name=".LesionAgeing" />
+        <activity android:name=".Suggestion"></activity>
     </application>
 
 </manifest>
