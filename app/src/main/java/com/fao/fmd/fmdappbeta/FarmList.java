@@ -54,8 +54,8 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         addTrace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Tracings in development",
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(FarmList.this, Tracing.class);
+                startActivity(intent);
             }
         });
         farmTL.setOnClickListener(new View.OnClickListener() {

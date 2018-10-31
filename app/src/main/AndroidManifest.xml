@@ -20,7 +20,8 @@
         <activity android:name=".FarmList" />
         <activity android:name=".AnimalCreation" />
         <activity android:name=".LesionAgeing" />
-        <activity android:name=".Suggestion"></activity>
+        <activity android:name=".Suggestion" />
+        <activity android:name=".Tracing"></activity>
     </application>
 
 </manifest>
