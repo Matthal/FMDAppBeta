@@ -1,6 +1,5 @@
 package com.fao.fmd.fmdappbeta;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +16,8 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
     View view;
     Bundle bundle = new Bundle();
 
+    int animal;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         // Defines the xml file for the fragment
@@ -26,6 +27,10 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
         Button noBtn = view.findViewById(R.id.noBtn);
         yesBtn.setOnClickListener(this);
         noBtn.setOnClickListener(this);
+
+        animal = getArguments().getInt("id");
+
+        System.out.println(animal);
 
         return view;
     }
@@ -54,6 +59,7 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
     }
 
     public void changeFragment(){
+        bundle.putInt("id",animal);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = new Q2Fragment();
@@ -64,6 +70,7 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
 
     public void endAlgorithm(){
         Intent intent = new Intent(getActivity(), Suggestion.class);
+        bundle.putInt("id",animal);
         intent.putExtras(bundle);
         startActivity(intent);
     }

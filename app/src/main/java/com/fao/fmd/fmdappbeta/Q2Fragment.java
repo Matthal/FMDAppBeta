@@ -19,6 +19,8 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
     View view;
     Bundle bundle;
 
+    int animal;
+
     public Q2Fragment() {
         // Required empty public constructor
     }
@@ -31,6 +33,9 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
         view = inflater.inflate(R.layout.fragment_q2, container, false);
 
         bundle = this.getArguments();
+
+        animal = getArguments().getInt("id");
+        System.out.println(animal);
 
         Button yesBtn = view.findViewById(R.id.yesBtn);
         Button noBtn = view.findViewById(R.id.noBtn);
@@ -56,6 +61,7 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
     }
 
     public void changeFragment(){
+        bundle.putInt("id",animal);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = new Q3Fragment();

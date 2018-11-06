@@ -43,7 +43,7 @@
         android:layout_marginRight="83dp"
         android:ems="10"
         android:hint="Owner"
-        android:inputType="number"
+        android:inputType="text"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="161dp" />
 

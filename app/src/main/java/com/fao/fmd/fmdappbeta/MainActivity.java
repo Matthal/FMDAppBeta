@@ -2,6 +2,7 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +27,8 @@ public class MainActivity extends Activity {
         Button lFarm = findViewById(R.id.listFarm);
         Button dBtn = findViewById(R.id.diagn);
 
+        //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
+
         cFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,6 +48,9 @@ public class MainActivity extends Activity {
         dBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
                 Toast.makeText(getBaseContext(), "Diagnostics in development",
                         Toast.LENGTH_LONG).show();
             }

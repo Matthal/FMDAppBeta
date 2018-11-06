@@ -20,6 +20,8 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
     View view;
     Bundle bundle;
 
+    int animal;
+
     public Q5Fragment() {
         // Required empty public constructor
     }
@@ -31,6 +33,9 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
         view = inflater.inflate(R.layout.fragment_q5, container, false);
 
         bundle = this.getArguments();
+
+        animal = getArguments().getInt("id");
+        System.out.println(animal);
 
         Button smallBtn = view.findViewById(R.id.smallBtn);
         Button lotBtn = view.findViewById(R.id.lotBtn);
@@ -62,6 +67,7 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
     }
 
     public void endAlgorithm(){
+        bundle.putInt("id",animal);
         Intent intent = new Intent(getActivity(), Suggestion.class);
         intent.putExtras(bundle);
         startActivity(intent);

@@ -1,8 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -16,6 +15,8 @@ public class Tracing extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracing);
 
+        final Bundle bundle = getIntent().getExtras();
+
         Button animalTrack = findViewById(R.id.animalTrack);
         Button productTrack = findViewById(R.id.productTrack);
         Button peopleTrack = findViewById(R.id.peopleTrack);
@@ -27,7 +28,9 @@ public class Tracing extends FragmentActivity {
                 RelativeLayout mainLayout= findViewById(R.id.main);
                 mainLayout.setVisibility(RelativeLayout.GONE);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.placeholder, new AnimalTrackFragment());
+                Fragment fragment = new AnimalTrackFragment();
+                fragment.setArguments(bundle);
+                ft.replace(R.id.placeholder, fragment);
                 ft.commit();
             }
         });
@@ -38,7 +41,9 @@ public class Tracing extends FragmentActivity {
                 RelativeLayout mainLayout= findViewById(R.id.main);
                 mainLayout.setVisibility(RelativeLayout.GONE);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.placeholder, new ProductTrackFragment());
+                Fragment fragment = new ProductTrackFragment();
+                fragment.setArguments(bundle);
+                ft.replace(R.id.placeholder, fragment);
                 ft.commit();
             }
         });
@@ -49,7 +54,9 @@ public class Tracing extends FragmentActivity {
                 RelativeLayout mainLayout= findViewById(R.id.main);
                 mainLayout.setVisibility(RelativeLayout.GONE);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.placeholder, new PeopleTrackFragment());
+                Fragment fragment = new PeopleTrackFragment();
+                fragment.setArguments(bundle);
+                ft.replace(R.id.placeholder,fragment);
                 ft.commit();
             }
         });
@@ -60,7 +67,9 @@ public class Tracing extends FragmentActivity {
                 RelativeLayout mainLayout= findViewById(R.id.main);
                 mainLayout.setVisibility(RelativeLayout.GONE);
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.placeholder, new VehicleTrackFragment());
+                Fragment fragment = new VehicleTrackFragment();
+                fragment.setArguments(bundle);
+                ft.replace(R.id.placeholder, fragment);
                 ft.commit();
             }
         });

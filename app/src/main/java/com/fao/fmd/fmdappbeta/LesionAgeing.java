@@ -12,12 +12,13 @@ public class LesionAgeing extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesion_ageing);
 
+        Bundle bundle = getIntent().getExtras();
+
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the contents of the container with the new fragment
-        ft.replace(R.id.placeholder, new Q1Fragment());
-        // or ft.add(R.id.your_placeholder, new FooFragment());
-        // Complete the changes added above
+        Q1Fragment fragment = new Q1Fragment();
+        fragment.setArguments(bundle);
+        ft.replace(R.id.placeholder, fragment);
         ft.commit();
 
     }

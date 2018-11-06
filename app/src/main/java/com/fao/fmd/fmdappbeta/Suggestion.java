@@ -12,6 +12,8 @@ public class Suggestion extends FragmentActivity {
     Bundle bundle;
     Intent in;
 
+    int animal;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +21,9 @@ public class Suggestion extends FragmentActivity {
 
         in = getIntent();
         bundle = getIntent().getExtras();
+
+        animal = bundle.getInt("id");
+        System.out.println(animal);
 
         String val1 = bundle.getString("Q1");
         String val3 = bundle.getString("Q3");
@@ -80,6 +85,7 @@ public class Suggestion extends FragmentActivity {
     }
 
     public void fragmentComplete(Bundle complete){
+        complete.putInt("id",animal);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         CompleteFragment fragment = new CompleteFragment();
         fragment.setArguments(complete);

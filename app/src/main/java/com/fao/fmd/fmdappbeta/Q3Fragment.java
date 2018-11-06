@@ -20,6 +20,8 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
     View view;
     Bundle bundle;
 
+    int animal;
+
     public Q3Fragment() {
         // Required empty public constructor
     }
@@ -41,6 +43,9 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
         pinkBtn.setOnClickListener(this);
         yellowBtn.setOnClickListener(this);
         whiteBtn.setOnClickListener(this);
+
+        animal = getArguments().getInt("id");
+        System.out.println(animal);
 
         if(bundle != null) {
             if (bundle.getString("Q2").equals("a")) {
@@ -78,6 +83,7 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
     }
 
     public void changeFragment(){
+        bundle.putInt("id",animal);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = new Q4Fragment();
@@ -88,6 +94,7 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
 
     public void endAlgorithm(){
         Intent intent = new Intent(getActivity(), Suggestion.class);
+        bundle.putInt("id",animal);
         intent.putExtras(bundle);
         startActivity(intent);
     }
