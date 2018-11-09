@@ -9,9 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class AnimalListAdapter extends BaseExpandableListAdapter {
 
@@ -46,7 +44,7 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.animal_item, null);
+            convertView = infalInflater.inflate(R.layout.animal_item, parent,false);
         }
 
         TextView txtListChild = convertView
@@ -84,7 +82,7 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.list_animal, null);
+            convertView = infalInflater.inflate(R.layout.list_animal, parent, false);
         }
 
         TextView lblListHeader = convertView

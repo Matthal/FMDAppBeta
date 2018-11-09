@@ -4,17 +4,12 @@ package com.fao.fmd.fmdappbeta;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Q5Fragment extends Fragment implements View.OnClickListener{
 
     View view;
@@ -25,7 +20,6 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
     public Q5Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

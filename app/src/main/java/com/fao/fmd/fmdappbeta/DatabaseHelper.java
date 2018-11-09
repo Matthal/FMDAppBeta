@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    public static final String DATABASE_NAME = "fmdapp_db";
+    private static final String DATABASE_NAME = "fmdapp_db";
 
 
     public DatabaseHelper(Context context) {
@@ -36,6 +36,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // Drop older table if existed
         db.execSQL(Farm.DELETE_ENTRIES);
+        db.execSQL(Animal.DELETE_ENTRIES);
+        db.execSQL(Lesion.DELETE_ENTRIES);
+        db.execSQL(Tracings.DELETE_ENTRIES);
 
         // Create tables again
         onCreate(db);

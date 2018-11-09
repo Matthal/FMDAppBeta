@@ -11,10 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Q3Fragment extends Fragment implements View.OnClickListener{
 
     View view;
@@ -25,7 +21,6 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
     public Q3Fragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +40,6 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
         whiteBtn.setOnClickListener(this);
 
         animal = getArguments().getInt("id");
-        System.out.println(animal);
 
         if(bundle != null) {
             if (bundle.getString("Q2").equals("a")) {

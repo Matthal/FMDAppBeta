@@ -18,10 +18,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class CompleteFragment extends Fragment {
 
     View view;
@@ -30,7 +26,6 @@ public class CompleteFragment extends Fragment {
     public CompleteFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,8 +114,6 @@ public class CompleteFragment extends Fragment {
         int like_spr_max = old - 2;
         int pos_spr_min = old + 3;
 
-        //db.execSQL(Animal.DELETE_ENTRIES);
-        //db.execSQL(Animal.CREATE_ANIMAL_TABLE);
 
         ContentValues values = new ContentValues();
         values.put(Lesion.LesionEntry.COLUMN_ANIMAL, bundle.getInt("id"));

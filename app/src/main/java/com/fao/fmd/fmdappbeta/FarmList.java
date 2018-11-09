@@ -73,8 +73,8 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         farmTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Timeline in development",
-                        Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(FarmList.this, Timeline.class);
+                startActivity(intent);
             }
         });
 
@@ -203,7 +203,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         farms.add(0,"Select a farm...");
 
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + Farm.FarmEntry.TABLE_NAME;
+        String selectQuery = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME;
 
         DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -221,7 +221,5 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         db.close();
         return farms;
     }
-
-
 
 }

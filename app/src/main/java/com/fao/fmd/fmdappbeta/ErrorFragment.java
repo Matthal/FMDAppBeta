@@ -12,9 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class ErrorFragment extends Fragment {
 
     View view;
@@ -23,7 +20,6 @@ public class ErrorFragment extends Fragment {
     public ErrorFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

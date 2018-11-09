@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class Q2Fragment extends Fragment implements View.OnClickListener{
 
     View view;
@@ -25,7 +22,6 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -35,7 +31,6 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
         bundle = this.getArguments();
 
         animal = getArguments().getInt("id");
-        System.out.println(animal);
 
         Button yesBtn = view.findViewById(R.id.yesBtn);
         Button noBtn = view.findViewById(R.id.noBtn);

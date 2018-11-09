@@ -18,10 +18,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        /*FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
         DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("farms");
-        scoresRef.keepSynced(true);
+        scoresRef.keepSynced(true);*/
 
         Button cFarm = findViewById(R.id.newFarm);
         Button lFarm = findViewById(R.id.listFarm);

@@ -32,7 +32,7 @@ public class FarmCreation extends Activity {
         setContentView(R.layout.activity_farm_creation);
 
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-mm-yyyy",Locale.UK);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.UK);
         final String date = df.format(c);
 
         Button cFarm = findViewById(R.id.createFarm);
@@ -67,10 +67,6 @@ public class FarmCreation extends Activity {
                 //PUT VALUES INTO DB
                 DatabaseHelper mDbHelper = new DatabaseHelper(FarmCreation.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-                //db.execSQL(Farm.DELETE_ENTRIES);
-                //db.execSQL(Farm.CREATE_FARM_TABLE);
-
                 ContentValues values = new ContentValues();
                 values.put(Farm.FarmEntry.COLUMN_VET, name.getText().toString());
                 values.put(Farm.FarmEntry.COLUMN_OWNER, owner.getText().toString());

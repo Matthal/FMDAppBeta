@@ -30,8 +30,6 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
 
         animal = getArguments().getInt("id");
 
-        System.out.println(animal);
-
         return view;
     }
 
@@ -40,7 +38,6 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
     }
-
 
 
     @Override

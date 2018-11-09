@@ -16,9 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class VehicleTrackFragment extends Fragment {
 
     View view;
@@ -26,7 +23,6 @@ public class VehicleTrackFragment extends Fragment {
     public VehicleTrackFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,10 +1,6 @@
 package com.fao.fmd.fmdappbeta;
 
-import com.google.firebase.database.IgnoreExtraProperties;
-
-@IgnoreExtraProperties
 public class Animal {
-
 
     private Animal() {
     }

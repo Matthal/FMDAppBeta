@@ -16,9 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class PeopleTrackFragment extends Fragment {
 
     View view;
@@ -26,7 +23,6 @@ public class PeopleTrackFragment extends Fragment {
     public PeopleTrackFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +86,6 @@ public class PeopleTrackFragment extends Fragment {
                 }
             }
         });
-
 
         return view;
     }

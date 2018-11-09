@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/timeline"
+            android:showDividers="middle"
+            android:divider="?android:listDivider">
+
+            <TableRow
+                android:id="@+id/header">
+                <TextView
+                    android:text="Date"
+                    android:padding="3dip"
+                    android:gravity="center"/>
+                <TextView
+                    android:text="Lesion"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Source"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Spread"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Category"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Sub-Category"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="Notes"
+                    android:padding="3dip" />
+            </TableRow>
+
+        </TableLayout>
+
+    </HorizontalScrollView>
+
+</ScrollView>
