@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
+                System.out.println(DatabaseHelper.getTableAsString(db, "tracings"));
                 Toast.makeText(getBaseContext(), "Diagnostics in development",
                         Toast.LENGTH_LONG).show();
             }

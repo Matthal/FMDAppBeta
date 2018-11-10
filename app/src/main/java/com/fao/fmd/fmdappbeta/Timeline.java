@@ -55,6 +55,7 @@ public class Timeline extends Activity {
             e.printStackTrace();
         }
 
+        Map<String,List<String>> trackAttr = getTracingAttr(tracings);
 
         for (int i = 0; i < days+1; i++) {
             TableRow row = new TableRow(this);
@@ -111,19 +112,22 @@ public class Timeline extends Activity {
                 }
             }
 
-            Map<String,String> trackAttr = getTracingAttr(tracings, newDate);
-
             TextView category = new TextView(this);
-            if(trackAttr.get("category") != null){
-                category.append(trackAttr.get("category"));
-            }
             TextView subCat = new TextView(this);
-            if(trackAttr.get("category") != null){
-                subCat.append(trackAttr.get("sub_category"));
-            }
             TextView notes = new TextView(this);
-            if(trackAttr.get("category") != null){
-                notes.append(trackAttr.get("notes"));
+
+            for (Map.Entry<String, List<String>> entry : trackAttr.entrySet()) {
+                List<String> values = entry.getValue();
+                try {
+                    Date date1 = new SimpleDateFormat("dd/MM/yy",Locale.UK).parse(values.get(3));
+                    if(newDate.compareTo(date1) == 0){
+                        category.append(values.get(0));
+                        subCat.append(values.get(1));
+                        notes.append(values.get(2));
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             row.addView(date);
@@ -311,7 +315,7 @@ public class Timeline extends Activity {
     public List<Integer> getTracings(int id){
         List<Integer> tracings = new ArrayList<>();
 
-        String selectQuery = "SELECT id FROM " + Tracings.TracingEntry.TABLE_NAME + " WHERE farm=" + id;
+        String selectQuery = "SELECT * FROM " + Tracings.TracingEntry.TABLE_NAME + " WHERE farm=" + id;
 
         DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -329,39 +333,39 @@ public class Timeline extends Activity {
         return tracings;
     }
 
-    public Map<String,String> getTracingAttr(List<Integer> tracings, Date date){
-        Map<String,String> trackAttr = new HashMap<>();
+    public Map<String,List<String>> getTracingAttr(List<Integer> tracings){
+        Map<String,List<String>> track = new HashMap<>();
 
-        SimpleDateFormat mdyFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.UK);
-        String strDate = mdyFormat.format(date);
 
         DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
         for(int i = 0; i < tracings.size(); i++){
-            String selectQuery = "SELECT * FROM " + Tracings.TracingEntry.TABLE_NAME + " WHERE id=" + tracings.get(i) + " AND Date=" + strDate;
+            String selectQuery = "SELECT * FROM " + Tracings.TracingEntry.TABLE_NAME + " WHERE id=" + tracings.get(i);
 
             Cursor cursor = db.rawQuery(selectQuery, null);
+            List<String> trackAttr = new ArrayList<>();
 
             if (cursor.moveToFirst()) {
+                do {
                     String cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
                     String subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
                     String notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
-                while (cursor.moveToNext()) {
-                    cat += "/" + cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
-                    subCat += "/" + cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
-                    notes += "/" + cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
-                }
-                trackAttr.put("category",cat);
-                trackAttr.put("sub_category",subCat);
-                trackAttr.put("notes",notes);
+                    String date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
+                    trackAttr.add(cat);
+                    trackAttr.add(subCat);
+                    trackAttr.add(notes);
+                    trackAttr.add(date);
+                } while (cursor.moveToNext());
             }
+            track.put(Integer.toString(tracings.get(i)),trackAttr);
+
             cursor.close();
 
         }
         db.close();
 
-        return trackAttr;
+        return track;
     }
 
     public Date getMaxDate(List<Integer> lesions) throws ParseException {
