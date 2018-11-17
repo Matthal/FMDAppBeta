@@ -1,6 +1,5 @@
 package com.fao.fmd.fmdappbeta;
 
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +33,7 @@ public class CompleteFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_complete, container, false);
 
         bundle = this.getArguments();
+        System.out.println("Comple "+ bundle);
 
         TextView text = view.findViewById(R.id.text);
         text.append(bundle.getString("res") + " days");
@@ -70,6 +70,9 @@ public class CompleteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 addDBEntry();
+                Intent intent = new Intent(getActivity(), PostLesion.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         assumptBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +82,6 @@ public class CompleteFragment extends Fragment {
                         Toast.LENGTH_LONG).show();
             }
         });
-
 
 
         return view;

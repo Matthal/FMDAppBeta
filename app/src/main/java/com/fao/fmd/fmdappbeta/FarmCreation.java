@@ -1,11 +1,18 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,7 +31,9 @@ import java.util.Locale;
 
 public class FarmCreation extends Activity {
 
-    private DatabaseReference mDatabase;
+    //private DatabaseReference mDatabase;
+    double longitude;
+    double latitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +41,7 @@ public class FarmCreation extends Activity {
         setContentView(R.layout.activity_farm_creation);
 
         Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.UK);
+        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
         final String date = df.format(c);
 
         Button cFarm = findViewById(R.id.createFarm);
@@ -46,6 +55,16 @@ public class FarmCreation extends Activity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, CountryDetails.country);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            longitude = 0.0;
+            latitude = 0.0;
+        }
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        longitude = location.getLongitude();
+        latitude = location.getLatitude();
 
         cFarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,8 +90,8 @@ public class FarmCreation extends Activity {
                 values.put(Farm.FarmEntry.COLUMN_VET, name.getText().toString());
                 values.put(Farm.FarmEntry.COLUMN_OWNER, owner.getText().toString());
                 values.put(Farm.FarmEntry.COLUMN_DATE, date);
-                values.put(Farm.FarmEntry.COLUMN_LONGITUDE, 30.271);
-                values.put(Farm.FarmEntry.COLUMN_LATITUDE, 10.359);
+                values.put(Farm.FarmEntry.COLUMN_LONGITUDE, longitude);
+                values.put(Farm.FarmEntry.COLUMN_LATITUDE, latitude);
                 values.put(Farm.FarmEntry.COLUMN_COUNTRY, spinner.getSelectedItem().toString());
                 values.put(Farm.FarmEntry.COLUMN_NAME, farm.getText().toString());
 
@@ -102,4 +121,27 @@ public class FarmCreation extends Activity {
         });
 
     }
+
+    private final LocationListener locationListener = new LocationListener() {
+        public void onLocationChanged(Location location) {
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+            Toast.makeText(getBaseContext(), "Please, enable GPS",
+                    Toast.LENGTH_LONG).show();
+        }
+    };
 }

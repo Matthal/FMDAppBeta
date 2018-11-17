@@ -34,7 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:visibility="invisible"
-        android:text="Add an animal" />
+        android:text="@string/add_animal" />
 
     <Button
         android:id="@+id/newTrace"
@@ -47,7 +47,7 @@
         android:layout_marginLeft="131dp"
         android:layout_marginBottom="0dp"
         android:visibility="invisible"
-        android:text="Add tracings" />
+        android:text="@string/add_tracing" />
 
     <Button
         android:id="@+id/farmTL"
@@ -60,6 +60,6 @@
         android:layout_marginLeft="258dp"
         android:layout_marginBottom="0dp"
         android:visibility="invisible"
-        android:text="Farm timeline" />
+        android:text="@string/timeline" />
 
 </RelativeLayout>

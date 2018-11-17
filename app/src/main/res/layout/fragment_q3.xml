@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:paddingTop="55dp"
-        android:text="What colour is the lesion?"
+        android:text="@string/q3"
         android:textSize="36sp" />
 
     <Button
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="200dp"
-        android:text="Red" />
+        android:text="@string/red" />
 
     <Button
         android:id="@+id/redExBtn"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="200dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
     <Button
         android:id="@+id/pinkBtn"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="270dp"
-        android:text="Pink" />
+        android:text="@string/pink" />
 
     <Button
         android:id="@+id/pinkExBtn"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="270dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
     <Button
         android:id="@+id/yellowBtn"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="340dp"
-        android:text="Yellow" />
+        android:text="@string/yellow" />
 
     <Button
         android:id="@+id/yellowExBtn"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="340dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
     <Button
         android:id="@+id/whiteBtn"
@@ -67,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="410dp"
-        android:text="White" />
+        android:text="@string/white" />
 
     <Button
         android:id="@+id/whiteExBtn"
@@ -75,8 +75,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="410dp"
-        android:text="See photo examples" />
-
-
+        android:text="@string/photo" />
 
 </FrameLayout>

@@ -24,7 +24,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="76dp"
             android:gravity="center_horizontal"
-            android:text="Please select the type of tracing"
+            android:text="@string/text_tracing"
             android:textSize="30sp" />
 
         <Button
@@ -34,7 +34,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="190dp"
-            android:text="Animal movements" />
+            android:text="@string/animal_movements" />
 
         <Button
             android:id="@+id/productTrack"
@@ -44,7 +44,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="35dp"
             android:layout_marginTop="260dp"
-            android:text="Products" />
+            android:text="@string/prosucts"
+            android:layout_alignLeft="@+id/animalTrack"
+            android:layout_marginLeft="35dp" />
 
         <Button
             android:id="@+id/peopleTrack"
@@ -54,7 +56,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="39dp"
             android:layout_marginTop="330dp"
-            android:text="People" />
+            android:text="@string/people"
+            android:layout_alignLeft="@+id/animalTrack"
+            android:layout_marginLeft="39dp" />
 
         <Button
             android:id="@+id/veichleTrack"
@@ -64,7 +68,10 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="36dp"
             android:layout_marginTop="400dp"
-            android:text="Veichles" />
+            android:text="@string/veichles"
+            android:layout_alignLeft="@+id/animalTrack"
+            android:layout_marginLeft="36dp" />
+
     </RelativeLayout>
 
 </RelativeLayout>

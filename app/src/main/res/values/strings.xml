@@ -1,6 +1,101 @@
 <resources>
     <string name="app_name">FMDAppBeta</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //COMMON
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="done">Done</string>
+    <string name="add_animal">Add an animal</string>
+    <string name="add_tracing">Add tracings</string>
+    <string name="timeline">View farm timeline</string>
+    <string name="enter_date">Enter Date (dd/mm/yyyy)</string>
+    <string name="zero">0</string>
+    <string name="insert_notes">Insert Notes</string>
+    <string name="category">Category</string>
+    <string name="contact">Direct contact with animal areas</string>
+    <string name="amount">Amount</string>
+
+    //MAIN
+    <string name="text_main">EuFMD App</string>
+    <string name="add_farm">Add a farm</string>
+    <string name="pre_farm">View previous farm</string>
+    <string name="diagn">Diagnostics</string>
+
+    //ANIMAL CREATION
+    <string name="text_animal_creation">Enter animal information</string>
+    <string name="hint_ID">ID</string>
+    <string name="hint_Group_ID">Group ID</string>
+    <string name="hint_age">Age</string>
+    <string name="hint_other">Other</string>
+    <string name="hint_sign">Reported onset of clinical sign</string>
+    <string name="vaccinated">Vaccinated in last 6 months?</string>
+
+    //FARM CREATION
+    <string name="text_farm_creation">Enter farm information</string>
+    <string name="hint_vet">Vet name</string>
+    <string name="hint_owner">Owner</string>
+    <string name="hint_farm">Farm name</string>
+    <string name="country">Select a country</string>
+
+    //POST LESION
+    <string name="text_post_lesion">This animal has been added to the farm timeline.</string>
+    <string name="add_an_animal">Add another animal</string>
+
+    //TIMELINE
+    <string name="date">Date</string>
+    <string name="lesion">Lesion</string>
+    <string name="source">Source</string>
+    <string name="spread">Spread</string>
+    <string name="sub_category">Sub-Category</string>
+    <string name="notes">Notes</string>
+
+    //TRACING
+    <string name="text_tracing">Please select the type of tracing</string>
+    <string name="animal_movements">Animal Movements</string>
+    <string name="prosucts">Products</string>
+    <string name="people">People</string>
+    <string name="veichles">Veichles</string>
+
+    //ANIMAL TRACK
+    <string name="text_animal_track">Animal movements - more information</string>
+    <string name="species">Species</string>
+    <string name="number">Number</string>
+
+    //PEOPLE TRACK
+    <string name="text_people_track">People - more information</string>
+
+    //PRODUCT TRACK
+    <string name="text_product_track">Products - more information</string>
+
+    //VEICHLE TRACK
+    <string name="text_veichle_track">Vehicles - more information</string>
+
+    //COMPLETE
+    <string name="text_complete">Based on the information you have provided, the likely age of this lesion is: </string>
+    <string name="examples">See examples</string>
+    <string name="diagn_opt">View diagnostic options</string>
+    <string name="add_lesion">Add another lesion</string>
+    <string name="add_timeline">Add to farm timeline</string>
+    <string name="assumptions">View assumptions</string>
+
+    //ERROR
+    <string name="text_error">Please try again. </string>
+    <string name="start_again">Start again</string>
+
+    //QUESTIONS
+    <string name="q1">Is there a vescicle?</string>
+    <string name="q2">Is there fibrin present?</string>
+    <string name="q3">What colour is the lesion?</string>
+    <string name="red">Red</string>
+    <string name="pink">Pink</string>
+    <string name="yellow">Yellow</string>
+    <string name="white">White</string>
+    <string name="q4">How do the edges appear?</string>
+    <string name="round">Round/Smooth</string>
+    <string name="sharp">Sharp</string>
+    <string name="q5">Is there evidence of healing (epithelialisation)?</string>
+    <string name="small">Healing (small)</string>
+    <string name="lot">Healing (a lot)</string>
+    <string name="photo">See photo examples</string>
+
 </resources>

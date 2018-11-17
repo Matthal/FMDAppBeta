@@ -27,9 +27,10 @@ public class ErrorFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_error, container, false);
 
         bundle = this.getArguments();
+        System.out.println(bundle);
 
         TextView text = view.findViewById(R.id.text);
-        text.append(bundle.getString("res"));
+        text.append(bundle.getString("res") + " Use the photos to guide you.");
 
         Button startBtn = view.findViewById(R.id.startBtn);
         Button animalBtn = view.findViewById(R.id.animalBtn);

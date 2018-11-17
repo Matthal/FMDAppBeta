@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:paddingTop="55dp"
-        android:text="Is there a vescicle?"
+        android:text="@string/q1"
         android:textSize="36sp" />
 
     <Button
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="200dp"
-        android:text="Yes" />
+        android:text="@string/yes" />
 
     <Button
         android:id="@+id/noBtn"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="300dp"
-        android:text="No" />
+        android:text="@string/no" />
 
     <Button
         android:id="@+id/exBtn"
@@ -35,6 +35,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="400dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
 </FrameLayout>

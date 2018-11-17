@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +16,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class AnimalCreation extends Activity {
+public class AnimalCreation extends Activity implements AdapterView.OnItemSelectedListener {
+
+    Spinner spinner;
+    EditText other;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +32,15 @@ public class AnimalCreation extends Activity {
         final EditText group = findViewById(R.id.groupID);
         final EditText age = findViewById(R.id.animalAge);
         final EditText sign = findViewById(R.id.sign);
+        other = findViewById(R.id.other);
 
-        final String[] items = new String[]{"goat", "cow", "bull"};
+        final String[] items = new String[]{"goat", "cow", "bull", "other"};
 
-        final Spinner spinner = findViewById(R.id.breed);
+        spinner = findViewById(R.id.breed);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
         RadioGroup rg = findViewById(R.id.check);
         final int[] radio = new int[1];
@@ -60,8 +67,6 @@ public class AnimalCreation extends Activity {
             farm = 0;
         }
 
-        System.out.println(farm);
-
         addAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,12 +77,19 @@ public class AnimalCreation extends Activity {
                 //db.execSQL(Animal.DELETE_ENTRIES);
                 //db.execSQL(Animal.CREATE_ANIMAL_TABLE);
 
+                String breed;
+                if(spinner.getVisibility() == View.VISIBLE){
+                    breed = spinner.getSelectedItem().toString();
+                }else{
+                    breed = other.getText().toString();
+                }
+
                 ContentValues values = new ContentValues();
                 values.put(Animal.AnimalEntry.COLUMN_ID, animal.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
                 values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_AGE, age.getText().toString());
-                values.put(Animal.AnimalEntry.COLUMN_BREED, spinner.getSelectedItem().toString());
+                values.put(Animal.AnimalEntry.COLUMN_BREED, breed);
                 values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_VACCINATED, radio[0]);
 
@@ -105,4 +117,19 @@ public class AnimalCreation extends Activity {
             }
         });
     }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        if(parent.getItemAtPosition(pos) == "other"){
+           spinner.setVisibility(View.INVISIBLE);
+           other.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+
+    }
+
 }

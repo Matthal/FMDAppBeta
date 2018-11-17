@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 
+import java.util.List;
+
 public class Tracing extends FragmentActivity {
 
     @Override
@@ -30,7 +32,7 @@ public class Tracing extends FragmentActivity {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new AnimalTrackFragment();
                 fragment.setArguments(bundle);
-                ft.replace(R.id.placeholder, fragment);
+                ft.replace(R.id.placeholder, fragment,"fragment");
                 ft.commit();
             }
         });
@@ -43,7 +45,7 @@ public class Tracing extends FragmentActivity {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new ProductTrackFragment();
                 fragment.setArguments(bundle);
-                ft.replace(R.id.placeholder, fragment);
+                ft.replace(R.id.placeholder, fragment,"fragment");
                 ft.commit();
             }
         });
@@ -56,7 +58,7 @@ public class Tracing extends FragmentActivity {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new PeopleTrackFragment();
                 fragment.setArguments(bundle);
-                ft.replace(R.id.placeholder,fragment);
+                ft.replace(R.id.placeholder,fragment,"fragment");
                 ft.commit();
             }
         });
@@ -69,11 +71,23 @@ public class Tracing extends FragmentActivity {
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new VehicleTrackFragment();
                 fragment.setArguments(bundle);
-                ft.replace(R.id.placeholder, fragment);
+                ft.replace(R.id.placeholder, fragment,"fragment");
                 ft.commit();
             }
         });
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        RelativeLayout mainLayout = findViewById(R.id.main);
+        if(mainLayout.getVisibility() == View.GONE){
+            mainLayout.setVisibility(RelativeLayout.VISIBLE);
+            Fragment frag = getSupportFragmentManager().findFragmentByTag("fragment");
+            frag.getView().setVisibility(View.GONE);
+        }else{
+            super.onBackPressed();
+        }
     }
 
 }

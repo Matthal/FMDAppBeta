@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:paddingTop="55dp"
-        android:text="Is there evidence of healing (epithelialisation)?"
+        android:text="@string/q5"
         android:textSize="36sp" />
 
     <Button
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="210dp"
-        android:text="Healing (small)" />
+        android:text="@string/small" />
 
     <Button
         android:id="@+id/smallExBtn"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="210dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
     <Button
         android:id="@+id/lotBtn"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="280dp"
-        android:text="Healing (a lot)" />
+        android:text="@string/lot" />
 
     <Button
         android:id="@+id/lotExBtn"
@@ -43,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="280dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
     <Button
         android:id="@+id/noBtn"
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="350dp"
-        android:text="No" />
+        android:text="@string/no" />
 
     <Button
         android:id="@+id/noExBtn"
@@ -59,6 +59,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="350dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
 </FrameLayout>

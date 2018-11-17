@@ -29,7 +29,6 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
         bundle = this.getArguments();
 
         animal = getArguments().getInt("id");
-        System.out.println(animal);
 
         Button smallBtn = view.findViewById(R.id.smallBtn);
         Button lotBtn = view.findViewById(R.id.lotBtn);

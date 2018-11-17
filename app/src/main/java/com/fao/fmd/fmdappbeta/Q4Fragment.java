@@ -66,6 +66,7 @@ public class Q4Fragment extends Fragment implements View.OnClickListener{
         Fragment fragment = new Q5Fragment();
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.placeholder, fragment);
+        fragmentTransaction.addToBackStack("Q4");
         fragmentTransaction.commit();
     }
 

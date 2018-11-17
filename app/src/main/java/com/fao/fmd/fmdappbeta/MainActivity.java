@@ -1,9 +1,11 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
 
         /*FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -50,12 +54,19 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "tracings"));
+                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
                 Toast.makeText(getBaseContext(), "Diagnostics in development",
                         Toast.LENGTH_LONG).show();
             }
         });
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 
 }

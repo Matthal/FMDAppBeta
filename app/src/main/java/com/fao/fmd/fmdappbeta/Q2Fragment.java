@@ -62,6 +62,7 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
         Fragment fragment = new Q3Fragment();
         fragment.setArguments(bundle);
         fragmentTransaction.replace(R.id.placeholder, fragment);
+        fragmentTransaction.addToBackStack("Q2");
         fragmentTransaction.commit();
     }
 

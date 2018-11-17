@@ -35,7 +35,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     Button addTrace;
     Button farmTL;
 
-    private DatabaseReference mDatabase;
+    //private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +73,11 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         farmTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int id = spinner.getSelectedItemPosition();
                 Intent intent = new Intent(FarmList.this, Timeline.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",id);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
@@ -140,7 +144,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     private void prepareListData(int pos) {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
-        final List<String> details = new ArrayList<String>();
 
         String selectQuery = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE farm=" + pos;
         DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
@@ -149,9 +152,11 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         cursor.moveToFirst();
 
         for(int i = 0; i < cursor.getCount(); i++){
+            List<String> details = new ArrayList<String>();
             listDataHeader.add("Animal " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID)));
             details.add("Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +  "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)));
-            listDataChild.put(listDataHeader.get(0), details);
+            listDataChild.put(listDataHeader.get(i), details);
+            cursor.moveToNext();
         }
 
         db.close();

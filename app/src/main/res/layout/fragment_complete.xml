@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:paddingTop="55dp"
-        android:text="Based on the information you have provided, the likely age of this lesion is:"
+        android:paddingTop="25dp"
+        android:text="@string/text_complete"
         android:textSize="30sp" />
 
     <Button
@@ -19,39 +19,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="210dp"
-        android:text="See examples" />
+        android:layout_marginTop="180dp"
+        android:text="@string/examples" />
 
     <Button
         android:id="@+id/diagnBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="270dp"
-        android:text="View diagnostic options" />
+        android:layout_marginTop="235dp"
+        android:text="@string/diagn_opt" />
 
     <Button
         android:id="@+id/lesBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="330dp"
-        android:text="Add another lesion" />
+        android:layout_marginTop="290dp"
+        android:text="@string/add_lesion" />
 
     <Button
         android:id="@+id/timelineBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="390dp"
-        android:text="Add to farm timeline" />
+        android:layout_marginTop="345dp"
+        android:text="@string/add_timeline" />
 
     <Button
         android:id="@+id/assumptBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="450dp"
-        android:text="View assumptions" />
+        android:layout_marginTop="400dp"
+        android:text="@string/assumptions" />
 
 </FrameLayout>

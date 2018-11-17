@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:paddingTop="30dp"
-        android:text="Animal movements - more information"
+        android:text="@string/text_animal_track"
         android:textSize="30sp" />
 
     <EditText
@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:hint="Enter Date (dd/mm/yyyy)"
+        android:hint="@string/enter_date"
         android:inputType="date"
         android:layout_marginTop="150dp" />
 
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="230dp"
         android:layout_marginLeft="80dp"
-        android:text="Species"
+        android:text="@string/species"
         android:textSize="18sp" />
 
     <Spinner
@@ -39,12 +39,21 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
 
+    <EditText
+        android:id="@+id/other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="200dp"
+        android:layout_marginTop="220dp"
+        android:hint="@string/hint_other"
+        android:visibility="invisible" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="290dp"
         android:layout_marginLeft="80dp"
-        android:text="Number"
+        android:text="@string/number"
         android:textSize="18sp" />
 
     <EditText
@@ -52,7 +61,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="210dp"
-        android:hint="0"
+        android:hint="@string/zero"
         android:inputType="number"
         android:layout_marginTop="275dp" />
 
@@ -61,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:hint="Insert notes"
+        android:hint="@string/insert_notes"
         android:inputType="text"
         android:layout_marginTop="340dp" />
 
@@ -71,6 +80,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="450dp"
-        android:text="Done" />
+        android:text="@string/done" />
 
 </FrameLayout>

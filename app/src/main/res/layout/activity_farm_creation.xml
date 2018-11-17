@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="44dp"
-        android:text="Enter farm information"
+        android:text="@string/text_farm_creation"
         android:textSize="24sp" />
 
     <EditText
@@ -26,7 +26,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="101dp"
         android:ems="10"
-        android:hint="Vet name"
+        android:hint="@string/hint_vet"
         android:inputType="text"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="72dp" />
@@ -42,7 +42,7 @@
         android:layout_marginEnd="83dp"
         android:layout_marginRight="83dp"
         android:ems="10"
-        android:hint="Owner"
+        android:hint="@string/hint_owner"
         android:inputType="text"
         tools:layout_editor_absoluteX="82dp"
         tools:layout_editor_absoluteY="161dp" />
@@ -56,7 +56,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="256dp"
         android:ems="10"
-        android:hint="Farm name"
+        android:hint="@string/hint_farm"
         android:inputType="text" />
 
     <TextView
@@ -66,7 +66,7 @@
         android:layout_above="@+id/country"
         android:layout_alignStart="@+id/country"
         android:layout_marginBottom="-356dp"
-        android:text="Select a country"
+        android:text="@string/country"
         android:layout_alignLeft="@+id/country" />
 
     <Spinner
@@ -87,7 +87,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="40dp"
-        android:text="Done" />
+        android:text="@string/done" />
 
 
 </RelativeLayout>

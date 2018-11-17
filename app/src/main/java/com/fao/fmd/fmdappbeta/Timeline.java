@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -22,13 +21,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class Timeline extends Activity {
 
     Date minDate;
     Date dayZero;
     long days;
+    int id;
     Map<String,Date> infectionDates;
     Map<String,Date> spreadDates;
 
@@ -39,13 +38,21 @@ public class Timeline extends Activity {
 
         TableLayout timeline = findViewById(R.id.timeline);
 
-        List<Integer> animals = getAnimals(1);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null){
+            id = bundle.getInt("id");
+        }
+
+
+        List<Integer> animals = getAnimals(id);
+        System.out.println("Animals:" + animals);
         List<Integer> lesions = getLesions(animals);
-        List<Integer> tracings = getTracings(1);
+        System.out.println("Lesions:" + lesions);
+        List<Integer> tracings = getTracings(id);
 
         try {
             Date maxDate = getMaxDate(lesions);
-            minDate = getMinDate(lesions);
+            minDate = getMinDate(lesions,tracings);
             long diff = maxDate.getTime() - minDate.getTime();
             days = (diff / (1000*60*60*24));
             dayZero = getDayZero(lesions);
@@ -96,8 +103,6 @@ public class Timeline extends Activity {
             }else{
                 if(newDate.compareTo(infectionDates.get("poss_inf_min")) == 0 || (newDate.compareTo(infectionDates.get("poss_inf_min")) > 0 && newDate.compareTo(infectionDates.get("poss_inf_max")) < 0) || newDate.compareTo(infectionDates.get("poss_inf_max")) == 0){
                     infection.setBackgroundColor(Color.RED);
-                }else{
-                    infection.setBackgroundColor(Color.WHITE);
                 }
             }
 
@@ -107,13 +112,13 @@ public class Timeline extends Activity {
             }else{
                 if(newDate.compareTo(spreadDates.get("poss_spr_min")) == 0 || (newDate.compareTo(spreadDates.get("poss_spr_min")) > 0 && newDate.compareTo(spreadDates.get("poss_spr_max")) < 0) || newDate.compareTo(spreadDates.get("poss_spr_max")) == 0){
                     spread.setBackgroundColor(Color.RED);
-                }else{
-                    spread.setBackgroundColor(Color.WHITE);
                 }
             }
 
             TextView category = new TextView(this);
+            category.setGravity(Gravity.CENTER);
             TextView subCat = new TextView(this);
+            subCat.setGravity(Gravity.CENTER);
             TextView notes = new TextView(this);
 
             for (Map.Entry<String, List<String>> entry : trackAttr.entrySet()) {
@@ -392,8 +397,9 @@ public class Timeline extends Activity {
         return Collections.max(dates);
     }
 
-    public Date getMinDate(List<Integer> lesions) throws ParseException {
+    public Date getMinDate(List<Integer> lesions, List<Integer> tracings) throws ParseException {
         List<Date> dates = new ArrayList<>();
+        List<Date> trackDates = new ArrayList<>();
 
         for(int i = 0; i < lesions.size(); i++){
             String selectQuery = "SELECT * FROM " + Lesion.LesionEntry.TABLE_NAME + " WHERE id=" + lesions.get(i);
@@ -413,7 +419,34 @@ public class Timeline extends Activity {
             db.close();
         }
 
-        return Collections.min(dates);
+        Date firstDate = Collections.min(dates);
+
+        for(int i = 0; i < tracings.size(); i++){
+            String selectQuery = "SELECT * FROM " + Tracings.TracingEntry.TABLE_NAME + " WHERE id=" + tracings.get(i);
+
+            DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    String strDate = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
+                    Date date = new SimpleDateFormat("dd/MM/yy",Locale.UK).parse(strDate);
+                    trackDates.add(date);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            db.close();
+        }
+
+        Date secondDate = Collections.min(trackDates);
+
+        if(firstDate.compareTo(secondDate) < 0){
+            return firstDate;
+        }else{
+            return  secondDate;
+        }
+
     }
 
     public Date getDayZero(List<Integer> lesions) throws ParseException {
@@ -426,11 +459,28 @@ public class Timeline extends Activity {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
 
+            int old;
+
             if (cursor.moveToFirst()) {
                 do {
-                    String strDate = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MAX));
-                    Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(strDate);
-                    dates.add(date);
+                    String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
+                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
+                    if(age.charAt(1) == '-'){
+                        if(age.length() == 3){
+                            old = Character.getNumericValue(age.charAt(2));
+                        }else{
+                            old = Integer.parseInt(age.substring(2,3));
+                        }
+                    }else{
+                        if(age.charAt(2) == '-'){
+                            old = Integer.parseInt(age.substring(3,4));
+                        }else{
+                            old = Integer.parseInt(age.substring(0,1));
+                        }
+                    }
+                    Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);
+                    Date diagnDate = subDays(date,old);
+                    dates.add(diagnDate);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -444,6 +494,13 @@ public class Timeline extends Activity {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
         cal.add(Calendar.DATE, days);
+        return cal.getTime();
+    }
+
+    public Date subDays(Date date, int days){
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -days);
         return cal.getTime();
     }
 

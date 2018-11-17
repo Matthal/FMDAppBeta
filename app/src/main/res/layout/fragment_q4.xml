@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:paddingTop="55dp"
-        android:text="How do the edges appear?"
+        android:text="@string/q4"
         android:textSize="36sp" />
 
     <Button
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="200dp"
-        android:text="Round/Smooth" />
+        android:text="@string/round" />
 
     <Button
         android:id="@+id/roundExBtn"
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="200dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
     <Button
         android:id="@+id/sharpBtn"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="270dp"
-        android:text="Sharp" />
+        android:text="@string/sharp" />
 
     <Button
         android:id="@+id/sharpExBtn"
@@ -43,6 +43,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
         android:layout_marginTop="270dp"
-        android:text="See photo examples" />
+        android:text="@string/photo" />
 
 </FrameLayout>

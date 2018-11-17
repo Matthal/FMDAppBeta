@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:paddingTop="55dp"
-        android:text="Please try again. "
+        android:text="@string/text_error"
         android:textSize="30sp" />
 
     <Button
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="390dp"
-        android:text="Start Again" />
+        android:text="@string/start_again" />
 
     <Button
         android:id="@+id/animalBtn"
@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="440dp"
+        android:visibility="invisible"
         android:text="Add new animal" />
 
     <Button
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="490dp"
+        android:visibility="invisible"
         android:text="Go to farm timeline" />
 
 </FrameLayout>

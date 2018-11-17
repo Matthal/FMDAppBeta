@@ -12,32 +12,35 @@
             android:layout_height="match_parent"
             android:id="@+id/timeline"
             android:showDividers="middle"
-            android:divider="?android:listDivider">
+            android:divider="?android:listDivider"
+            android:stretchColumns="*">
 
             <TableRow
-                android:id="@+id/header">
+                android:id="@+id/header"
+                android:layout_weight="1">
                 <TextView
-                    android:text="Date"
+                    android:text="@string/date"
                     android:padding="3dip"
                     android:gravity="center"/>
                 <TextView
-                    android:text="Lesion"
+                    android:text="@string/lesion"
                     android:padding="3dip" />
                 <TextView
-                    android:text="Source"
+                    android:text="@string/source"
                     android:padding="3dip" />
                 <TextView
-                    android:text="Spread"
+                    android:text="@string/spread"
                     android:padding="3dip" />
                 <TextView
-                    android:text="Category"
+                    android:text="@string/category"
+                    android:padding="3dip"
+                    android:gravity="center"/>
+                <TextView
+                    android:text="@string/sub_category"
                     android:padding="3dip" />
                 <TextView
-                    android:text="Sub-Category"
-                    android:padding="3dip" />
-                <TextView
-                    android:text="Notes"
-                    android:padding="3dip" />
+                    android:text="@string/notes"
+                    android:padding="3dip"/>
             </TableRow>
 
         </TableLayout>

@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Enter animal information"
+        android:text="@string/text_animal_creation"
         android:textSize="24sp"
         tools:layout_editor_absoluteX="162dp"
         tools:layout_editor_absoluteY="36dp" />
@@ -26,7 +26,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="124dp"
         android:ems="10"
-        android:hint="ID"
+        android:hint="@string/hint_ID"
         android:inputType="number"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="35dp" />
@@ -39,7 +39,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="35dp"
         android:ems="10"
-        android:hint="Group ID"
+        android:hint="@string/hint_Group_ID"
         android:inputType="number"
         android:layout_alignParentRight="true"
         android:layout_marginRight="35dp" />
@@ -53,7 +53,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="201dp"
         android:ems="10"
-        android:hint="Age"
+        android:hint="@string/hint_age"
         android:inputType="text"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="35dp" />
@@ -72,6 +72,19 @@
         android:layout_marginLeft="210dp" />
 
     <EditText
+        android:id="@+id/other"
+        android:layout_width="142dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/animalAge"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="210dp"
+        android:layout_marginBottom="-1dp"
+        android:layout_alignParentLeft="true"
+        android:hint="@string/hint_other"
+        android:visibility="invisible"
+        android:layout_marginLeft="210dp" />
+
+    <EditText
         android:id="@+id/sign"
         android:layout_width="316dp"
         android:layout_height="wrap_content"
@@ -80,8 +93,8 @@
         android:layout_marginTop="274dp"
         android:layout_marginBottom="178dp"
         android:ems="10"
-        android:hint="Reported onset of clinical sign"
-        android:inputType="textPersonName" />
+        android:hint="@string/hint_sign"
+        android:inputType="number" />
 
     <TextView
         android:id="@+id/textView5"
@@ -93,7 +106,7 @@
         android:layout_marginStart="35dp"
         android:layout_marginLeft="35dp"
         android:layout_marginBottom="-3dp"
-        android:text="Vaccinated in last 6 months?"
+        android:text="@string/vaccinated"
         android:textSize="18sp" />
 
     <RadioGroup
@@ -115,13 +128,13 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
-            android:text="yes" />
+            android:text="@string/yes" />
 
         <RadioButton
             android:id="@+id/no_chck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="no" />
+            android:text="@string/no" />
 
     </RadioGroup>
 
@@ -132,7 +145,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="36dp"
-        android:text="Done" />
+        android:text="@string/done" />
 
 
 </RelativeLayout>

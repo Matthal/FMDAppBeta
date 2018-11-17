@@ -11,7 +11,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     // Database Name
-    private static final String DATABASE_NAME = "fmdapp_db";
+    public static final String DATABASE_NAME = "fmdapp_db";
 
 
     public DatabaseHelper(Context context) {
