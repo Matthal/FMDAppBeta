@@ -43,11 +43,8 @@ public class Timeline extends Activity {
             id = bundle.getInt("id");
         }
 
-
         List<Integer> animals = getAnimals(id);
-        System.out.println("Animals:" + animals);
         List<Integer> lesions = getLesions(animals);
-        System.out.println("Lesions:" + lesions);
         List<Integer> tracings = getTracings(id);
 
         try {
@@ -441,11 +438,16 @@ public class Timeline extends Activity {
 
         Date secondDate = Collections.min(trackDates);
 
-        if(firstDate.compareTo(secondDate) < 0){
-            return firstDate;
+        if(tracings.size() > 0){
+            if(firstDate.compareTo(secondDate) < 0){
+                return firstDate;
+            }else{
+                return  secondDate;
+            }
         }else{
-            return  secondDate;
+            return firstDate;
         }
+
 
     }
 

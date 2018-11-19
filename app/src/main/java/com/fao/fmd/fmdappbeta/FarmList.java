@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -34,6 +36,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     Button addAnimal;
     Button addTrace;
     Button farmTL;
+    ImageView map;
 
     //private DatabaseReference mDatabase;
 
@@ -47,6 +50,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         addAnimal = findViewById(R.id.newAnimal);
         addTrace = findViewById(R.id.newTrace);
         farmTL = findViewById(R.id.farmTL);
+        map = findViewById(R.id.map);
 
         addAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +85,22 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                 startActivity(intent);
             }
         });
+        map.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                String selectQuery = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE id=" + spinner.getSelectedItemPosition();
+                DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor cursor = db.rawQuery(selectQuery, null);
+                cursor.moveToFirst();
+                double latitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
+                double longitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
+                Uri uri = Uri.parse("https://www.google.com/maps/search/?api=1&query="+ latitude + "," + longitude);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+                cursor.close();
+                db.close();
+            }
+        });
 
         final List<String> farmList = getAllFarms();
 
@@ -104,7 +124,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         };
         farmsRef.addListenerForSingleValueEvent(valueEventListener);*/
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,farmList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,farmList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
@@ -119,11 +139,16 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
 
         if(farmName.equals("Select a farm...")){
             animalList.setVisibility(View.INVISIBLE);
+            addAnimal.setVisibility(View.INVISIBLE);
+            addTrace.setVisibility(View.INVISIBLE);
+            farmTL.setVisibility(View.INVISIBLE);
+            map.setVisibility(View.INVISIBLE);
         }else{
             animalList.setVisibility(View.VISIBLE);
             addAnimal.setVisibility(View.VISIBLE);
             addTrace.setVisibility(View.VISIBLE);
             farmTL.setVisibility(View.VISIBLE);
+            map.setVisibility(View.VISIBLE);
 
             // preparing list data
             prepareListData(pos);
@@ -152,15 +177,15 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         cursor.moveToFirst();
 
         for(int i = 0; i < cursor.getCount(); i++){
-            List<String> details = new ArrayList<String>();
+            List<String> details = new ArrayList<>();
             listDataHeader.add("Animal " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID)));
             details.add("Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +  "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)));
             listDataChild.put(listDataHeader.get(i), details);
             cursor.moveToNext();
         }
 
-        db.close();
         cursor.close();
+        db.close();
 
         /*mDatabase = FirebaseDatabase.getInstance().getReference();
         final DatabaseReference farmsRef = mDatabase.child("animals");
@@ -217,7 +242,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                String farm = "Farm" + cursor.getInt(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+                String farm = "Farm " + cursor.getInt(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
                 farms.add(farm);
             } while (cursor.moveToNext());
         }

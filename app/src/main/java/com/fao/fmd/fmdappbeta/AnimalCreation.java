@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -73,9 +72,6 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
                 DatabaseHelper mDbHelper = new DatabaseHelper(AnimalCreation.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
-                //db.execSQL(Animal.DELETE_ENTRIES);
-                //db.execSQL(Animal.CREATE_ANIMAL_TABLE);
 
                 String breed;
                 if(spinner.getVisibility() == View.VISIBLE){
