@@ -208,7 +208,9 @@ public class ProductTrackFragment extends Fragment implements AdapterView.OnItem
             db.close();
         }
 
-        return Collections.max(dates);
+        Date date = Collections.max(dates);
+
+        return date;
     }
 
     public Date subDays(Date date, int days){

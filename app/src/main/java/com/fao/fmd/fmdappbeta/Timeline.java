@@ -1,6 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -385,6 +386,7 @@ public class Timeline extends Activity {
                     String strDate = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(strDate);
                     dates.add(date);
+                    System.out.println(dates);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -436,7 +438,11 @@ public class Timeline extends Activity {
             db.close();
         }
 
-        Date secondDate = Collections.min(trackDates);
+        Date secondDate = null;
+        if(trackDates.size() > 0){
+            secondDate = Collections.min(trackDates);
+        }
+
 
         if(tracings.size() > 0){
             if(firstDate.compareTo(secondDate) < 0){
@@ -504,6 +510,12 @@ public class Timeline extends Activity {
         cal.setTime(date);
         cal.add(Calendar.DATE, -days);
         return cal.getTime();
+    }
+
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(Timeline.this, FarmList.class);
+        startActivity(a);
     }
 
 }

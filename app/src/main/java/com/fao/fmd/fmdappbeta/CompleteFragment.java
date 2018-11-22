@@ -83,7 +83,6 @@ public class CompleteFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
