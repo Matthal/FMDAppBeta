@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "315233393727",
+    "firebase_url": "https://fmdappbeta.firebaseio.com",
+    "project_id": "fmdappbeta",
+    "storage_bucket": "fmdappbeta.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315233393727:android:9f1facc7d95965b1",
+        "android_client_info": {
+          "package_name": "com.fao.fmd.fmdappbeta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315233393727-k3adnvs2gm0fm7td6d7ftt3aeecig0kp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fao.fmd.fmdappbeta",
+            "certificate_hash": "fcd6cb7bf12d73577e134ea45664d6f5331141f6"
+          }
+        },
+        {
+          "client_id": "315233393727-lpbf77lbpegff18q2kfubppea88rsk7q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmW1Iy5Nif80esQBoTWAdi9ZeQPuGMqTU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315233393727-lpbf77lbpegff18q2kfubppea88rsk7q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
