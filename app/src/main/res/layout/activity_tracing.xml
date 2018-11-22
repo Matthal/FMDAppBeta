@@ -68,7 +68,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="36dp"
             android:layout_marginTop="400dp"
-            android:text="@string/veichles"
+            android:text="@string/vehicles"
             android:layout_alignLeft="@+id/animalTrack"
             android:layout_marginLeft="36dp" />
 

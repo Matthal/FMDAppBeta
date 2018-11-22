@@ -8,7 +8,7 @@
     <string name="add_animal">Add an animal</string>
     <string name="add_tracing">Add tracings</string>
     <string name="timeline">View farm timeline</string>
-    <string name="enter_date">Enter Date (dd/mm/yyyy)</string>
+    <string name="enter_date">Enter Date</string>
     <string name="zero">0</string>
     <string name="insert_notes">Insert Notes</string>
     <string name="category">Category</string>
@@ -23,9 +23,11 @@
 
     //ANIMAL CREATION
     <string name="text_animal_creation">Enter animal information</string>
-    <string name="hint_ID">ID</string>
-    <string name="hint_Group_ID">Group ID</string>
-    <string name="hint_age">Age</string>
+    <string name="hint_ID">ID/Name</string>
+    <string name="hint_Group_ID">Group</string>
+    <string name="age">Age</string>
+    <string name="hint_years">Years</string>
+    <string name="hint_months">Months</string>
     <string name="hint_other">Other</string>
     <string name="hint_sign">Reported onset of clinical sign</string>
     <string name="vaccinated">Vaccinated in last 6 months?</string>
@@ -54,7 +56,7 @@
     <string name="animal_movements">Animal Movements</string>
     <string name="prosucts">Products</string>
     <string name="people">People</string>
-    <string name="veichles">Veichles</string>
+    <string name="vehicles">Vehicles</string>
 
     //ANIMAL TRACK
     <string name="text_animal_track">Animal movements - more information</string>
@@ -83,7 +85,7 @@
     <string name="start_again">Start again</string>
 
     //QUESTIONS
-    <string name="q1">Is there a vescicle?</string>
+    <string name="q1">Is there a vesicle?</string>
     <string name="q2">Is there fibrin present?</string>
     <string name="q3">What colour is the lesion?</string>
     <string name="red">Red</string>
@@ -97,5 +99,18 @@
     <string name="small">Healing (small)</string>
     <string name="lot">Healing (a lot)</string>
     <string name="photo">See photo examples</string>
+
+    //DIAGNOSTICS OVERVIEW
+    <string name="par_one">Samples and tests for virus</string>
+    <string name="btn_vesicular">Vesicular fluid</string>
+    <string name="btn_epithelium">Epithelium samples</string>
+    <string name="btn_swabs">Swabs</string>
+    <string name="btn_probang">Probang</string>
+    <string name="par_two">Tests for antibody</string>
+    <string name="btn_structural">Structural protein antibodies</string>
+    <string name="btn_non_structural">Non-structural protein antibodies</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -33,7 +35,6 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
 
     View view;
     Date dayZero;
-    Date trackDate;
     Spinner category;
     EditText other;
 
@@ -57,7 +58,33 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
             e.printStackTrace();
         }
 
+        final Calendar calendar = Calendar.getInstance();
         final EditText date = view.findViewById(R.id.date);
+        final DatePickerDialog.OnDateSetListener datepick = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String myFormat = "dd/MM/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+                date.setText(sdf.format(calendar.getTime()));
+            }
+
+        };
+        date.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                DatePickerDialog dialog = new DatePickerDialog(getActivity(), datepick, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH));
+                dialog.getDatePicker().setMinDate(subDays(dayZero,21).getTime());
+                dialog.show();
+            }
+        });
+
         final EditText notes = view.findViewById(R.id.note);
         other = view.findViewById(R.id.other);
 
@@ -92,21 +119,6 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
             @Override
             public void onClick(View v) {
 
-                try {
-                    trackDate = new SimpleDateFormat("dd/MM/yyyy",Locale.UK).parse(date.getText().toString());
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if(dayZero.compareTo(trackDate) > 0){
-                    long diff = dayZero.getTime() - trackDate.getTime();
-                    long days = -(diff / (1000*60*60*24));
-                    if(days > 21){
-                        Toast.makeText(getActivity(), "Tracing is too old, it must be at maximum 21 days before the first day of disease",
-                                Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-
                 String catStr;
                 if(category.getVisibility() == View.VISIBLE){
                     catStr = category.getSelectedItem().toString();
@@ -133,7 +145,7 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
                     Toast.makeText(getActivity(), "New entry added to the DB",
                             Toast.LENGTH_LONG).show();
                     db.close();
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    Intent intent = new Intent(getActivity(), Tracing.class);
                     startActivity(intent);
                 }
             }

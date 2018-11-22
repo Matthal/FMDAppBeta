@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fao.fmd.fmdappbeta">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -26,10 +26,8 @@
         <activity android:name=".Suggestion" />
         <activity android:name=".Tracing" />
         <activity android:name=".Timeline" />
-        <activity android:name=".PostLesion"></activity>
-
+        <activity android:name=".PostLesion" />
+        <activity android:name=".DiagnosticsOverview"></activity>
     </application>
-
-
 
 </manifest>

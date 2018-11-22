@@ -1,6 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -10,10 +11,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class AnimalCreation extends Activity implements AdapterView.OnItemSelectedListener {
 
@@ -29,8 +35,8 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
         final EditText animal = findViewById(R.id.animalID);
         final EditText group = findViewById(R.id.groupID);
-        final EditText age = findViewById(R.id.animalAge);
-        final EditText sign = findViewById(R.id.sign);
+        final EditText years = findViewById(R.id.animalYears);
+        final EditText months = findViewById(R.id.animalMonths);
         other = findViewById(R.id.other);
 
         final String[] items = new String[]{"goat", "cow", "bull", "other"};
@@ -40,6 +46,32 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        final Calendar calendar = Calendar.getInstance();
+        final EditText sign = findViewById(R.id.sign);
+        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, monthOfYear);
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                String myFormat = "dd/MM/yy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+                sign.setText(sdf.format(calendar.getTime()));
+            }
+
+        };
+        sign.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(AnimalCreation.this, date, calendar
+                        .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                        calendar.get(Calendar.DAY_OF_MONTH)).show();
+            }
+        });
+
 
         RadioGroup rg = findViewById(R.id.check);
         final int[] radio = new int[1];
@@ -84,7 +116,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 values.put(Animal.AnimalEntry.COLUMN_ID, animal.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
                 values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
-                values.put(Animal.AnimalEntry.COLUMN_AGE, age.getText().toString());
+                values.put(Animal.AnimalEntry.COLUMN_AGE, years.getText().toString() + " & " + months.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_BREED, breed);
                 values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_VACCINATED, radio[0]);
@@ -115,8 +147,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         if(parent.getItemAtPosition(pos) == "other"){
            spinner.setVisibility(View.INVISIBLE);
            other.setVisibility(View.VISIBLE);
