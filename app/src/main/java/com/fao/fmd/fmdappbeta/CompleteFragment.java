@@ -33,7 +33,6 @@ public class CompleteFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_complete, container, false);
 
         bundle = this.getArguments();
-        System.out.println("Comple "+ bundle);
 
         TextView text = view.findViewById(R.id.text);
         text.append(bundle.getString("res") + " days");
@@ -54,8 +53,9 @@ public class CompleteFragment extends Fragment {
         diagnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Diagnosis in development",
-                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), DiagnosticOptions.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         lesBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +78,8 @@ public class CompleteFragment extends Fragment {
         assumptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Assumptions in development",
-                        Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getActivity(), Assumptions.class);
+                startActivity(intent);
             }
         });
 
@@ -114,7 +114,6 @@ public class CompleteFragment extends Fragment {
         int like_spr_min = old + 1;
         int like_spr_max = old - 2;
         int pos_spr_min = old + 3;
-
 
         ContentValues values = new ContentValues();
         values.put(Lesion.LesionEntry.COLUMN_ANIMAL, bundle.getInt("id"));

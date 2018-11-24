@@ -131,8 +131,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
 
     }
 
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         // An item was selected. You can retrieve the selected item using
         // parent.getItemAtPosition(pos)
         String farmName = (String) parent.getItemAtPosition(pos);

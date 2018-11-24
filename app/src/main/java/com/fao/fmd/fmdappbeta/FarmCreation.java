@@ -2,9 +2,11 @@ package com.fao.fmd.fmdappbeta;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +36,7 @@ public class FarmCreation extends Activity {
     //private DatabaseReference mDatabase;
     double longitude;
     double latitude;
+    LocationManager lm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,15 +59,26 @@ public class FarmCreation extends Activity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            longitude = 0.0;
-            latitude = 0.0;
+
         }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
-        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        longitude = location.getLongitude();
-        latitude = location.getLatitude();
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            if (location != null) {
+                System.out.println("location not null");
+                longitude = location.getLongitude();
+                latitude = location.getLatitude();
+            }else{
+                System.out.println("location null");
+                lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            }
+        }else{
+            Toast.makeText(getBaseContext(), "Please, enable GPS",
+                    Toast.LENGTH_LONG).show();
+        }
+        registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+
 
         cFarm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,11 +111,11 @@ public class FarmCreation extends Activity {
 
                 long newRowId = db.insert(Farm.FarmEntry.TABLE_NAME, null, values);
 
-                if(newRowId == -1){
+                if (newRowId == -1) {
                     Toast.makeText(getBaseContext(), "Error in the DB",
                             Toast.LENGTH_LONG).show();
                     db.close();
-                }else{
+                } else {
                     Toast.makeText(getBaseContext(), "New entry added to the DB",
                             Toast.LENGTH_LONG).show();
                     String selectQuery = "SELECT  * FROM " + Farm.FarmEntry.TABLE_NAME;
@@ -126,6 +140,7 @@ public class FarmCreation extends Activity {
         public void onLocationChanged(Location location) {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
+            System.out.println(longitude);
         }
 
         @Override
@@ -135,7 +150,8 @@ public class FarmCreation extends Activity {
 
         @Override
         public void onProviderEnabled(String s) {
-
+            Toast.makeText(getBaseContext(), "GPS enabled",
+                    Toast.LENGTH_LONG).show();
         }
 
         @Override
@@ -144,4 +160,15 @@ public class FarmCreation extends Activity {
                     Toast.LENGTH_LONG).show();
         }
     };
+
+    private BroadcastReceiver mGpsSwitchStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent.getAction().matches("android.location.PROVIDERS_CHANGED")) {
+                finish();
+                startActivity(getIntent());
+            }
+        }
+    };
+
 }

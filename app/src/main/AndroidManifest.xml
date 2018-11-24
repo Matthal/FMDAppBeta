@@ -27,7 +27,9 @@
         <activity android:name=".Tracing" />
         <activity android:name=".Timeline" />
         <activity android:name=".PostLesion" />
-        <activity android:name=".DiagnosticsOverview"></activity>
+        <activity android:name=".DiagnosticsOverview" />
+        <activity android:name=".Assumptions" />
+        <activity android:name=".DiagnosticOptions"></activity>
     </application>
 
 </manifest>
