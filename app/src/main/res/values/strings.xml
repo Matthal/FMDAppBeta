@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FMDAppBeta</string>
+    <string name="app_name">EuFMDApp</string>
 
     //COMMON
     <string name="yes">Yes</string>
@@ -73,7 +73,7 @@
     <string name="text_veichle_track">Vehicles - more information</string>
 
     //COMPLETE
-    <string name="text_complete">Based on the information you have provided, the likely age of this lesion is: </string>
+    <string name="text_complete">Based on the information you have provided, the likely age of this lesion is:</string>
     <string name="examples">See examples</string>
     <string name="diagn_opt">View diagnostic options</string>
     <string name="add_lesion">Add another lesion</string>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Q4Fragment extends Fragment implements View.OnClickListener{
 
@@ -31,8 +32,12 @@ public class Q4Fragment extends Fragment implements View.OnClickListener{
 
         Button roundBtn = view.findViewById(R.id.roundBtn);
         Button sharpBtn = view.findViewById(R.id.sharpBtn);
+        Button roundExBtn = view.findViewById(R.id.roundExBtn);
+        Button sharpExBtn = view.findViewById(R.id.sharpExBtn);
         roundBtn.setOnClickListener(this);
         sharpBtn.setOnClickListener(this);
+        roundExBtn.setOnClickListener(this);
+        sharpExBtn.setOnClickListener(this);
 
         animal = getArguments().getInt("id");
 
@@ -48,13 +53,50 @@ public class Q4Fragment extends Fragment implements View.OnClickListener{
                 changeFragment();
                 break;
             case R.id.sharpBtn:
-                if(bundle.getString("Q3").equals("d")){
+                if((bundle.getString("Q2").equals("a") && bundle.getString("Q3").equals("a")) || (bundle.getString("Q2").equals("a") && bundle.getString("Q3").equals("b")) || bundle.getString("Q3").equals("b") || bundle.getString("Q3").equals("d")){
                     bundle.putString("Q4", "b" );
                     endAlgorithm();
                 }else{
                     bundle.putString("Q4", "b" );
                     changeFragment();
                 }
+                break;
+            case R.id.roundExBtn:
+                if(bundle.getString("Q2").equals("a") && bundle.getString("Q3").equals("a")){
+                    bundle.putString("tag","redYesRound");
+                }
+                if(bundle.getString("Q2").equals("a") && bundle.getString("Q3").equals("b")){
+                    bundle.putString("tag","pinkYesRound");
+                }
+                if(bundle.getString("Q2").equals("b") && bundle.getString("Q3").equals("a")){
+                    bundle.putString("tag","redNoRound");
+                }
+                if(bundle.getString("Q2").equals("b") && bundle.getString("Q3").equals("b")){
+                    //bundle.putString("tag","pinkNoRound");
+                    Toast.makeText(getActivity(), "No photos watermarked yet", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                if(bundle.getString("Q3").equals("d")){
+                    bundle.putString("tag","white");
+                }
+                Intent intentRound = new Intent(getActivity(), PhotoViewer.class);
+                intentRound.putExtras(bundle);
+                startActivity(intentRound);
+                break;
+            case R.id.sharpExBtn:
+                if(bundle.getString("Q2").equals("a") && bundle.getString("Q3").equals("a")){
+                    bundle.putString("tag","redYesSharp");
+                }else{
+                    if(bundle.getString("Q2").equals("b") && bundle.getString("Q3").equals("a")){
+                        bundle.putString("tag","redNoSharp");
+                    }else{
+                        Toast.makeText(getActivity(), "No photos available", Toast.LENGTH_LONG).show();
+                        break;
+                    }
+                }
+                Intent intentSharp = new Intent(getActivity(), PhotoViewer.class);
+                intentSharp.putExtras(bundle);
+                startActivity(intentSharp);
                 break;
         }
     }

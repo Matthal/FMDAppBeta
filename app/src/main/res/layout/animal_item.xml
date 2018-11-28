@@ -13,4 +13,12 @@
         android:paddingBottom="5dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
 
+    <Button
+        android:id="@+id/del"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="X"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

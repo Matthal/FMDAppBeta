@@ -1,6 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -34,8 +35,10 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
 
         Button yesBtn = view.findViewById(R.id.yesBtn);
         Button noBtn = view.findViewById(R.id.noBtn);
+        Button exBtn = view.findViewById(R.id.exBtn);
         yesBtn.setOnClickListener(this);
         noBtn.setOnClickListener(this);
+        exBtn.setOnClickListener(this);
 
         return view;
     }
@@ -52,6 +55,11 @@ public class Q2Fragment extends Fragment implements View.OnClickListener{
                 bundle.putString("Q2", "b" );
                 changeFragment();
                 break;
+            case R.id.exBtn:
+                bundle.putString("tag","fib");
+                Intent intent = new Intent(getActivity(), PhotoViewer.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
         }
     }
 

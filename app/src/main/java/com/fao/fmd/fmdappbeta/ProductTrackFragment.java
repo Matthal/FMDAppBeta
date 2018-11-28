@@ -88,7 +88,7 @@ public class ProductTrackFragment extends Fragment implements AdapterView.OnItem
         final EditText notes = view.findViewById(R.id.note);
         other = view.findViewById(R.id.other);
 
-        String[] items = new String[]{"milk", "meat", "feed", "other"};
+        String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
 
         category = view.findViewById(R.id.category);
 
@@ -130,6 +130,9 @@ public class ProductTrackFragment extends Fragment implements AdapterView.OnItem
                             Toast.LENGTH_LONG).show();
                     db.close();
                     Intent intent = new Intent(getActivity(), Tracing.class);
+                    Bundle b = new Bundle();
+                    b.putInt("id",farm);
+                    intent.putExtras(b);
                     startActivity(intent);
                 }
             }
@@ -234,7 +237,7 @@ public class ProductTrackFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if(parent.getItemAtPosition(pos) == "other"){
+        if(parent.getItemAtPosition(pos) == "Other"){
             category.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
         }

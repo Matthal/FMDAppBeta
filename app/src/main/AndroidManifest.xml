@@ -29,7 +29,8 @@
         <activity android:name=".PostLesion" />
         <activity android:name=".DiagnosticsOverview" />
         <activity android:name=".Assumptions" />
-        <activity android:name=".DiagnosticOptions"></activity>
+        <activity android:name=".DiagnosticOptions" />
+        <activity android:name=".PhotoViewer"></activity>
     </application>
 
 </manifest>

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class Q3Fragment extends Fragment implements View.OnClickListener{
 
@@ -38,6 +39,15 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
         pinkBtn.setOnClickListener(this);
         yellowBtn.setOnClickListener(this);
         whiteBtn.setOnClickListener(this);
+
+        Button redExBtn = view.findViewById(R.id.redExBtn);
+        Button pinkExBtn = view.findViewById(R.id.pinkExBtn);
+        Button yellowExBtn = view.findViewById(R.id.yellowExBtn);
+        Button whiteExBtn = view.findViewById(R.id.whiteExBtn);
+        redExBtn.setOnClickListener(this);
+        pinkExBtn.setOnClickListener(this);
+        yellowExBtn.setOnClickListener(this);
+        whiteExBtn.setOnClickListener(this);
 
         animal = getArguments().getInt("id");
 
@@ -72,6 +82,35 @@ public class Q3Fragment extends Fragment implements View.OnClickListener{
             case R.id.whiteBtn:
                 bundle.putString("Q3", "d" );
                 changeFragment();
+                break;
+            case R.id.redExBtn:
+                if(bundle.getString("Q2").equals("a")){
+                    bundle.putString("tag","redYes");
+                }else{
+                    bundle.putString("tag","redNo");
+                }
+                Intent intentRed = new Intent(getActivity(), PhotoViewer.class);
+                intentRed.putExtras(bundle);
+                startActivity(intentRed);
+                break;
+            case R.id.pinkExBtn:
+                if(bundle.getString("Q2").equals("a")){
+                    bundle.putString("tag","pinkYes");
+                }else{
+                    bundle.putString("tag","pinkNo");
+                }
+                Intent intentPink = new Intent(getActivity(), PhotoViewer.class);
+                intentPink.putExtras(bundle);
+                startActivity(intentPink);
+                break;
+            case R.id.yellowExBtn:
+                Toast.makeText(getActivity(), "No photos available", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.whiteExBtn:
+                bundle.putString("tag","white");
+                Intent intentWhite = new Intent(getActivity(), PhotoViewer.class);
+                intentWhite.putExtras(bundle);
+                startActivity(intentWhite);
                 break;
         }
     }

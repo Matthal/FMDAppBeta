@@ -25,8 +25,10 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
 
         Button yesBtn = view.findViewById(R.id.yesBtn);
         Button noBtn = view.findViewById(R.id.noBtn);
+        Button exBtn = view.findViewById(R.id.exBtn);
         yesBtn.setOnClickListener(this);
         noBtn.setOnClickListener(this);
+        exBtn.setOnClickListener(this);
 
         animal = getArguments().getInt("id");
 
@@ -52,6 +54,11 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
                 bundle.putString("Q1", "b" );
                 changeFragment();
                 break;
+            case R.id.exBtn:
+                bundle.putString("tag","ves");
+                Intent intent = new Intent(getActivity(), PhotoViewer.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
         }
     }
 

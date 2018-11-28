@@ -119,7 +119,7 @@ public class Timeline extends Activity {
             subCat.setGravity(Gravity.CENTER);
             TextView notes = new TextView(this);
 
-            for (Map.Entry<String, List<String>> entry : trackAttr.entrySet()) {
+            for (Map.Entry<String,List<String>> entry : trackAttr.entrySet()) {
                 List<String> values = entry.getValue();
                 try {
                     Date date1 = new SimpleDateFormat("dd/MM/yy",Locale.UK).parse(values.get(3));
@@ -351,10 +351,21 @@ public class Timeline extends Activity {
 
             if (cursor.moveToFirst()) {
                 do {
-                    String cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
-                    String subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
-                    String notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
-                    String date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
+                    String cat;
+                    String subCat;
+                    String notes;
+                    String date;
+                    if(i != tracings.size() - 1){
+                        cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY)) + "\n";
+                        subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY)) + "\n";
+                        notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES)) + "\n";
+                        date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE)) + "\n";
+                    }else{
+                        cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
+                        subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
+                        notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
+                        date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
+                    }
                     trackAttr.add(cat);
                     trackAttr.add(subCat);
                     trackAttr.add(notes);

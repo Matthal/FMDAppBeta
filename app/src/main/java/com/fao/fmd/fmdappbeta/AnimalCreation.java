@@ -24,6 +24,7 @@ import java.util.Locale;
 public class AnimalCreation extends Activity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
+    Spinner sexSpin;
     EditText other;
 
     @Override
@@ -39,13 +40,19 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final EditText months = findViewById(R.id.animalMonths);
         other = findViewById(R.id.other);
 
-        final String[] items = new String[]{"goat", "cow", "bull", "other"};
+        final String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
+        final String[] sex = new String[]{"M", "F"};
 
         spinner = findViewById(R.id.breed);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        sexSpin = findViewById(R.id.sex);
+        ArrayAdapter<String> sexAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sex);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sexSpin.setAdapter(sexAdapter);
 
         final Calendar calendar = Calendar.getInstance();
         final EditText sign = findViewById(R.id.sign);
@@ -113,11 +120,11 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 }
 
                 ContentValues values = new ContentValues();
-                values.put(Animal.AnimalEntry.COLUMN_ID, animal.getText().toString());
+                values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
                 values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_AGE, years.getText().toString() + " & " + months.getText().toString());
-                values.put(Animal.AnimalEntry.COLUMN_BREED, breed);
+                values.put(Animal.AnimalEntry.COLUMN_BREED, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
                 values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_VACCINATED, radio[0]);
 
@@ -148,7 +155,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if(parent.getItemAtPosition(pos) == "other"){
+        if(parent.getItemAtPosition(pos) == "Other"){
            spinner.setVisibility(View.INVISIBLE);
            other.setVisibility(View.VISIBLE);
         }

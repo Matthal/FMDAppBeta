@@ -104,7 +104,7 @@ public class VehicleTrackFragment extends Fragment implements AdapterView.OnItem
             }
         });
 
-        final String[] items = new String[]{"private car", "milk tanker", "feed truck", "other"};
+        final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
 
         category = view.findViewById(R.id.category);
 
@@ -145,6 +145,9 @@ public class VehicleTrackFragment extends Fragment implements AdapterView.OnItem
                             Toast.LENGTH_LONG).show();
                     db.close();
                     Intent intent = new Intent(getActivity(), Tracing.class);
+                    Bundle b = new Bundle();
+                    b.putInt("id",farm);
+                    intent.putExtras(b);
                     startActivity(intent);
                 }
             }
@@ -247,7 +250,7 @@ public class VehicleTrackFragment extends Fragment implements AdapterView.OnItem
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if(parent.getItemAtPosition(pos) == "other"){
+        if(parent.getItemAtPosition(pos) == "Other"){
             category.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
         }

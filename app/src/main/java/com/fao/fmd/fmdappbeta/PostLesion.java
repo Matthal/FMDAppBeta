@@ -41,7 +41,6 @@ public class PostLesion extends Activity {
                 startActivity(intent);
             }
         });
-
         viewTimeline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

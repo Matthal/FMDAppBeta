@@ -26,7 +26,7 @@ public class DiagnosticOptions extends Activity {
         List<String> listDataHeader = new ArrayList<>();
         HashMap<String, List<String>> listDataChild = new HashMap<>();
 
-        if(res.equals("1-2")){
+        if(res.equals("1-2") || res.equals("2-3")){
 
             listDataHeader.add("Vesicular fluid");
             listDataHeader.add("Epithelium samples");
@@ -125,7 +125,7 @@ public class DiagnosticOptions extends Activity {
             test.setText(text);
         }
 
-        if(res.equals("4-5") || res.equals("5-6")){
+        if(res.equals("4-5")){
 
             listDataHeader.add("Swabs");
             listDataHeader.add("Probang");
@@ -169,7 +169,7 @@ public class DiagnosticOptions extends Activity {
             test.setText(text);
         }
 
-        if(res.equals("6-7")){
+        if(res.equals("5-7")){
 
             listDataHeader.add("Swabs");
             listDataHeader.add("Probang");

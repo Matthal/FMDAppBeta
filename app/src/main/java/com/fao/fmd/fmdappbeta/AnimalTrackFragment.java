@@ -88,7 +88,7 @@ public class AnimalTrackFragment extends Fragment implements AdapterView.OnItemS
         final EditText notes = view.findViewById(R.id.note);
         other = view.findViewById(R.id.other);
 
-        String[] items = new String[]{"goat", "cow", "bull", "other"};
+        String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
 
         species = view.findViewById(R.id.species);
 
@@ -130,6 +130,9 @@ public class AnimalTrackFragment extends Fragment implements AdapterView.OnItemS
                             Toast.LENGTH_LONG).show();
                     db.close();
                     Intent intent = new Intent(getActivity(), Tracing.class);
+                    Bundle b = new Bundle();
+                    b.putInt("id",farm);
+                    intent.putExtras(b);
                     startActivity(intent);
                 }
             }
@@ -232,7 +235,7 @@ public class AnimalTrackFragment extends Fragment implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if(parent.getItemAtPosition(pos) == "other"){
+        if(parent.getItemAtPosition(pos) == "Other"){
             species.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
         }

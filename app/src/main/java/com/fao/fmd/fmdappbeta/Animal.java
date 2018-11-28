@@ -9,6 +9,7 @@ public class Animal {
     public static class AnimalEntry {
         public static final String TABLE_NAME = "animals";
         public static final String COLUMN_ID = "id";
+        public static final String COLUMN_NAME = "name";
         public static final String COLUMN_FARM = "farm";
         public static final String COLUMN_GROUP = "group_id";
         public static final String COLUMN_AGE = "age";
@@ -19,7 +20,8 @@ public class Animal {
 
     public static final String CREATE_ANIMAL_TABLE =
             "CREATE TABLE " + AnimalEntry.TABLE_NAME + " (" +
-                    AnimalEntry.COLUMN_ID + " INTEGER PRIMARY KEY," +
+                    AnimalEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    AnimalEntry.COLUMN_NAME + " TEXT," +
                     AnimalEntry.COLUMN_FARM + " INTEGER," +
                     AnimalEntry.COLUMN_GROUP + " INTEGER," +
                     AnimalEntry.COLUMN_AGE + " TEXT," +

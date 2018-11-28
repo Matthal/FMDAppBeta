@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AnimalListAdapter extends BaseExpandableListAdapter {
 
@@ -47,10 +50,20 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.animal_item, parent,false);
         }
 
-        TextView txtListChild = convertView
-                .findViewById(R.id.lblListItem);
-
+        TextView txtListChild = convertView.findViewById(R.id.lblListItem);
         txtListChild.setText(childText);
+
+        Button del = convertView.findViewById(R.id.del);
+        del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                DatabaseHelper mDbHelper = new DatabaseHelper(_context);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                db.delete(Animal.AnimalEntry.TABLE_NAME,"ID = " + childPosition+1,null);
+                Toast.makeText(_context, "Animal deleted, refresh page", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         return convertView;
     }
 

@@ -104,7 +104,7 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
             }
         });
 
-        String[] items = new String[]{"family", "vet", "nutritionist", "other"};
+        String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
 
         category = view.findViewById(R.id.category);
 
@@ -146,6 +146,9 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
                             Toast.LENGTH_LONG).show();
                     db.close();
                     Intent intent = new Intent(getActivity(), Tracing.class);
+                    Bundle b = new Bundle();
+                    b.putInt("id",farm);
+                    intent.putExtras(b);
                     startActivity(intent);
                 }
             }
@@ -248,7 +251,7 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if(parent.getItemAtPosition(pos) == "other"){
+        if(parent.getItemAtPosition(pos) == "Other"){
             category.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
         }

@@ -178,7 +178,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         for(int i = 0; i < cursor.getCount(); i++){
             List<String> details = new ArrayList<>();
             listDataHeader.add("Animal " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID)));
-            details.add("Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +  "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)));
+            details.add("Name : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME)) + "       Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +  "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)) + "       Age : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE)));
             listDataChild.put(listDataHeader.get(i), details);
             cursor.moveToNext();
         }

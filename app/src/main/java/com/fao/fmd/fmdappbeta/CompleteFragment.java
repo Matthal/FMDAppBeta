@@ -35,7 +35,7 @@ public class CompleteFragment extends Fragment {
         bundle = this.getArguments();
 
         TextView text = view.findViewById(R.id.text);
-        text.append(bundle.getString("res") + " days");
+        text.append(" "+ bundle.getString("res") + " days");
 
         Button exBtn = view.findViewById(R.id.exBtn);
         Button diagnBtn = view.findViewById(R.id.diagnBtn);
@@ -46,8 +46,10 @@ public class CompleteFragment extends Fragment {
         exBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), "Examples in development",
-                        Toast.LENGTH_LONG).show();
+                bundle.putString("tag","complete");
+                Intent intent = new Intent(getActivity(), PhotoViewer.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         diagnBtn.setOnClickListener(new View.OnClickListener() {

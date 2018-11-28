@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class Q5Fragment extends Fragment implements View.OnClickListener{
@@ -33,9 +34,15 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
         Button smallBtn = view.findViewById(R.id.smallBtn);
         Button lotBtn = view.findViewById(R.id.lotBtn);
         Button noBtn = view.findViewById(R.id.noBtn);
+        Button smallExBtn = view.findViewById(R.id.smallExBtn);
+        Button lotExBtn = view.findViewById(R.id.lotExBtn);
+        Button noExBtn = view.findViewById(R.id.noExBtn);
         smallBtn.setOnClickListener(this);
         lotBtn.setOnClickListener(this);
         noBtn.setOnClickListener(this);
+        smallExBtn.setOnClickListener(this);
+        lotExBtn.setOnClickListener(this);
+        noExBtn.setOnClickListener(this);
 
         return view;
     }
@@ -55,6 +62,15 @@ public class Q5Fragment extends Fragment implements View.OnClickListener{
             case R.id.noBtn:
                 bundle.putString("Q5", "c" );
                 endAlgorithm();
+                break;
+            case R.id.smallExBtn:
+                Toast.makeText(getActivity(), "No photos available", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.lotExBtn:
+                Toast.makeText(getActivity(), "No photos available", Toast.LENGTH_LONG).show();
+                break;
+            case R.id.noExBtn:
+                Toast.makeText(getActivity(), "No photos available", Toast.LENGTH_LONG).show();
                 break;
         }
     }

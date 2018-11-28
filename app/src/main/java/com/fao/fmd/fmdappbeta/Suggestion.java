@@ -51,11 +51,6 @@ public class Suggestion extends FragmentActivity {
         String val4 = bundle.getString("Q4");
         String val5 = bundle.getString("Q5");
 
-        if(val4.equals("b") && val5.equals("a")){
-            bundle.putString("res","3-4");
-            fragmentComplete(bundle);
-        }
-
         if(val3.equals("a") && val4.equals("a") && val5.equals("b")){
             bundle.putString("res","4-5");
             fragmentComplete(bundle);
@@ -97,10 +92,6 @@ public class Suggestion extends FragmentActivity {
         String val4 = bundle.getString("Q4");
         String val5 = bundle.getString("Q5");
 
-        if(val4.equals("b") && val5.equals("c")){
-            bundle.putString("res","3-4");
-            fragmentComplete(bundle);
-        }
 
         if(val3.equals("b") && val4.equals("a") && val5.equals("a")){
             bundle.putString("res","4-5");
@@ -108,7 +99,7 @@ public class Suggestion extends FragmentActivity {
         }
 
         if(val3.equals("b") && val4.equals("a") && val5.equals("b")){
-            bundle.putString("res","6-7");
+            bundle.putString("res","5-7");
             fragmentComplete(bundle);
         }
 
@@ -117,13 +108,13 @@ public class Suggestion extends FragmentActivity {
             fragmentError(bundle);
         }
 
-        if(val3.equals("a") && val4.equals("b") && val5.equals("b")){
-            bundle.putString("res","Usually red lesions with sharp edges don’t have evidence of healing.");
-            fragmentError(bundle);
+        if(val3.equals("a") && val4.equals("b")){
+            bundle.putString("res","3-4");
+            fragmentComplete(bundle);
         }
 
-        if(val3.equals("b") && val4.equals("b") && val5.equals("b")){
-            bundle.putString("res","Usually pink lesions with evidence of a lot of healing have smooth rather than sharp edges.");
+        if(val3.equals("b") && val4.equals("b")){
+            bundle.putString("res","Sharp edged lesions are usually quite fresh and tend to be red in colour.");
             fragmentError(bundle);
         }
 
@@ -160,6 +151,16 @@ public class Suggestion extends FragmentActivity {
             fragmentComplete(bundle);
         }
 
+        if(val3.equals("a") && val4.equals("b") && val5.equals("a")){
+            bundle.putString("res","3-4");
+            fragmentComplete(bundle);
+        }
+
+        if(val3.equals("b") && val4.equals("b")){
+            bundle.putString("res","Sharp edged lesions are usually quite fresh and tend to be red in colour.");
+            fragmentError(bundle);
+        }
+
         if(val3.equals("a") && val4.equals("b") && val5.equals("b")){
             bundle.putString("res","Red lesions with sharp edges are usually fresh and would usually only have no or limited amount of healing/epithelisation around the edge of the lesion.");
             fragmentError(bundle);
@@ -167,11 +168,6 @@ public class Suggestion extends FragmentActivity {
 
         if(val3.equals("b") && val4.equals("a") && val5.equals("c")){
             bundle.putString("res","Smooth/rounded lesion edges with a pink colour usually have evidence of healing or epithelisation around the periphery of the lesion.");
-            fragmentError(bundle);
-        }
-
-        if(val3.equals("b") && val4.equals("b") && val5.equals("b")){
-            bundle.putString("res","Sharp edged lesions usually have only a limited amount of healing or epithelisation.");
             fragmentError(bundle);
         }
 
