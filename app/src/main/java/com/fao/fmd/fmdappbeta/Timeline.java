@@ -1,16 +1,35 @@
 package com.fao.fmd.fmdappbeta;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,7 +42,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-public class Timeline extends Activity {
+public class Timeline extends AppCompatActivity {
 
     Date minDate;
     Date dayZero;
@@ -37,7 +56,10 @@ public class Timeline extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        TableLayout timeline = findViewById(R.id.timeline);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final TableLayout timeline = findViewById(R.id.timeline);
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -133,6 +155,10 @@ public class Timeline extends Activity {
                 }
             }
 
+            if(!category.getText().toString().matches("[a-zA-Z.? ]*")){
+                spread.setHeight(105);
+            }
+
             row.addView(date);
             row.addView(lesion);
             row.addView(infection);
@@ -142,6 +168,81 @@ public class Timeline extends Activity {
             row.addView(notes);
             timeline.addView(row,i+1);
         }
+
+    }
+
+    // Menu icons are inflated just as they were with actionbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            case R.id.pdf:
+                createPDF();
+                return true;
+            case R.id.mail:
+                return true;
+            case R.id.upload:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void createPDF(){
+        //First Check if the external storage is writable
+        String state = Environment.getExternalStorageState();
+        if (!Environment.MEDIA_MOUNTED.equals(state)) {
+        }
+        //Create a directory for your PDF
+        File pdfDir = new File(Environment.getExternalStorageDirectory(), "EuFMDApp");
+        if (!pdfDir.exists()){
+            pdfDir.mkdir();
+        }
+        Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline)); // here give id of our root layout (here its my RelativeLayout's id)
+        //Now create the name of your PDF file that you will generate
+        File pdfFile = new File(pdfDir, "myPdfFile.pdf");
+        try {
+            Document document = new Document();
+            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+            document.open();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            Image image = Image.getInstance(byteArray);
+            image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+            document.add(image);
+            document.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  "myPdfFile.pdf"));
+        intent.setDataAndType(uri, "application/pdf");
+        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        startActivity(intent);
+    }
+
+    public static Bitmap getBitmapFromView(View view) {
+        Bitmap returnedBitmap = Bitmap.createBitmap(1700, view.getHeight(),Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(returnedBitmap);
+        Drawable bgDrawable = view.getBackground();
+        if (bgDrawable!=null) {
+            bgDrawable.draw(canvas);
+        } else {
+            canvas.drawColor(Color.WHITE);
+        }
+        view.draw(canvas);
+        return returnedBitmap;
     }
 
     public List<Integer> getAnimals(int id) {

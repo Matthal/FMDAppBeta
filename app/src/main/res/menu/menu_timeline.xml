@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/pdf"
+        android:icon="@drawable/pdf_ic"
+        app:showAsAction="always"
+        android:title="Create Pdf">
+    </item>
+    <item
+        android:id="@+id/mail"
+        android:icon="@drawable/mail_ic"
+        app:showAsAction="always"
+        android:title="Send mail">
+    </item>
+    <item
+        android:id="@+id/upload"
+        android:icon="@drawable/upload_ic"
+        app:showAsAction="always"
+        android:title="Upload">
+    </item>
+</menu>

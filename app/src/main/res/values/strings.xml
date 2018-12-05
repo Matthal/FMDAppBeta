@@ -42,6 +42,7 @@
     //POST LESION
     <string name="text_post_lesion">This animal has been added to the farm timeline.</string>
     <string name="add_an_animal">Add another animal</string>
+    <string name="take_photo">Take a photo</string>
 
     //TIMELINE
     <string name="date">Date</string>
