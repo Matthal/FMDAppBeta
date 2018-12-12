@@ -1,8 +1,6 @@
 package com.fao.fmd.fmdappbeta;
 
-
 public final class Farm {
-
 
     private Farm() {
     }

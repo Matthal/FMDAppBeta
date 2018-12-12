@@ -49,4 +49,13 @@
         android:layout_marginBottom="58dp"
         android:text="@string/pre_farm" />
 
+    <Button
+        android:id="@+id/sync"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:text="Sync"
+        android:layout_alignParentRight="true" />
+
 </RelativeLayout>

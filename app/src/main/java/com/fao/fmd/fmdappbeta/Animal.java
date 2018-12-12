@@ -27,7 +27,8 @@ public class Animal {
                     AnimalEntry.COLUMN_AGE + " TEXT," +
                     AnimalEntry.COLUMN_BREED + " TEXT," +
                     AnimalEntry.COLUMN_REPORT + " TEXT," +
-                    AnimalEntry.COLUMN_VACCINATED + " INTEGER)";
+                    AnimalEntry.COLUMN_VACCINATED + " INTEGER," +
+                    " FOREIGN KEY ("+AnimalEntry.COLUMN_FARM+") REFERENCES "+Farm.FarmEntry.TABLE_NAME +"("+Farm.FarmEntry.COLUMN_ID +"));";
 
     public static final String DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + AnimalEntry.TABLE_NAME;

@@ -251,4 +251,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         return farms;
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(FarmList.this, MainActivity.class);
+        startActivity(a);
+    }
+
 }

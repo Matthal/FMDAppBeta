@@ -187,6 +187,7 @@ public class Timeline extends AppCompatActivity {
                 createPDF();
                 return true;
             case R.id.mail:
+                sendEmail();
                 return true;
             case R.id.upload:
                 return true;
@@ -207,7 +208,7 @@ public class Timeline extends AppCompatActivity {
         }
         Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline)); // here give id of our root layout (here its my RelativeLayout's id)
         //Now create the name of your PDF file that you will generate
-        File pdfFile = new File(pdfDir, "myPdfFile.pdf");
+        File pdfFile = new File(pdfDir, "Farm " + id + " Timeline.pdf");
         try {
             Document document = new Document();
             PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
@@ -224,12 +225,24 @@ public class Timeline extends AppCompatActivity {
             e.printStackTrace();
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  "myPdfFile.pdf"));
+        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  "Farm " + id + " Timeline.pdf"));
         intent.setDataAndType(uri, "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         startActivity(intent);
+    }
+
+    public void sendEmail(){
+        File pdfDir = new File(Environment.getExternalStorageDirectory(), "EuFMDApp");
+        Intent email = new Intent(Intent.ACTION_SEND);
+        email.putExtra(Intent.EXTRA_SUBJECT, "Farm " + id + " Timeline");
+        email.putExtra(Intent.EXTRA_TEXT, "This is the timeline of farm " + id);
+        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  "Farm " + id + " Timeline.pdf"));
+        email.putExtra(Intent.EXTRA_STREAM, uri);
+        email.setType("application/pdf");
+        email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(email);
     }
 
     public static Bitmap getBitmapFromView(View view) {
@@ -341,7 +354,6 @@ public class Timeline extends AppCompatActivity {
         dates.put("poss_inf_max",possInfMaxDate);
         cursor.close();
 
-
         return dates;
 
     }
@@ -439,7 +451,6 @@ public class Timeline extends AppCompatActivity {
 
     public Map<String,List<String>> getTracingAttr(List<Integer> tracings){
         Map<String,List<String>> track = new HashMap<>();
-
 
         DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -555,7 +566,6 @@ public class Timeline extends AppCompatActivity {
             secondDate = Collections.min(trackDates);
         }
 
-
         if(tracings.size() > 0){
             if(firstDate.compareTo(secondDate) < 0){
                 return firstDate;
@@ -565,7 +575,6 @@ public class Timeline extends AppCompatActivity {
         }else{
             return firstDate;
         }
-
 
     }
 

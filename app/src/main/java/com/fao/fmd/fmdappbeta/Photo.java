@@ -17,7 +17,8 @@ public class Photo {
             "CREATE TABLE " + PhotoEntry.TABLE_NAME + " (" +
                     PhotoEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     PhotoEntry.COLUMN_PHOTO + " BLOB," +
-                    PhotoEntry.COLUMN_LESION + " INTEGER)";
+                    PhotoEntry.COLUMN_LESION + " INTEGER," +
+                    " FOREIGN KEY ("+PhotoEntry.COLUMN_LESION+") REFERENCES "+Lesion.LesionEntry.TABLE_NAME +"("+Lesion.LesionEntry.COLUMN_ID +"));";
 
     public static final String DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + PhotoEntry.TABLE_NAME;

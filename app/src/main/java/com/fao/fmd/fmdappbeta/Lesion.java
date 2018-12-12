@@ -33,7 +33,8 @@ public class Lesion {
                     LesionEntry.COLUMN_LIKE_SPR_MIN + " TEXT," +
                     LesionEntry.COLUMN_LIKE_SPR_MAX + " TEXT," +
                     LesionEntry.COLUMN_POSS_SPR_MIN + " TEXT," +
-                    LesionEntry.COLUMN_POSS_SPR_MAX + " TEXT)";
+                    LesionEntry.COLUMN_POSS_SPR_MAX + " TEXT," +
+                    " FOREIGN KEY ("+LesionEntry.COLUMN_ANIMAL+") REFERENCES "+Animal.AnimalEntry.TABLE_NAME +"("+Animal.AnimalEntry.COLUMN_ID +"));";
 
     public static final String DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + LesionEntry.TABLE_NAME;

@@ -23,7 +23,8 @@ public class Tracings {
                     TracingEntry.COLUMN_CATEGORY + " TEXT," +
                     TracingEntry.COLUMN_SUB_CATEGORY + " TEXT," +
                     TracingEntry.COLUMN_DATE + " TEXT," +
-                    TracingEntry.COLUMN_NOTES + " TEXT)";
+                    TracingEntry.COLUMN_NOTES + " TEXT," +
+                    " FOREIGN KEY ("+TracingEntry.COLUMN_FARM+") REFERENCES "+Farm.FarmEntry.TABLE_NAME +"("+Farm.FarmEntry.COLUMN_ID +"));";
 
     public static final String DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TracingEntry.TABLE_NAME;
