@@ -31,4 +31,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.0.3'
     implementation 'com.itextpdf:itextg:5.5.10'
     implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.parse:parse-android:1.16.3'
+}
+
+repositories {
+    mavenCentral()
 }

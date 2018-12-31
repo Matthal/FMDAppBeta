@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EuFMDApp</string>
+    <string name="app_name">FMD-DOC</string>
 
     //COMMON
     <string name="yes">Yes</string>
@@ -16,26 +16,31 @@
     <string name="amount">Amount</string>
 
     //MAIN
-    <string name="text_main">EuFMD App</string>
-    <string name="add_farm">Add a farm</string>
-    <string name="pre_farm">View previous farm</string>
+    <string name="text_main">FMD-DOC | DISEASE OUTBREAK CONTROL</string>
+    <string name="header">EuFMD-OI</string>
+    <string name="welcome">WELCOME BACK</string>
+    <string name="add_farm">Add\na farm</string>
+    <string name="pre_farm">My\nfarms</string>
+    <string name="bio">Biosecurity</string>
     <string name="diagn">Diagnostics</string>
 
     //ANIMAL CREATION
-    <string name="text_animal_creation">Enter animal information</string>
+    <string name="text_animal_creation">ANIMAL INFORMATION</string>
+    <string name="id">Identification</string>
     <string name="hint_ID">ID/Name</string>
     <string name="hint_Group_ID">Group</string>
     <string name="age">Age</string>
     <string name="hint_years">Years</string>
     <string name="hint_months">Months</string>
+    <string name="animal">Animal</string>
     <string name="hint_other">Other</string>
     <string name="hint_sign">Reported onset of clinical sign</string>
     <string name="vaccinated">Vaccinated in last 6 months?</string>
 
     //FARM CREATION
-    <string name="text_farm_creation">Enter farm information</string>
+    <string name="text_farm_creation">FARM INFORMATION</string>
     <string name="hint_vet">Vet name</string>
-    <string name="hint_owner">Owner</string>
+    <string name="hint_owner">Farm owner</string>
     <string name="hint_farm">Farm name</string>
     <string name="country">Select a country</string>
 
@@ -111,7 +116,9 @@
     <string name="btn_structural">Structural protein antibodies</string>
     <string name="btn_non_structural">Non-structural protein antibodies</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    //PARSE KEY
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">UKd48bFQpCmN9ovQ5TuiBvhv3UQUgGfnije37tB4</string>
+    <string name="back4app_client_key">ey69cIIu4F0MPwbmomhma3JIJKIDWtE7ONsPjrYM</string>
 
 </resources>

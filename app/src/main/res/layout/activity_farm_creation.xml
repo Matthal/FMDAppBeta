@@ -4,91 +4,167 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
+    android:background="#f2f2f2"
     tools:context=".FarmCreation">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="44dp"
-        android:text="@string/text_farm_creation"
-        android:textSize="24sp" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/basictoolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        style="@style/MyToolbar">
 
-    <EditText
-        android:id="@+id/vetName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/owner"
-        android:layout_alignLeft="@+id/owner"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="101dp"
-        android:ems="10"
-        android:hint="@string/hint_vet"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="72dp" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_white" />
 
-    <EditText
-        android:id="@+id/owner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="178dp"
-        android:layout_marginEnd="83dp"
-        android:layout_marginRight="83dp"
-        android:ems="10"
-        android:hint="@string/hint_owner"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="161dp" />
+    </android.support.v7.widget.Toolbar>
 
-    <EditText
-        android:id="@+id/farmName"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/vetName"
-        android:layout_alignLeft="@+id/vetName"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="256dp"
-        android:ems="10"
-        android:hint="@string/hint_farm"
-        android:inputType="text" />
+        android:layout_below="@id/basictoolbar">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/country"
-        android:layout_alignStart="@+id/country"
-        android:layout_marginBottom="-356dp"
-        android:text="@string/country"
-        android:layout_alignLeft="@+id/country" />
+        <TextView
+            android:id="@+id/appHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="#498F75"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_main"
+            android:textSize="14sp" />
 
-    <Spinner
-        android:id="@+id/country"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="356dp"
-        android:layout_marginBottom="129dp"
-        android:background="@android:drawable/btn_dropdown"
-        android:spinnerMode="dropdown" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appHeader"
+            android:background="#D9D9D9"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_farm_creation"
+            android:textSize="16sp" />
 
-    <Button
-        android:id="@+id/createFarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:text="@string/done" />
+        <EditText
+            android:id="@+id/vetName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/owner"
+            android:layout_alignLeft="@+id/owner"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="80dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:ems="10"
+            android:hint="@string/hint_vet"
+            android:inputType="text"
+            android:background="#ffffff"
+            tools:layout_editor_absoluteX="82dp"
+            tools:layout_editor_absoluteY="72dp" />
 
+        <EditText
+            android:id="@+id/owner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="150dp"
+            android:layout_marginEnd="83dp"
+            android:layout_marginRight="83dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:ems="10"
+            android:hint="@string/hint_owner"
+            android:inputType="text"
+            android:background="#ffffff"
+            tools:layout_editor_absoluteX="82dp"
+            tools:layout_editor_absoluteY="161dp" />
+
+        <EditText
+            android:id="@+id/farmName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/vetName"
+            android:layout_alignLeft="@+id/vetName"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="220dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:ems="10"
+            android:hint="@string/hint_farm"
+            android:background="#ffffff"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/country"
+            android:layout_alignStart="@+id/country"
+            android:layout_marginBottom="-310dp"
+            android:text="@string/country"
+            android:layout_alignLeft="@+id/country" />
+
+        <Spinner
+            android:id="@+id/country"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="310dp"
+            android:layout_marginBottom="129dp"
+            android:background="#ffffff"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:spinnerMode="dropdown" />
+
+        <Switch
+            android:id="@+id/locker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="390dp"
+            android:thumb="@drawable/customswitchselector"
+            android:track="@drawable/custom_track" />
+
+        <Button
+            android:id="@+id/createFarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="27dp"
+            android:text="@string/done"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_above="@id/progbar"
+            android:background="#D9D9D9" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginBottom="27dp"
+            android:src="@drawable/qmark_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp" />
+
+        <include android:id="@+id/progbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            layout="@layout/progression_bar"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

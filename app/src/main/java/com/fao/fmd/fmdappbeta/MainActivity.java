@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
 
@@ -33,6 +39,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+
+        //Parse Initialization
+        Parse.initialize(this);
+        ParseInstallation.getCurrentInstallation().saveInBackground();
 
         /*FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 
@@ -96,33 +106,25 @@ public class MainActivity extends Activity {
                 String country = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_COUNTRY));
                 String name = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_NAME));
 
-                final String[] onlineID = {Integer.toString(id)};
-                mDatabase = FirebaseDatabase.getInstance().getReference("farms");
-                ValueEventListener valueEventListener = new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                            if(snapshot.child(onlineID[0]).exists()){
-                                onlineID[0] = "2";
-                            }
-                        }
-                    }
+                ParseObject entity = new ParseObject("Farms");
 
+                entity.put("ID", id);
+                entity.put("Vet_name", vet);
+                entity.put("Owner_name", owner);
+                entity.put("Date", date);
+                entity.put("Longitude", lon);
+                entity.put("Latitude", lat);
+                entity.put("Country", country);
+                entity.put("Farm_name", name);
+
+                // Saves the new object.
+                // Notice that the SaveCallback is totally optional!
+                entity.saveInBackground(new SaveCallback() {
                     @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w("DBError", "Failed to read value.", error.toException());
+                    public void done(ParseException e) {
+                        // Here you can handle errors, if thrown. Otherwise, "e" should be null
                     }
-                };
-                mDatabase.addListenerForSingleValueEvent(valueEventListener);
-                //mDatabase.child("id").setValue(id);
-                mDatabase.child(onlineID[0]).child("vet_name").setValue(vet);
-                mDatabase.child(onlineID[0]).child("owner_name").setValue(owner);
-                mDatabase.child(onlineID[0]).child("date").setValue(date);
-                mDatabase.child(onlineID[0]).child("longitude").setValue(lon);
-                mDatabase.child(onlineID[0]).child("latitude").setValue(lat);
-                mDatabase.child(onlineID[0]).child("country").setValue(country);
-                mDatabase.child(onlineID[0]).child("village_name").setValue(name);
+                });
 
             } while (cursor.moveToNext());
         }
