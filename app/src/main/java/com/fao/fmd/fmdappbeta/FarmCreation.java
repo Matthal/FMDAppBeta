@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -49,7 +50,7 @@ public class FarmCreation extends Activity {
         SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy", Locale.UK);
         final String date = df.format(c);
 
-        Button cFarm = findViewById(R.id.createFarm);
+        ImageView cFarm = findViewById(R.id.createFarm);
 
         final EditText name = findViewById(R.id.vetName);
         final EditText owner = findViewById(R.id.owner);

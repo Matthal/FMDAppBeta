@@ -4,130 +4,220 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
+    android:background="#f2f2f2"
     tools:context=".DiagnosticsOverview">
 
-    <FrameLayout
-        android:id="@+id/placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/basictoolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        style="@style/MyToolbar">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_white" />
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/basictoolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true">
 
         <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+            android:id="@+id/appHeader"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="44dp"
-            android:text="@string/par_one"
-            android:textSize="24sp"
-            tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="31dp" />
+            android:background="#498F75"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_main"
+            android:textSize="14sp" />
 
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_alignBottom="@+id/textView7"
-            android:layout_alignParentStart="true"
-            android:background="#000000"
-            android:layout_alignParentLeft="true" />
-
-        <Button
-            android:id="@+id/vesicular"
-            android:layout_width="110dp"
+        <TextView
+            android:id="@+id/info"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginLeft="31dp"
-            android:layout_marginTop="114dp"
-            android:text="@string/btn_vesicular" />
+            android:layout_below="@id/appHeader"
+            android:background="#D9D9D9"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_diagn_ovw"
+            android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/epithelium"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/vesicular"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="29dp"
-            android:layout_marginRight="29dp"
-            android:text="@string/btn_epithelium" />
+        <FrameLayout
+            android:id="@+id/placeholder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/info"
+            android:layout_above="@id/gray">
 
-        <Button
-            android:id="@+id/swabs"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/vesicular"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="209dp"
-            android:text="@string/btn_swabs"
-            android:layout_alignLeft="@+id/vesicular" />
+        </FrameLayout>
 
-        <Button
-            android:id="@+id/probang"
-            android:layout_width="110dp"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/epithelium"
-            android:layout_alignLeft="@+id/epithelium"
-            android:layout_alignBottom="@+id/swabs"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/gray"
+            android:id="@+id/main">
+
+
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="44dp"
+                android:text="@string/par_one"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="162dp"
+                tools:layout_editor_absoluteY="31dp" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_alignBottom="@+id/textView7"
+                android:layout_alignParentStart="true"
+                android:background="#000000"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                android:id="@+id/vesicular"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="31dp"
+                android:layout_marginLeft="31dp"
+                android:layout_marginTop="114dp"
+                android:text="@string/btn_vesicular"
+                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <Button
+                android:id="@+id/epithelium"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/vesicular"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="29dp"
+                android:layout_marginRight="29dp"
+                android:text="@string/btn_epithelium"
+                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <Button
+                android:id="@+id/swabs"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/vesicular"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="209dp"
+                android:text="@string/btn_swabs"
+                android:layout_alignLeft="@+id/vesicular"
+                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <Button
+                android:id="@+id/probang"
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/epithelium"
+                android:layout_alignLeft="@+id/epithelium"
+                android:layout_alignBottom="@+id/swabs"
+                android:layout_marginStart="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginBottom="-1dp"
+                android:text="@string/btn_probang"
+                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="285dp"
+                android:text="@string/par_two"
+                android:textSize="24sp"
+                tools:layout_editor_absoluteX="162dp"
+                tools:layout_editor_absoluteY="31dp" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_alignBottom="@+id/textView7"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginBottom="-240dp"
+                android:background="#000000"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="0dp" />
+
+            <Button
+                android:id="@+id/structural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/vesicular"
+                android:layout_alignLeft="@+id/vesicular"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginBottom="70dp"
+                android:text="@string/btn_structural"
+                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+            <Button
+                android:id="@+id/non_structural"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/vesicular"
+                android:layout_alignLeft="@+id/vesicular"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/btn_non_structural"
+                android:layout_alignRight="@+id/textView7"
+                android:textAllCaps="false"
+                style="@style/Widget.AppCompat.Button.Colored"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/gray"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_above="@id/progbar"
+            android:background="#D9D9D9" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="0dp"
             android:layout_marginLeft="0dp"
-            android:layout_marginBottom="-1dp"
-            android:text="@string/btn_probang" />
+            android:layout_marginBottom="10dp"
+            android:layout_above="@id/progbar"
+            android:src="@drawable/qmark_icon" />
 
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+        <include android:id="@+id/progbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="325dp"
-            android:text="@string/par_two"
-            android:textSize="24sp"
-            tools:layout_editor_absoluteX="162dp"
-            tools:layout_editor_absoluteY="31dp" />
-
-        <View
-            android:id="@+id/view"
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:layout_alignBottom="@+id/textView7"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginBottom="-282dp"
-            android:background="#000000"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp" />
-
-        <Button
-            android:id="@+id/structural"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/vesicular"
-            android:layout_alignLeft="@+id/vesicular"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="31dp"
-            android:layout_marginLeft="31dp"
-            android:layout_marginBottom="89dp"
-            android:text="@string/btn_structural" />
-
-        <Button
-            android:id="@+id/non_structural"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/textView7"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="33dp"
-            android:text="@string/btn_non_structural"
-            android:layout_alignRight="@+id/textView7" />
+            layout="@layout/progression_bar"/>
 
     </RelativeLayout>
 

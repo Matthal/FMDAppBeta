@@ -107,6 +107,7 @@
     <string name="photo">See photo examples</string>
 
     //DIAGNOSTICS OVERVIEW
+    <string name="text_diagn_ovw">DIAGNOSTIC OVERVIEW</string>
     <string name="par_one">Samples and tests for virus</string>
     <string name="btn_vesicular">Vesicular fluid</string>
     <string name="btn_epithelium">Epithelium samples</string>
@@ -115,6 +116,15 @@
     <string name="par_two">Tests for antibody</string>
     <string name="btn_structural">Structural protein antibodies</string>
     <string name="btn_non_structural">Non-structural protein antibodies</string>
+
+    //DIAGNOSTIC OPTIONS
+    <string name="text_diagn_opt">DIAGNOSTIC OPTIONS</string>
+
+    //ASSUMPTIONS
+    <string name="text_asssumpt">ASSUMPTIONS</string>
+
+    //GALLERY
+    <string name="text_gallery">VESICLES GALLERY</string>
 
     //PARSE KEY
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>

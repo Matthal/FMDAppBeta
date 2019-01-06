@@ -238,7 +238,7 @@ public class DiagnosticOptions extends Activity {
             test.setText(text);
         }
 
-        ExpandableListAdapter listAdapter = new AnimalListAdapter(this, listDataHeader, listDataChild);
+        ExpandableListAdapter listAdapter = new TextAdapter(this, listDataHeader, listDataChild);
         diagnList.setAdapter(listAdapter);
     }
 }

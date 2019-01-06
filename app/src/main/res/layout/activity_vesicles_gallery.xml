@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Assumptions">
+    android:id="@+id/container"
+    tools:context=".MainActivity" >
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/basictoolbar"
@@ -11,22 +12,19 @@
         android:layout_height="40dp"
         style="@style/MyToolbar">
 
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/logo_white" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/logo_white" />
 
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/basictoolbar"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="0dp"
-        android:layout_alignParentLeft="true">
+        android:layout_below="@id/basictoolbar">
 
         <TextView
             android:id="@+id/appHeader"
@@ -47,25 +45,24 @@
             android:background="#D9D9D9"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="@string/text_asssumpt"
+            android:text="@string/text_gallery"
             android:textSize="16sp" />
 
-        <ScrollView
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/info">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView
+            android:id="@+id/expanded_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/info"
-            android:layout_above="@id/gray">
-
-            <TextView
-                android:id="@+id/assumptions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"/>
-
-        </ScrollView>
+            android:visibility="invisible" />
 
         <TextView
-            android:id="@+id/gray"
             android:layout_width="match_parent"
             android:layout_height="70sp"
             android:layout_above="@id/progbar"
@@ -74,11 +71,13 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginBottom="10dp"
-            android:layout_above="@id/progbar"
-            android:src="@drawable/qmark_icon" />
+            android:layout_marginBottom="27dp"
+            android:src="@drawable/qmark_icon"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp" />
 
         <include android:id="@+id/progbar"
             android:layout_width="match_parent"

@@ -2,17 +2,15 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.ViewPager;
+
+import com.davemorrissey.labs.subscaleview.ImageSource;
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class PhotoViewer extends Activity {
 
-    //private static final Integer[] IMAGES = {R.drawable.onetwo_photo_1,R.drawable.onetwo_photo_2,R.drawable.onetwo_photo_3,R.drawable.onetwo_photo_4};
     private ArrayList<Integer> ImagesArray = new ArrayList<>();
 
     @Override
@@ -21,15 +19,11 @@ public class PhotoViewer extends Activity {
         setContentView(R.layout.activity_photo_viewer);
 
         Bundle b = getIntent().getExtras();
-        if(b != null){
-            if(b.getString("tag").equals("complete")){
-                String days = b.getString("res");
-                init(days);
-            }else{
-                String tag = b.getString("tag");
-                init(tag);
-            }
-        }
+
+        SubsamplingScaleImageView imageView = findViewById(R.id.imgDisplay);
+
+        imageView.setImage(ImageSource.resource(b.getInt("img")));
+
     }
 
     private void init(String id) {
@@ -115,10 +109,6 @@ public class PhotoViewer extends Activity {
             final Integer[] IMAGES = {R.drawable.rednosharp_photo_1,R.drawable.rednosharp_photo_2,R.drawable.rednosharp_photo_3,R.drawable.rednosharp_photo_4,R.drawable.rednosharp_photo_5};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
-
-        ViewPager mPager = findViewById(R.id.pager);
-
-        mPager.setAdapter(new ImageAdapter(PhotoViewer.this,ImagesArray));
 
     }
 }
