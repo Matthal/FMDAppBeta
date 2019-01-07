@@ -197,43 +197,29 @@
             android:id="@+id/textView5"
             android:layout_width="182dp"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/check"
+            android:layout_alignBottom="@+id/vaccinated"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginStart="35dp"
+            android:layout_marginStart="120dp"
             android:layout_marginLeft="35dp"
-            android:layout_marginBottom="-3dp"
+            android:layout_marginBottom="47dp"
             android:text="@string/vaccinated"
-            android:textSize="18sp" />
+            android:textSize="14sp" />
 
-        <RadioGroup
-            android:id="@+id/check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/groupID"
-            android:layout_alignRight="@+id/groupID"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="394dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="99dp"
-            android:orientation="horizontal">
+        <Spinner
+            android:id="@+id/vaccinated"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="130dp"
+            android:layout_height="50dp"
+            android:layout_alignStart="@+id/groupID"
+            android:layout_alignLeft="@+id/groupID"
+            android:layout_alignTop="@+id/breed"
+            android:layout_marginStart="-77dp"
+            android:layout_marginLeft="-77dp"
+            android:layout_marginTop="125dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown" />
 
-            <RadioButton
-                android:id="@+id/yes_check"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/yes" />
-
-            <RadioButton
-                android:id="@+id/no_chck"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no" />
-
-        </RadioGroup>
 
         <TextView
             android:layout_width="match_parent"
@@ -242,14 +228,30 @@
             android:background="#D9D9D9" />
 
         <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="250dp"
+            android:layout_marginRight="250dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:rotation="180"
+            android:src="@drawable/next_icon" />
+
+        <ImageView
             android:id="@+id/addAnimal"
             android:layout_width="50dp"
             android:layout_height="60dp"
             android:layout_above="@id/progbar"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="148dp"
-            android:layout_marginRight="148dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
             android:layout_marginBottom="5dp"
             android:clickable="true"
             android:focusable="true"

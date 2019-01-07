@@ -111,6 +111,19 @@
             android:background="#D9D9D9" />
 
         <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:rotation="180"
+            android:src="@drawable/next_icon" />
+
+        <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="0dp"

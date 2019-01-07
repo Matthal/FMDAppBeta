@@ -81,21 +81,11 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         });
 
 
-        RadioGroup rg = findViewById(R.id.check);
-        final int[] radio = new int[1];
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.yes_check:
-                        radio[0] = 1;
-                        break;
-                    case R.id.no_chck:
-                        radio[0] = 0;
-                        break;
-                }
-            }
-        });
+        final String[] vaccination = new String[]{"<6 months", ">6 months"};
+        final Spinner vacc = findViewById(R.id.vaccinated);
+        ArrayAdapter<String> vaccAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vaccination);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sexSpin.setAdapter(vaccAdapter);
 
         Bundle bundle = getIntent().getExtras();
         final int farm;
@@ -120,6 +110,13 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                     breed = other.getText().toString();
                 }
 
+                int vaccined;
+                if(vacc.getSelectedItem().equals("<6 months")){
+                    vaccined = 1;
+                }else{
+                    vaccined = 0;
+                }
+
                 ContentValues values = new ContentValues();
                 values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
@@ -127,7 +124,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 values.put(Animal.AnimalEntry.COLUMN_AGE, years.getText().toString() + " & " + months.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_BREED, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
                 values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
-                values.put(Animal.AnimalEntry.COLUMN_VACCINATED, radio[0]);
+                values.put(Animal.AnimalEntry.COLUMN_VACCINATED, vaccined);
 
                 long newRowId = db.insert(Animal.AnimalEntry.TABLE_NAME, null, values);
 
@@ -150,6 +147,14 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                     intent.putExtras(mBundle);
                     startActivity(intent);
                 }
+            }
+        });
+
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

@@ -91,7 +91,7 @@ public class Timeline extends AppCompatActivity {
 
             TextView date = new TextView(this);
             Date dayDate = addDays(minDate, i);
-            SimpleDateFormat mdyFormat = new SimpleDateFormat("dd/MM/yyyy",Locale.UK);
+            SimpleDateFormat mdyFormat = new SimpleDateFormat("dd MMM yyyy",Locale.UK);
             String strDate = mdyFormat.format(dayDate);
             Date newDate = null;
             try {
@@ -119,19 +119,19 @@ public class Timeline extends AppCompatActivity {
 
             TextView infection = new TextView(this);
             if(newDate.compareTo(infectionDates.get("likely_inf_min")) == 0 || (newDate.compareTo(infectionDates.get("likely_inf_min")) > 0 && newDate.compareTo(infectionDates.get("likely_inf_max")) < 0) || newDate.compareTo(infectionDates.get("likely_inf_max")) == 0){
-                infection.setBackgroundColor(Color.GREEN);
+                infection.setBackgroundResource(R.color.TLred);
             }else{
                 if(newDate.compareTo(infectionDates.get("poss_inf_min")) == 0 || (newDate.compareTo(infectionDates.get("poss_inf_min")) > 0 && newDate.compareTo(infectionDates.get("poss_inf_max")) < 0) || newDate.compareTo(infectionDates.get("poss_inf_max")) == 0){
-                    infection.setBackgroundColor(Color.RED);
+                    infection.setBackgroundResource(R.color.TLyellow);
                 }
             }
 
             TextView spread = new TextView(this);
             if(newDate.compareTo(spreadDates.get("likely_spr_min")) == 0 || (newDate.compareTo(spreadDates.get("likely_spr_min")) > 0 && newDate.compareTo(spreadDates.get("likely_spr_max")) < 0) || newDate.compareTo(spreadDates.get("likely_spr_max")) == 0){
-                spread.setBackgroundColor(Color.GREEN);
+                spread.setBackgroundResource(R.color.TLred);
             }else{
                 if(newDate.compareTo(spreadDates.get("poss_spr_min")) == 0 || (newDate.compareTo(spreadDates.get("poss_spr_min")) > 0 && newDate.compareTo(spreadDates.get("poss_spr_max")) < 0) || newDate.compareTo(spreadDates.get("poss_spr_max")) == 0){
-                    spread.setBackgroundColor(Color.RED);
+                    spread.setBackgroundResource(R.color.TLyellow);
                 }
             }
 

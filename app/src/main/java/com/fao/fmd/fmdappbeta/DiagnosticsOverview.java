@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class DiagnosticsOverview extends FragmentActivity {
@@ -137,6 +138,13 @@ public class DiagnosticsOverview extends FragmentActivity {
                 fragment.setArguments(b);
                 ft.replace(R.id.placeholder, fragment,"fragment");
                 ft.commit();
+            }
+        });
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

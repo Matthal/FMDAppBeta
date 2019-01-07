@@ -71,13 +71,11 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentBottom="true"
             android:layout_marginStart="0dp"
-            android:layout_marginBottom="27dp"
-            android:src="@drawable/qmark_icon"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp" />
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_above="@id/progbar"
+            android:src="@drawable/qmark_icon" />
 
         <include android:id="@+id/progbar"
             android:layout_width="match_parent"

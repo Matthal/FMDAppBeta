@@ -2,8 +2,10 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -240,5 +242,13 @@ public class DiagnosticOptions extends Activity {
 
         ExpandableListAdapter listAdapter = new TextAdapter(this, listDataHeader, listDataChild);
         diagnList.setAdapter(listAdapter);
+
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 }

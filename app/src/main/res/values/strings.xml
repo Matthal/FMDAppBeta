@@ -35,7 +35,7 @@
     <string name="animal">Animal</string>
     <string name="hint_other">Other</string>
     <string name="hint_sign">Reported onset of clinical sign</string>
-    <string name="vaccinated">Vaccinated in last 6 months?</string>
+    <string name="vaccinated">Vaccination</string>
 
     //FARM CREATION
     <string name="text_farm_creation">FARM INFORMATION</string>
