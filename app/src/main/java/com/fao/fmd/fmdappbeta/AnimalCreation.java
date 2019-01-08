@@ -52,7 +52,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
         sexSpin = findViewById(R.id.sex);
         ArrayAdapter<String> sexAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sex);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        sexAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sexSpin.setAdapter(sexAdapter);
 
         final Calendar calendar = Calendar.getInstance();
@@ -82,10 +82,10 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
 
         final String[] vaccination = new String[]{"<6 months", ">6 months"};
-        final Spinner vacc = findViewById(R.id.vaccinated);
+        final Spinner vaccSpin = findViewById(R.id.vaccinated);
         ArrayAdapter<String> vaccAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vaccination);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        sexSpin.setAdapter(vaccAdapter);
+        vaccAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        vaccSpin.setAdapter(vaccAdapter);
 
         Bundle bundle = getIntent().getExtras();
         final int farm;
@@ -111,7 +111,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 }
 
                 int vaccined;
-                if(vacc.getSelectedItem().equals("<6 months")){
+                if(vaccSpin.getSelectedItem().toString().equals("<6 months")){
                     vaccined = 1;
                 }else{
                     vaccined = 0;

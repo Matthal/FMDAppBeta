@@ -7,10 +7,11 @@
     tools:context=".Q5Fragment">
 
     <TextView
+        android:id="@+id/q5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
-        android:paddingTop="55dp"
+        android:paddingTop="25dp"
         android:text="@string/q5"
         android:textSize="36sp" />
 
@@ -19,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="280dp"
         android:text="@string/small" />
 
     <Button
@@ -27,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
-        android:layout_marginTop="210dp"
+        android:layout_marginTop="280dp"
         android:text="@string/photo" />
 
     <Button
@@ -35,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="350dp"
         android:text="@string/lot" />
 
     <Button
@@ -43,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="350dp"
         android:text="@string/photo" />
 
     <Button
@@ -51,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="420dp"
         android:text="@string/no" />
 
     <Button
@@ -59,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="200dp"
-        android:layout_marginTop="350dp"
+        android:layout_marginTop="420dp"
         android:text="@string/photo" />
 
 </FrameLayout>

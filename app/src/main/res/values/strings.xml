@@ -93,15 +93,15 @@
     //QUESTIONS
     <string name="q1">Is there a vesicle?</string>
     <string name="q2">Is there fibrin present?</string>
-    <string name="q3">What colour is the lesion?</string>
+    <string name="q3">What colour is the base of the erosion?</string>
     <string name="red">Red</string>
     <string name="pink">Pink</string>
     <string name="yellow">Yellow</string>
-    <string name="white">White</string>
+    <string name="white">Grey/White</string>
     <string name="q4">How do the edges appear?</string>
     <string name="round">Round/Smooth</string>
     <string name="sharp">Sharp</string>
-    <string name="q5">Is there evidence of healing (epithelialisation)?</string>
+    <string name="q5">What is the extent of healing (re-epithelialisation) from around the edges of the lesion?</string>
     <string name="small">Healing (small)</string>
     <string name="lot">Healing (a lot)</string>
     <string name="photo">See photo examples</string>
