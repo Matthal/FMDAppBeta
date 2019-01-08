@@ -71,7 +71,7 @@
 
                 <ExpandableListView
                     android:id="@+id/diagnList"
-                    android:layout_height="240dp"
+                    android:layout_height="220dp"
                     android:layout_width="match_parent"
                     android:layout_marginTop="25dp" />
 
