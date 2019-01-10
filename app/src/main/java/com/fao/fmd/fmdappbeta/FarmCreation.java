@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -19,9 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -61,70 +58,6 @@ public class FarmCreation extends Activity {
         final EditText name = findViewById(R.id.vetName);
         final EditText owner = findViewById(R.id.owner);
         final EditText farm = findViewById(R.id.farmName);
-        name.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!name.getText().toString().trim().isEmpty()) {
-                    name.setBackgroundResource(R.color.colorPrimary);
-                } else {
-                    name.setBackgroundResource(R.color.TLyellow);
-                }
-            }
-        });
-        owner.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(name.getText().toString().trim().isEmpty()){
-                    name.setBackgroundResource(R.color.TLyellow);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!owner.getText().toString().trim().isEmpty()) {
-                    owner.setBackgroundResource(R.color.colorPrimary);
-                } else {
-                    owner.setBackgroundResource(R.color.TLyellow);
-                }
-            }
-        });
-        farm.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(owner.getText().toString().trim().isEmpty()){
-                    owner.setBackgroundResource(R.color.TLyellow);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!farm.getText().toString().trim().isEmpty()) {
-                    farm.setBackgroundResource(R.color.colorPrimary);
-                } else {
-                    farm.setBackgroundResource(R.color.TLyellow);
-                }
-            }
-        });
 
         final Spinner spinner = findViewById(R.id.country);
 
@@ -225,6 +158,22 @@ public class FarmCreation extends Activity {
         locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    if (!name.getText().toString().trim().isEmpty()) {
+                        name.setBackgroundResource(R.color.colorPrimary);
+                    } else {
+                        name.setBackgroundResource(R.color.TLyellow);
+                    }
+                    if (!owner.getText().toString().trim().isEmpty()) {
+                        owner.setBackgroundResource(R.color.colorPrimary);
+                    } else {
+                        owner.setBackgroundResource(R.color.TLyellow);
+                    }
+                    if (!farm.getText().toString().trim().isEmpty()) {
+                        farm.setBackgroundResource(R.color.colorPrimary);
+                    } else {
+                        farm.setBackgroundResource(R.color.TLyellow);
+                    }
+                    spinner.setBackgroundResource(R.color.colorPrimary);
                     name.setEnabled(false);
                     owner.setEnabled(false);
                     farm.setEnabled(false);

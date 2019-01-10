@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FMD-DOC</string>
+    <string name="app_name">FMD-DOI</string>
 
     //COMMON
     <string name="yes">Yes</string>
@@ -16,13 +16,20 @@
     <string name="amount">Amount</string>
 
     //MAIN
-    <string name="text_main">FMD-DOC | DISEASE OUTBREAK CONTROL</string>
-    <string name="header">EuFMD-OI</string>
+    <string name="text_main">FMD-DOI | DISEASE OUTBREAK INVESTIGATION</string>
+    <string name="header">EuFMD-DOI</string>
     <string name="welcome">WELCOME BACK</string>
     <string name="add_farm">Add\na farm</string>
     <string name="pre_farm">My\nfarms</string>
     <string name="bio">Biosecurity</string>
     <string name="diagn">Diagnostics</string>
+
+    //FARM CREATION
+    <string name="text_farm_creation">FARM INFORMATION</string>
+    <string name="hint_vet">Vet name</string>
+    <string name="hint_owner">Farm owner</string>
+    <string name="hint_farm">Farm name</string>
+    <string name="country">Select a country</string>
 
     //ANIMAL CREATION
     <string name="text_animal_creation">ANIMAL INFORMATION</string>
@@ -37,12 +44,18 @@
     <string name="hint_sign">Reported onset of clinical sign</string>
     <string name="vaccinated">Vaccination</string>
 
-    //FARM CREATION
-    <string name="text_farm_creation">FARM INFORMATION</string>
-    <string name="hint_vet">Vet name</string>
-    <string name="hint_owner">Farm owner</string>
-    <string name="hint_farm">Farm name</string>
-    <string name="country">Select a country</string>
+    //LESION AGEING
+    <string name="text_lesion_ageing">LESION REPORT</string>
+    <string name="vesicles">Vesicles</string>
+    <string name="fibrin">Fibrin</string>
+    <string name="gallery">Gallery</string>
+    <string name="color">Color of the base of the erosion</string>
+    <string name="red">Red</string>
+    <string name="pink">Pink</string>
+    <string name="yellow">Yellow</string>
+    <string name="white">Grey/White</string>
+    <string name="edges">Edges</string>
+    <string name="heal">Healing/Re-epithelialisation</string>
 
     //POST LESION
     <string name="text_post_lesion">This animal has been added to the farm timeline.</string>
@@ -94,10 +107,6 @@
     <string name="q1">Is there a vesicle?</string>
     <string name="q2">Is there fibrin present?</string>
     <string name="q3">What colour is the base of the erosion?</string>
-    <string name="red">Red</string>
-    <string name="pink">Pink</string>
-    <string name="yellow">Yellow</string>
-    <string name="white">Grey/White</string>
     <string name="q4">How do the edges appear?</string>
     <string name="round">Round/Smooth</string>
     <string name="sharp">Sharp</string>

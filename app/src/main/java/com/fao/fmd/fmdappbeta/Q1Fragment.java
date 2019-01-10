@@ -47,11 +47,11 @@ public class Q1Fragment extends Fragment implements View.OnClickListener {
         //do what you want to do when button is clicked
         switch (v.getId()) {
             case R.id.yesBtn:
-                bundle.putString("Q1", "a" );
+                bundle.putString("Q1", "a");
                 endAlgorithm();
                 break;
             case R.id.noBtn:
-                bundle.putString("Q1", "b" );
+                bundle.putString("Q1", "b");
                 changeFragment();
                 break;
             case R.id.exBtn:

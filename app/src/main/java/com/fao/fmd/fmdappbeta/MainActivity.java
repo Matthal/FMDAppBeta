@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
+                Intent intent = new Intent(MainActivity.this, LesionAgeing.class);
                 startActivity(intent);
             }
         });

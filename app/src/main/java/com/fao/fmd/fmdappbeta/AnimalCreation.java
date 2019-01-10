@@ -10,12 +10,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -37,12 +37,23 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
         final EditText animal = findViewById(R.id.animalID);
         final EditText group = findViewById(R.id.groupID);
-        final EditText years = findViewById(R.id.animalYears);
-        final EditText months = findViewById(R.id.animalMonths);
         other = findViewById(R.id.other);
 
         final String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
         final String[] sex = new String[]{"M", "F"};
+        final String[] years = new String[]{"0 year","1 year","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10 years","11 years","12 years","13 years","14 years","15 years"};
+        final String[] months = new String[]{"1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months","12 months"};
+        final String[] vaccination = new String[]{"≤6 months", ">6 months"};
+
+        final Spinner yearsSpin = findViewById(R.id.animalYears);
+        ArrayAdapter<String> yearsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
+        yearsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        yearsSpin.setAdapter(yearsAdapter);
+
+        final Spinner monthsSpin = findViewById(R.id.animalMonths);
+        ArrayAdapter<String> monthsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
+        monthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        monthsSpin.setAdapter(monthsAdapter);
 
         spinner = findViewById(R.id.breed);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
@@ -80,8 +91,6 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             }
         });
 
-
-        final String[] vaccination = new String[]{"<6 months", ">6 months"};
         final Spinner vaccSpin = findViewById(R.id.vaccinated);
         ArrayAdapter<String> vaccAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vaccination);
         vaccAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -121,7 +130,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
                 values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
-                values.put(Animal.AnimalEntry.COLUMN_AGE, years.getText().toString() + " & " + months.getText().toString());
+                values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
                 values.put(Animal.AnimalEntry.COLUMN_BREED, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
                 values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
                 values.put(Animal.AnimalEntry.COLUMN_VACCINATED, vaccined);
@@ -155,6 +164,51 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             @Override
             public void onClick(View v) {
                 onBackPressed();
+            }
+        });
+
+        Switch locker = findViewById(R.id.locker);
+        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if (!animal.getText().toString().trim().isEmpty()) {
+                        animal.setBackgroundResource(R.color.colorPrimary);
+                    } else {
+                        animal.setBackgroundResource(R.color.TLyellow);
+                    }
+                    if (!group.getText().toString().trim().isEmpty()) {
+                        group.setBackgroundResource(R.color.colorPrimary);
+                    } else {
+                        group.setBackgroundResource(R.color.TLyellow);
+                    }
+                    yearsSpin.setBackgroundResource(R.color.colorPrimary);
+                    monthsSpin.setBackgroundResource(R.color.colorPrimary);
+                    spinner.setBackgroundResource(R.color.colorPrimary);
+                    sexSpin.setBackgroundResource(R.color.colorPrimary);
+                    if (!sign.getText().toString().trim().isEmpty()) {
+                        sign.setBackgroundResource(R.color.colorPrimary);
+                    } else {
+                        sign.setBackgroundResource(R.color.TLyellow);
+                    }
+                    vaccSpin.setBackgroundResource(R.color.colorPrimary);
+                    animal.setEnabled(false);
+                    group.setEnabled(false);
+                    yearsSpin.setEnabled(false);
+                    monthsSpin.setEnabled(false);
+                    spinner.setEnabled(false);
+                    sexSpin.setEnabled(false);
+                    sign.setEnabled(false);
+                    vaccSpin.setEnabled(false);
+                }else{
+                    animal.setEnabled(true);
+                    group.setEnabled(true);
+                    yearsSpin.setEnabled(true);
+                    monthsSpin.setEnabled(true);
+                    spinner.setEnabled(true);
+                    sexSpin.setEnabled(true);
+                    sign.setEnabled(true);
+                    vaccSpin.setEnabled(true);
+                }
             }
         });
     }

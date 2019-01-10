@@ -1,16 +1,290 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/fragment_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LesionAgeing"
-    android:orientation="horizontal">
+    android:background="#f2f2f2"
+    tools:context=".LesionAgeing">
 
-    <FrameLayout
-        android:id="@+id/placeholder"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/basictoolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        style="@style/MyToolbar">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_white"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/basictoolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true">
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/appHeader"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:background="#498F75"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_main"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appHeader"
+            android:background="#D9D9D9"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_lesion_ageing"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/ves"
+            android:layout_alignLeft="@+id/ves"
+            android:layout_alignBottom="@+id/ves"
+            android:layout_marginBottom="43dp"
+            android:text="@string/vesicles"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/ves"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="100dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/fib"
+            android:layout_alignLeft="@+id/fib"
+            android:layout_alignBottom="@+id/fib"
+            android:layout_marginBottom="43dp"
+            android:text="@string/fibrin"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/fib"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="170dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown" />
+
+        <Button
+            android:id="@+id/gallery"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="120dp"
+            android:layout_alignTop="@+id/ves"
+            android:layout_marginStart="201dp"
+            android:layout_marginLeft="201dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="-5dp"
+            android:text="@string/gallery"
+            android:layout_marginEnd="25dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/colRed"
+            android:layout_alignLeft="@+id/colRed"
+            android:layout_alignBottom="@+id/colRed"
+            android:layout_marginBottom="43dp"
+            android:text="@string/color"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/colRed"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="240dp"
+            android:background="@color/white"
+            android:textColor="@color/grey"
+            android:text="@string/red" />
+
+        <Button
+            android:id="@+id/colYellow"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="240dp"
+            android:background="@color/white"
+            android:textColor="@color/grey"
+            android:text="@string/yellow" />
+
+        <Button
+            android:id="@+id/colPink"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="290dp"
+            android:background="@color/white"
+            android:textColor="@color/grey"
+            android:text="@string/pink" />
+
+        <Button
+            android:id="@+id/colWhite"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="290dp"
+            android:background="@color/white"
+            android:textColor="@color/grey"
+            android:text="@string/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/edge"
+            android:layout_alignLeft="@+id/edge"
+            android:layout_alignBottom="@+id/edge"
+            android:layout_marginBottom="43dp"
+            android:text="@string/edges"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/edge"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="360dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/heal"
+            android:layout_alignLeft="@+id/heal"
+            android:layout_alignBottom="@+id/heal"
+            android:layout_marginBottom="43dp"
+            android:text="@string/heal"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/heal"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="360dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown" />
+
+        <TextView
+            android:id="@+id/grey"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_above="@id/progbar"
+            android:background="#D9D9D9" />
+
+        <Switch
+            android:id="@+id/locker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="420dp"
+            android:layout_marginLeft="30dp"
+            android:layout_centerHorizontal="true"
+            android:thumb="@drawable/customswitchselector"
+            android:track="@drawable/custom_track"
+            android:layout_marginStart="30dp" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="250dp"
+            android:layout_marginRight="250dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:rotation="180"
+            android:scaleType="fitCenter"
+            android:src="@drawable/next_icon" />
+
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/next_icon" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@id/progbar"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/qmark_icon" />
+
+        <include
+            android:id="@+id/progbar"
+            layout="@layout/progression_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
