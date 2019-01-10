@@ -58,7 +58,7 @@
     <string name="heal">Healing/Re-epithelialisation</string>
 
     //POST LESION
-    <string name="text_post_lesion">This animal has been added to the farm timeline.</string>
+    <string name="text_post_lesion">ANIMAL DATA COLLECTION</string>
     <string name="add_an_animal">Add another animal</string>
     <string name="take_photo">Take a photo</string>
 
@@ -92,14 +92,17 @@
     <string name="text_veichle_track">Vehicles - more information</string>
 
     //COMPLETE
-    <string name="text_complete">Based on the information you have provided, the likely age of this lesion is:</string>
-    <string name="examples">See examples</string>
+    <string name="text_complete">LESION AGEING CALCULATOR</string>
+    <string name="lesion_id">Lesion ID</string>
+    <string name="g_samples">Gallery samples</string>
+    <string name="days">Lesion ageing in days</string>
     <string name="diagn_opt">View diagnostic options</string>
     <string name="add_lesion">Add another lesion</string>
     <string name="add_timeline">Add to farm timeline</string>
     <string name="assumptions">View assumptions</string>
 
     //ERROR
+    <string name="error">ERROR</string>
     <string name="text_error">Please try again. </string>
     <string name="start_again">Start again</string>
 
@@ -133,7 +136,7 @@
     <string name="text_asssumpt">ASSUMPTIONS</string>
 
     //GALLERY
-    <string name="text_gallery">VESICLES GALLERY</string>
+    <string name="text_gallery">LESION LIBRARY</string>
 
     //PARSE KEY
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>

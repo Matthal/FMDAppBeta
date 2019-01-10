@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +28,17 @@ public class CompleteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_complete, container, false);
 
         bundle = this.getArguments();
 
-        TextView text = view.findViewById(R.id.text);
-        text.append(" "+ bundle.getString("res") + " days");
+        TextView id = view.findViewById(R.id.lesID);
+        id.append("Lesion ID");
+
+        TextView text = view.findViewById(R.id.days);
+        text.append(bundle.getString("res"));
 
         Button exBtn = view.findViewById(R.id.exBtn);
         Button diagnBtn = view.findViewById(R.id.diagnBtn);
@@ -43,19 +46,14 @@ public class CompleteFragment extends Fragment {
         Button timelineBtn = view.findViewById(R.id.timelineBtn);
         Button assumptBtn = view.findViewById(R.id.assumptBtn);
 
+        ImageView next = view.findViewById(R.id.next);
+        ImageView back = view.findViewById(R.id.back);
+
         exBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 bundle.putString("tag","complete");
-                Intent intent = new Intent(getActivity(), PhotoViewer.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-        diagnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DiagnosticOptions.class);
+                Intent intent = new Intent(getActivity(), VesiclesGallery.class); //To change with days gallery
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -68,11 +66,10 @@ public class CompleteFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        timelineBtn.setOnClickListener(new View.OnClickListener() {
+        diagnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDBEntry();
-                Intent intent = new Intent(getActivity(), PostLesion.class);
+                Intent intent = new Intent(getActivity(), DiagnosticOptions.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -82,6 +79,29 @@ public class CompleteFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), Assumptions.class);
                 startActivity(intent);
+            }
+        });
+        timelineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDBEntry();
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Mettere Controllo Timeline aggiunta a DB
+                Intent intent = new Intent(getActivity(), PostLesion.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
             }
         });
 

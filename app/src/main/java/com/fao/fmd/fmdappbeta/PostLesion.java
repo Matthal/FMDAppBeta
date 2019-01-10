@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -26,8 +27,10 @@ public class PostLesion extends Activity {
 
         Button addAnimal = findViewById(R.id.animal);
         Button addTracing = findViewById(R.id.tracing);
-        Button viewTimeline = findViewById(R.id.tlBtn);
         Button takePhoto = findViewById(R.id.photo);
+
+        ImageView next = findViewById(R.id.next);
+        ImageView back = findViewById(R.id.back);
 
         addAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +51,15 @@ public class PostLesion extends Activity {
                 startActivity(intent);
             }
         });
-        viewTimeline.setOnClickListener(new View.OnClickListener() {
+        takePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostLesion.this, Timeline.class);
@@ -56,11 +67,11 @@ public class PostLesion extends Activity {
                 startActivity(intent);
             }
         });
-        takePhoto.setOnClickListener(new View.OnClickListener() {
+
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+                onBackPressed();
             }
         });
     }

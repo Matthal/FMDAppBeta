@@ -27,7 +27,7 @@
         <activity android:name=".FarmList" />
         <activity android:name=".AnimalCreation" android:screenOrientation="portrait"/>
         <activity android:name=".LesionAgeing" android:screenOrientation="portrait"/>
-        <activity android:name=".Suggestion" />
+        <activity android:name=".Suggestion" android:screenOrientation="portrait"/>
         <activity android:name=".Tracing" />
         <activity android:name=".Timeline" />
         <activity android:name=".PostLesion" />
@@ -35,6 +35,7 @@
         <activity android:name=".Assumptions" />
         <activity android:name=".DiagnosticOptions" />
         <activity android:name=".PhotoViewer" />
+        <activity android:name=".VesiclesGallery" android:screenOrientation="portrait"/>
 
         <provider
             android:name=".GenericFileProvider"
@@ -59,7 +60,6 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-        <activity android:name=".VesiclesGallery"></activity>
     </application>
 
 </manifest>

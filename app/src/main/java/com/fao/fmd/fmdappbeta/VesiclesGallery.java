@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,7 @@ public class VesiclesGallery extends Activity {
         SimpleAdapter mAdapter = new SimpleAdapter(VesiclesGallery.this);
 
         //This is the code to provide a sectioned grid
-        sections = new ArrayList<SectionedGridRecyclerViewAdapter.Section>();
+        sections = new ArrayList<>();
 
         //Sections
         sections.add(new SectionedGridRecyclerViewAdapter.Section(0,"Vesicles"));
@@ -54,6 +53,14 @@ public class VesiclesGallery extends Activity {
 
         //Apply this adapter to the RecyclerView
         mRecyclerView.setAdapter(mSectionedAdapter);
+
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 }
