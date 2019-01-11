@@ -30,8 +30,8 @@
         <activity android:name=".Suggestion" android:screenOrientation="portrait"/>
         <activity android:name=".Tracing" />
         <activity android:name=".Timeline" />
-        <activity android:name=".PostLesion" />
-        <activity android:name=".DiagnosticsOverview" />
+        <activity android:name=".PostLesion" android:screenOrientation="portrait"/>
+        <activity android:name=".DiagnosticsOverview" android:screenOrientation="portrait"/>
         <activity android:name=".Assumptions" />
         <activity android:name=".DiagnosticOptions" />
         <activity android:name=".PhotoViewer" />

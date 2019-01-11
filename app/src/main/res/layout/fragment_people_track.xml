@@ -1,117 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:screenOrientation="portrait"
+    android:id="@+id/people_popup"
+    android:layout_width="wrap_content"
+    android:layout_height="400dp"
+    android:layout_gravity="center"
+    android:paddingRight="60dp"
+    android:paddingLeft="60dp"
+    android:background="@drawable/custom_border"
     tools:context=".PeopleTrackFragment">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="30dp"
-        android:text="@string/text_people_track"
-        android:textSize="30sp" />
 
     <EditText
         android:id="@+id/date"
-        android:layout_width="wrap_content"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center"
         android:hint="@string/enter_date"
         android:focusable="false"
-        android:layout_marginTop="150dp" />
+        android:background="#ffffff"
+        android:layout_marginTop="30dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="230dp"
-        android:layout_marginLeft="80dp"
+        android:layout_alignStart="@+id/category"
+        android:layout_alignLeft="@+id/category"
+        android:layout_alignBottom="@+id/category"
+        android:layout_marginBottom="43dp"
         android:text="@string/category"
-        android:textSize="18sp" />
+        android:textSize="14sp" />
 
     <Spinner
         android:id="@+id/category"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="220dp"
-        android:textSize="20sp"
-        android:textStyle="bold"/>
+        style="@style/Widget.AppCompat.DropDownItem.Spinner"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:background="#ffffff"
+        android:spinnerMode="dropdown" />
 
     <EditText
         android:id="@+id/other"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="200dp"
-        android:layout_marginTop="220dp"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp"
+        android:background="#ffffff"
         android:hint="@string/hint_other"
         android:visibility="invisible" />
 
-    <TextView
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:text="@string/contact"
-        android:layout_marginTop="280dp"
-        android:layout_marginLeft="70dp"
-        android:textSize="18sp"/>
-
-
-    <RadioGroup
-        android:id="@+id/check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:layout_marginLeft="240dp"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/yes_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/yes" />
-
-        <RadioButton
-            android:id="@+id/no_chck"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no" />
-
-    </RadioGroup>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="340dp"
-        android:layout_marginLeft="80dp"
-        android:text="@string/amount"
-        android:textSize="18sp" />
-
-    <EditText
-        android:id="@+id/number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="210dp"
-        android:hint="@string/zero"
-        android:inputType="number"
-        android:layout_marginTop="325dp" />
+    <Spinner
+        android:id="@+id/contact"
+        style="@style/Widget.AppCompat.DropDownItem.Spinner"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="190dp"
+        android:background="#ffffff"
+        android:spinnerMode="dropdown" />
 
     <EditText
         android:id="@+id/note"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="260dp"
+        android:background="#ffffff"
         android:hint="@string/insert_notes"
-        android:inputType="text"
-        android:layout_marginTop="380dp" />
+        android:inputType="text" />
 
     <Button
         android:id="@+id/done"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="450dp"
-        android:text="@string/done" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="330dp"
+        android:text="@string/add" />
 
-</FrameLayout>
+</RelativeLayout>

@@ -1,77 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
+    android:background="#f2f2f2"
     tools:context=".Tracing">
 
-    <FrameLayout
-        android:id="@+id/placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </FrameLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/basictoolbar"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        style="@style/MyToolbar">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_white" />
+
+    </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/main">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/basictoolbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="0dp"
+        android:layout_alignParentLeft="true">
 
         <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/appHeader"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="76dp"
-            android:gravity="center_horizontal"
+            android:background="#498F75"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_main"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appHeader"
+            android:background="#D9D9D9"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
             android:text="@string/text_tracing"
-            android:textSize="30sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/animalTrack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="260dp"
+            android:layout_height="80dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="190dp"
+            android:gravity="fill"
+            android:layout_marginTop="90dp"
             android:text="@string/animal_movements" />
 
         <Button
             android:id="@+id/productTrack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/animalTrack"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="260dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="35dp"
-            android:layout_marginTop="260dp"
-            android:text="@string/prosucts"
-            android:layout_alignLeft="@+id/animalTrack"
-            android:layout_marginLeft="35dp" />
+            android:layout_marginTop="180dp"
+            android:gravity="fill"
+            android:text="@string/prosucts" />
 
         <Button
             android:id="@+id/peopleTrack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/animalTrack"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="260dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="39dp"
-            android:layout_marginTop="330dp"
-            android:text="@string/people"
-            android:layout_alignLeft="@+id/animalTrack"
-            android:layout_marginLeft="39dp" />
+            android:layout_marginTop="270dp"
+            android:gravity="fill"
+            android:text="@string/people" />
 
         <Button
             android:id="@+id/veichleTrack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/animalTrack"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="260dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="36dp"
-            android:layout_marginTop="400dp"
-            android:text="@string/vehicles"
-            android:layout_alignLeft="@+id/animalTrack"
-            android:layout_marginLeft="36dp" />
+            android:layout_marginTop="360dp"
+            android:gravity="fill"
+            android:text="@string/vehicles" />
+
+        <TextView
+            android:id="@+id/gray"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_above="@id/progbar"
+            android:background="#D9D9D9" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="250dp"
+            android:layout_marginRight="250dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:rotation="180"
+            android:src="@drawable/next_icon" />
+
+        <ImageView
+            android:id="@+id/next"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/next_icon" />
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_above="@id/progbar"
+            android:src="@drawable/qmark_icon" />
+
+        <include android:id="@+id/progbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            layout="@layout/progression_bar"/>
 
     </RelativeLayout>
 

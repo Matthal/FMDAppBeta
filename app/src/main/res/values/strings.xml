@@ -4,7 +4,7 @@
     //COMMON
     <string name="yes">Yes</string>
     <string name="no">No</string>
-    <string name="done">Done</string>
+    <string name="add">Add</string>
     <string name="add_animal">Add an animal</string>
     <string name="add_tracing">Add tracings</string>
     <string name="timeline">View farm timeline</string>
@@ -71,7 +71,7 @@
     <string name="notes">Notes</string>
 
     //TRACING
-    <string name="text_tracing">Please select the type of tracing</string>
+    <string name="text_tracing">TRACING REPORT</string>
     <string name="animal_movements">Animal Movements</string>
     <string name="prosucts">Products</string>
     <string name="people">People</string>
@@ -80,7 +80,6 @@
     //ANIMAL TRACK
     <string name="text_animal_track">Animal movements - more information</string>
     <string name="species">Species</string>
-    <string name="number">Number</string>
 
     //PEOPLE TRACK
     <string name="text_people_track">People - more information</string>
@@ -104,7 +103,6 @@
     //ERROR
     <string name="error">ERROR</string>
     <string name="text_error">Please try again. </string>
-    <string name="start_again">Start again</string>
 
     //QUESTIONS
     <string name="q1">Is there a vesicle?</string>

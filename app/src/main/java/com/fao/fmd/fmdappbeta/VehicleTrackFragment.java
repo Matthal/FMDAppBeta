@@ -88,21 +88,6 @@ public class VehicleTrackFragment extends Fragment implements AdapterView.OnItem
         final EditText notes = view.findViewById(R.id.note);
         other = view.findViewById(R.id.other);
 
-        RadioGroup rg = view.findViewById(R.id.check);
-        final String[] radio = new String[1];
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.yes_check:
-                        radio[0] = " (animals)";
-                        break;
-                    case R.id.no_chck:
-                        radio[0] = " (not animals)";
-                        break;
-                }
-            }
-        });
 
         final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
 
@@ -129,7 +114,7 @@ public class VehicleTrackFragment extends Fragment implements AdapterView.OnItem
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 ContentValues values = new ContentValues();
                 values.put(Tracings.TracingEntry.COLUMN_FARM, farm);
-                values.put(Tracings.TracingEntry.COLUMN_CATEGORY, "Vehicle" + radio[0]);
+                values.put(Tracings.TracingEntry.COLUMN_CATEGORY, "Vehicle");
                 values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, catStr);
                 values.put(Tracings.TracingEntry.COLUMN_DATE, date.getText().toString());
                 values.put(Tracings.TracingEntry.COLUMN_NOTES, notes.getText().toString());
