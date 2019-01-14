@@ -62,6 +62,14 @@
             android:layout_marginTop="90dp"
             android:text="@string/animal_movements" />
 
+        <TextView
+            android:id="@+id/animalNum"
+            android:layout_width="62dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="245dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="95dp" />
+
         <Button
             android:id="@+id/productTrack"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -72,6 +80,14 @@
             android:layout_marginTop="180dp"
             android:gravity="fill"
             android:text="@string/prosucts" />
+
+        <TextView
+            android:id="@+id/productNum"
+            android:layout_width="62dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="245dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="185dp" />
 
         <Button
             android:id="@+id/peopleTrack"
@@ -84,6 +100,14 @@
             android:gravity="fill"
             android:text="@string/people" />
 
+        <TextView
+            android:id="@+id/peopleNum"
+            android:layout_width="62dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="245dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="275dp" />
+
         <Button
             android:id="@+id/veichleTrack"
             style="@style/Widget.AppCompat.Button.Colored"
@@ -94,6 +118,14 @@
             android:layout_marginTop="360dp"
             android:gravity="fill"
             android:text="@string/vehicles" />
+
+        <TextView
+            android:id="@+id/vehicleNum"
+            android:layout_width="62dp"
+            android:layout_height="70dp"
+            android:layout_marginStart="245dp"
+            android:layout_marginLeft="300dp"
+            android:layout_marginTop="365dp" />
 
         <TextView
             android:id="@+id/gray"

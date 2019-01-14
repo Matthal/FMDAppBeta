@@ -28,7 +28,7 @@
         <activity android:name=".AnimalCreation" android:screenOrientation="portrait"/>
         <activity android:name=".LesionAgeing" android:screenOrientation="portrait"/>
         <activity android:name=".Suggestion" android:screenOrientation="portrait"/>
-        <activity android:name=".Tracing" />
+        <activity android:name=".Tracing" android:screenOrientation="portrait"/>
         <activity android:name=".Timeline" />
         <activity android:name=".PostLesion" android:screenOrientation="portrait"/>
         <activity android:name=".DiagnosticsOverview" android:screenOrientation="portrait"/>

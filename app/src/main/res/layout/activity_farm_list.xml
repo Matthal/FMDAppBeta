@@ -3,78 +3,163 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:screenOrientation="portrait"
+    android:background="#f2f2f2"
     tools:context=".FarmList">
 
-    <Spinner
-        android:id="@+id/farmSpinner"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:layout_marginEnd="70dp" />
-
-    <ImageView
-        android:id="@+id/map"
-        android:layout_width="45dp"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/basictoolbar"
+        android:layout_width="fill_parent"
         android:layout_height="45dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="22dp"
-        android:layout_marginRight="22dp"
-        android:scaleType="fitCenter"
-        android:clickable="true"
-        android:src="@drawable/map_icon"
-        android:focusable="true"
-        android:visibility="invisible"/>
+        style="@style/MyToolbar">
 
-    <ExpandableListView
-        android:id="@+id/animalList"
-        android:layout_height="match_parent"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/logo_white" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignStart="@+id/farmSpinner"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="75dp"
-        android:layout_alignLeft="@+id/farmSpinner"
-        android:layout_above="@+id/newAnimal"/>
-
-    <Button
-        android:id="@+id/newAnimal"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/basictoolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:visibility="invisible"
-        android:text="@string/add_animal" />
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp">
 
-    <Button
-        android:id="@+id/newTrace"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="131dp"
-        android:layout_marginLeft="131dp"
-        android:layout_marginBottom="0dp"
-        android:visibility="invisible"
-        android:text="@string/add_tracing" />
+        <TextView
+            android:id="@+id/appHeader"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:background="#498F75"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_main"
+            android:textSize="14sp" />
 
-    <Button
-        android:id="@+id/farmTL"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="258dp"
-        android:layout_marginLeft="258dp"
-        android:layout_marginBottom="0dp"
-        android:visibility="invisible"
-        android:text="@string/timeline" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/appHeader"
+            android:background="#D9D9D9"
+            android:fontFamily="@font/roboto"
+            android:gravity="center"
+            android:text="@string/text_farm_list"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/farmSpinner"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginRight="70dp"
+            android:background="#ffffff"
+            android:spinnerMode="dropdown" />
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="67dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginRight="22dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/map_icon"
+            android:visibility="invisible" />
+
+        <ExpandableListView
+            android:id="@+id/animalList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/newAnimal"
+            android:layout_below="@id/farmSpinner"
+            android:layout_alignStart="@+id/farmSpinner"
+            android:layout_alignLeft="@+id/farmSpinner" />
+
+        <TextView
+            android:id="@+id/grey"
+            android:layout_width="match_parent"
+            android:layout_height="70sp"
+            android:layout_above="@id/progbar"
+            android:background="#D9D9D9" />
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="263dp"
+            android:layout_marginRight="263dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:rotation="180"
+            android:src="@drawable/next_icon" />
+
+        <Button
+            android:id="@+id/newAnimal"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginLeft="95dp"
+            android:layout_above="@id/progbar"
+            android:text="@string/add_animal" />
+
+        <Button
+            android:id="@+id/newTrace"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="92dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginStart="180dp"
+            android:layout_marginLeft="180dp"
+            android:layout_above="@id/progbar"
+            android:text="@string/add_tracing" />
+
+        <Button
+            android:id="@+id/farmTL"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="86dp"
+            android:layout_height="70dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginStart="270dp"
+            android:layout_marginLeft="270dp"
+            android:layout_above="@id/progbar"
+            android:text="@string/timeline"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_above="@id/progbar"
+            android:src="@drawable/qmark_icon" />
+
+        <include android:id="@+id/progbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            layout="@layout/progression_bar"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -1,7 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -13,11 +13,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.DatePicker;
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
+import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,13 +44,33 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
     Spinner spinner;
     EditText other;
 
+    EditText date;
+
+    int farm;
+
+    ArrayList<String> animalsSub = new ArrayList<>();
+    ArrayList<String> animalsDate = new ArrayList<>();
+    ArrayList<String> animalsNote = new ArrayList<>();
+
+    ArrayList<String> productsSub = new ArrayList<>();
+    ArrayList<String> productsDate = new ArrayList<>();
+    ArrayList<String> productsNote = new ArrayList<>();
+
+    ArrayList<String> peoplesSub = new ArrayList<>();
+    ArrayList<String> peoplesDate = new ArrayList<>();
+    ArrayList<String> peoplesNote = new ArrayList<>();
+
+    ArrayList<String> vehiclesSub = new ArrayList<>();
+    ArrayList<String> vehiclesDate = new ArrayList<>();
+    ArrayList<String> vehiclesNote = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracing);
 
         final Bundle bundle = getIntent().getExtras();
-        final int farm = bundle.getInt("id");
+        farm = bundle.getInt("id");
 
         List<Integer> animals = getAnimals(farm);
         List<Integer> lesions = getLesions(animals);
@@ -59,6 +86,15 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         Button productTrack = findViewById(R.id.productTrack);
         Button peopleTrack = findViewById(R.id.peopleTrack);
         Button veichleTrack = findViewById(R.id.veichleTrack);
+
+        final TextView animalNum = findViewById(R.id.animalNum);
+        final int[] animalCount = {0};
+        final TextView productNum = findViewById(R.id.productNum);
+        final int[] productCount = {0};
+        final TextView peopleNum = findViewById(R.id.peopleNum);
+        final int[] peopleCount = {0};
+        final TextView vehicleNum = findViewById(R.id.vehicleNum);
+        final int[] vehicleCount = {0};
 
         animalTrack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,25 +116,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     mPopupWindow.setElevation(5.0f);
                 }
 
-                final Calendar calendar = Calendar.getInstance();
-                final EditText date = customView.findViewById(R.id.date);
-                final DatePickerDialog.OnDateSetListener picker = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "dd/MM/yy";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
-                        date.setText(sdf.format(calendar.getTime()));
-                    }
-                };
+                date = customView.findViewById(R.id.date);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new DatePickerDialog(Tracing.this, picker, calendar
-                                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        DatePicker datePicker = picker.build();
+                        datePicker.show();
                     }
                 });
 
@@ -114,6 +138,39 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 final EditText notes = customView.findViewById(R.id.note);
 
                 mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                Button add = customView.findViewById(R.id.done);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(date.getText().toString().length() > 9) {
+                            int num = date.getText().toString().length() / 9;
+                            int end = 8;
+                            for (int i = 0; i < num; i++) {
+                                animalsDate.add(date.getText().toString().substring(0,end));
+                                end = end + 9;
+                                if (spinner.getVisibility() == View.VISIBLE) {
+                                    animalsSub.add(spinner.getSelectedItem().toString());
+                                } else {
+                                    animalsSub.add(other.getText().toString());
+                                }
+                                animalsNote.add(notes.getText().toString());
+                                animalCount[0]++;
+                                animalNum.setText(animalCount[0]);
+                            }
+                        }else{
+                            animalsDate.add(date.getText().toString().substring(0,8));
+                            if (spinner.getVisibility() == View.VISIBLE) {
+                                animalsSub.add(spinner.getSelectedItem().toString());
+                            } else {
+                                animalsSub.add(other.getText().toString());
+                            }
+                            animalsNote.add(notes.getText().toString());
+                            animalCount[0]++;
+                            animalNum.setText(animalCount[0]);
+                        }
+                    }
+                });
             }
         });
 
@@ -137,25 +194,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     mPopupWindow.setElevation(5.0f);
                 }
 
-                final Calendar calendar = Calendar.getInstance();
-                final EditText date = customView.findViewById(R.id.date);
-                final DatePickerDialog.OnDateSetListener picker = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "dd/MM/yy";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
-                        date.setText(sdf.format(calendar.getTime()));
-                    }
-                };
+                date = customView.findViewById(R.id.date);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new DatePickerDialog(Tracing.this, picker, calendar
-                                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        DatePicker datePicker = picker.build();
+                        datePicker.show();
                     }
                 });
 
@@ -171,6 +216,39 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 final EditText notes = customView.findViewById(R.id.note);
 
                 mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                Button add = customView.findViewById(R.id.done);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(date.getText().toString().length() > 9) {
+                            int num = date.getText().toString().length() / 9;
+                            int end = 8;
+                            for (int i = 0; i < num; i++) {
+                                productsDate.add(date.getText().toString().substring(0,end));
+                                end = end + 9;
+                                if(spinner.getVisibility() == View.VISIBLE){
+                                    productsSub.add(spinner.getSelectedItem().toString());
+                                }else{
+                                    productsSub.add(other.getText().toString());
+                                }
+                                productsNote.add(notes.getText().toString());
+                                productCount[0]++;
+                                productNum.setText(productCount[0]);
+                            }
+                        }else{
+                            productsDate.add(date.getText().toString().substring(0,8));
+                            if(spinner.getVisibility() == View.VISIBLE){
+                                productsSub.add(spinner.getSelectedItem().toString());
+                            }else{
+                                productsSub.add(other.getText().toString());
+                            }
+                            productsNote.add(notes.getText().toString());
+                            productCount[0]++;
+                            productNum.setText(productCount[0]);
+                        }
+                    }
+                });
             }
         });
 
@@ -194,25 +272,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     mPopupWindow.setElevation(5.0f);
                 }
 
-                final Calendar calendar = Calendar.getInstance();
-                final EditText date = customView.findViewById(R.id.date);
-                final DatePickerDialog.OnDateSetListener picker = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "dd/MM/yy";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
-                        date.setText(sdf.format(calendar.getTime()));
-                    }
-                };
+                date = customView.findViewById(R.id.date);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new DatePickerDialog(Tracing.this, picker, calendar
-                                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        DatePicker datePicker = picker.build();
+                        datePicker.show();
                     }
                 });
 
@@ -224,7 +290,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 spinner.setOnItemSelectedListener(Tracing.this);
 
                 String[] cont = new String[]{"Direct contact", "Indirect contact"};
-                Spinner contact = customView.findViewById(R.id.contact);
+                final Spinner contact = customView.findViewById(R.id.contact);
                 ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
                 contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 contact.setAdapter(contAdapter);
@@ -234,6 +300,39 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 final EditText notes = customView.findViewById(R.id.note);
 
                 mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                Button add = customView.findViewById(R.id.done);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(date.getText().toString().length() > 9) {
+                            int num = date.getText().toString().length() / 9;
+                            int end = 8;
+                            for (int i = 0; i < num; i++) {
+                                peoplesDate.add(date.getText().toString().substring(0,end));
+                                end = end + 9;
+                                if(spinner.getVisibility() == View.VISIBLE){
+                                    peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                }else{
+                                    peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                }
+                                peoplesNote.add(notes.getText().toString());
+                                peopleCount[0]++;
+                                peopleNum.setText(peopleCount[0]);
+                            }
+                        }else{
+                            peoplesDate.add(date.getText().toString().substring(0,8));
+                            if(spinner.getVisibility() == View.VISIBLE){
+                                peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                            }else{
+                                peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                            }
+                            peoplesNote.add(notes.getText().toString());
+                            peopleCount[0]++;
+                            peopleNum.setText(peopleCount[0]);
+                        }
+                    }
+                });
             }
         });
 
@@ -257,25 +356,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     mPopupWindow.setElevation(5.0f);
                 }
 
-                final Calendar calendar = Calendar.getInstance();
-                final EditText date = customView.findViewById(R.id.date);
-                final DatePickerDialog.OnDateSetListener picker = new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, monthOfYear);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        String myFormat = "dd/MM/yy";
-                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
-                        date.setText(sdf.format(calendar.getTime()));
-                    }
-                };
+                date = customView.findViewById(R.id.date);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new DatePickerDialog(Tracing.this, picker, calendar
-                                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                                calendar.get(Calendar.DAY_OF_MONTH)).show();
+                        DatePicker datePicker = picker.build();
+                        datePicker.show();
                     }
                 });
 
@@ -287,7 +374,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 spinner.setOnItemSelectedListener(Tracing.this);
 
                 String[] cont = new String[]{"Direct contact", "Indirect contact"};
-                Spinner contact = customView.findViewById(R.id.contact);
+                final Spinner contact = customView.findViewById(R.id.contact);
                 ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
                 contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 contact.setAdapter(contAdapter);
@@ -295,11 +382,111 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 other = customView.findViewById(R.id.other);
 
                 final EditText notes = customView.findViewById(R.id.note);
+                vehiclesNote.add(notes.getText().toString());
 
                 mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                Button add = customView.findViewById(R.id.done);
+                add.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(date.getText().toString().length() > 9) {
+                            int num = date.getText().toString().length() / 9;
+                            int end = 8;
+                            for (int i = 0; i < num; i++) {
+                                vehiclesDate.add(date.getText().toString().substring(0,end));
+                                end = end + 9;
+                                if(spinner.getVisibility() == View.VISIBLE){
+                                    vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                }else{
+                                    vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                }
+                                vehiclesNote.add(notes.getText().toString());
+                                vehicleCount[0]++;
+                                vehicleNum.setText(vehicleCount[0]);
+                            }
+                        }else{
+                            vehiclesDate.add(date.getText().toString().substring(0,8));
+                            if(spinner.getVisibility() == View.VISIBLE){
+                                vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                            }else{
+                                vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                            }
+                            vehiclesNote.add(notes.getText().toString());
+                            vehicleCount[0]++;
+                            vehicleNum.setText(vehicleCount[0]);
+                        }
+                    }
+                });
             }
         });
 
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        ImageView next = findViewById(R.id.next);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadToDB();
+            }
+        });
+
+    }
+
+    public void UploadToDB(){
+        DatabaseHelper mDbHelper = new DatabaseHelper(this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        for(int i = 0; i < animalsSub.size(); i++){
+            values.put(Tracings.TracingEntry.COLUMN_FARM, farm);
+            values.put(Tracings.TracingEntry.COLUMN_CATEGORY, "Animal");
+            values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, animalsSub.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_DATE, animalsDate.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_NOTES, animalsNote.get(i));
+        }
+
+        for(int i = 0; i < productsSub.size(); i++){
+            values.put(Tracings.TracingEntry.COLUMN_FARM, farm);
+            values.put(Tracings.TracingEntry.COLUMN_CATEGORY, "Product");
+            values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, productsSub.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_DATE, productsDate.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_NOTES, productsNote.get(i));
+        }
+
+        for(int i = 0; i < peoplesSub.size(); i++){
+            values.put(Tracings.TracingEntry.COLUMN_FARM, farm);
+            values.put(Tracings.TracingEntry.COLUMN_CATEGORY, "People");
+            values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, peoplesSub.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_DATE, peoplesDate.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_NOTES, peoplesNote.get(i));
+        }
+
+        for(int i = 0; i < vehiclesSub.size(); i++){
+            values.put(Tracings.TracingEntry.COLUMN_FARM, farm);
+            values.put(Tracings.TracingEntry.COLUMN_CATEGORY, "Vehicle");
+            values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, vehiclesSub.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_DATE, vehiclesDate.get(i));
+            values.put(Tracings.TracingEntry.COLUMN_NOTES, vehiclesNote.get(i));
+        }
+
+        long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
+
+        if(newRowId == -1){
+            Toast.makeText(this, "Error in the DB",
+                    Toast.LENGTH_LONG).show();
+            db.close();
+        }else {
+            Toast.makeText(this, "New entry added to the DB",
+                    Toast.LENGTH_LONG).show();
+            db.close();
+        }
     }
 
     public List<Integer> getAnimals(int id) {
@@ -376,7 +563,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         }
                     }
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);
-                    Date diagnDate = subDays(date,old);
+                    Date diagnDate = subDays(date,old).getTime();
                     dates.add(diagnDate);
                 } while (cursor.moveToNext());
             }
@@ -387,11 +574,11 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         return Collections.max(dates);
     }
 
-    public Date subDays(Date date, int days){
+    public Calendar subDays(Date date, int days){
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
         cal.add(Calendar.DATE, -days);
-        return cal.getTime();
+        return cal;
     }
 
     @Override
@@ -406,5 +593,19 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
     public void onNothingSelected(AdapterView<?> arg0) {
 
     }
+
+    private OnSelectDateListener listener = new OnSelectDateListener() {
+        @Override
+        public void onSelect(List<Calendar> calendars) {
+            String x = "";
+            String myFormat = "dd/MM/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+            for (int i = 0; i < calendars.size(); i++){
+                String selectedDate = sdf.format(calendars.get(i).getTime());
+                x += selectedDate + " ";
+            }
+            date.setText(x);
+        }
+    };
 
 }
