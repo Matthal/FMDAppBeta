@@ -87,11 +87,11 @@ public class FarmCreation extends Activity {
         if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             if (location != null) {
-                System.out.println("location not null");
+                //System.out.println("location not null");
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
             }else{
-                System.out.println("location null");
+                //System.out.println("location null");
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
         }else{
@@ -201,7 +201,7 @@ public class FarmCreation extends Activity {
         public void onLocationChanged(Location location) {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
-            System.out.println(longitude);
+            //System.out.println(longitude);
         }
 
         @Override

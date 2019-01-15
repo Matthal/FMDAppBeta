@@ -90,6 +90,7 @@ public class Timeline extends AppCompatActivity {
             row.setLayoutParams(lp);
 
             TextView date = new TextView(this);
+            date.setGravity(Gravity.CENTER);
             Date dayDate = addDays(minDate, i);
             SimpleDateFormat mdyFormat = new SimpleDateFormat("dd MMM yyyy",Locale.UK);
             String strDate = mdyFormat.format(dayDate);
@@ -168,6 +169,14 @@ public class Timeline extends AppCompatActivity {
             row.addView(notes);
             timeline.addView(row,i+1);
         }
+
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
     }
 
@@ -509,7 +518,6 @@ public class Timeline extends AppCompatActivity {
                     String strDate = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(strDate);
                     dates.add(date);
-                    System.out.println(dates);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -632,11 +640,4 @@ public class Timeline extends AppCompatActivity {
         cal.add(Calendar.DATE, -days);
         return cal.getTime();
     }
-
-    @Override
-    public void onBackPressed(){
-        Intent a = new Intent(Timeline.this, FarmList.class);
-        startActivity(a);
-    }
-
 }

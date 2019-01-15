@@ -28,6 +28,7 @@ public class PostLesion extends Activity {
         Button addAnimal = findViewById(R.id.animal);
         Button addTracing = findViewById(R.id.tracing);
         Button takePhoto = findViewById(R.id.photo);
+        Button timeline = findViewById(R.id.timeline);
 
         ImageView next = findViewById(R.id.next);
         ImageView back = findViewById(R.id.back);
@@ -58,12 +59,19 @@ public class PostLesion extends Activity {
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
             }
         });
-
-        next.setOnClickListener(new View.OnClickListener() {
+        timeline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostLesion.this, Timeline.class);
                 intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(PostLesion.this, MainActivity.class);
                 startActivity(intent);
             }
         });

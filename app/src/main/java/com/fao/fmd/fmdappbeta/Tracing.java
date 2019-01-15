@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -102,7 +105,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_animal_track,(ViewGroup) findViewById(R.id.animal_popup));
+                View customView = inflater.inflate(R.layout.fragment_animal_track, findViewById(R.id.animal_popup));
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -129,7 +132,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
                 spinner = customView.findViewById(R.id.species);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
                 spinner.setOnItemSelectedListener(Tracing.this);
 
@@ -156,7 +158,8 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 }
                                 animalsNote.add(notes.getText().toString());
                                 animalCount[0]++;
-                                animalNum.setText(animalCount[0]);
+                                String count = Integer.toString(animalCount[0]);
+                                animalNum.setText(count);
                             }
                         }else{
                             animalsDate.add(date.getText().toString().substring(0,8));
@@ -167,8 +170,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             }
                             animalsNote.add(notes.getText().toString());
                             animalCount[0]++;
-                            animalNum.setText(animalCount[0]);
+                            String count = Integer.toString(animalCount[0]);
+                            animalNum.setText(count);
                         }
+                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -180,7 +185,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_product_track,(ViewGroup) findViewById(R.id.product_popup));
+                View customView = inflater.inflate(R.layout.fragment_product_track, findViewById(R.id.product_popup));
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -234,7 +239,8 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 }
                                 productsNote.add(notes.getText().toString());
                                 productCount[0]++;
-                                productNum.setText(productCount[0]);
+                                String count = Integer.toString(productCount[0]);
+                                productNum.setText(count);
                             }
                         }else{
                             productsDate.add(date.getText().toString().substring(0,8));
@@ -245,8 +251,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             }
                             productsNote.add(notes.getText().toString());
                             productCount[0]++;
-                            productNum.setText(productCount[0]);
+                            String count = Integer.toString(productCount[0]);
+                            productNum.setText(count);
                         }
+                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -258,7 +266,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_people_track,(ViewGroup) findViewById(R.id.people_popup));
+                View customView = inflater.inflate(R.layout.fragment_people_track, findViewById(R.id.people_popup));
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -318,7 +326,8 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 }
                                 peoplesNote.add(notes.getText().toString());
                                 peopleCount[0]++;
-                                peopleNum.setText(peopleCount[0]);
+                                String count = Integer.toString(peopleCount[0]);
+                                peopleNum.setText(count);
                             }
                         }else{
                             peoplesDate.add(date.getText().toString().substring(0,8));
@@ -329,8 +338,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             }
                             peoplesNote.add(notes.getText().toString());
                             peopleCount[0]++;
-                            peopleNum.setText(peopleCount[0]);
+                            String count = Integer.toString(peopleCount[0]);
+                            peopleNum.setText(count);
                         }
+                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -342,7 +353,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
                 // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_vehicle_track,(ViewGroup) findViewById(R.id.vehicle_popup));
+                View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -403,7 +414,8 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 }
                                 vehiclesNote.add(notes.getText().toString());
                                 vehicleCount[0]++;
-                                vehicleNum.setText(vehicleCount[0]);
+                                String count = Integer.toString(vehicleCount[0]);
+                                vehicleNum.setText(count);
                             }
                         }else{
                             vehiclesDate.add(date.getText().toString().substring(0,8));
@@ -414,10 +426,160 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             }
                             vehiclesNote.add(notes.getText().toString());
                             vehicleCount[0]++;
-                            vehicleNum.setText(vehicleCount[0]);
+                            String count = Integer.toString(vehicleCount[0]);
+                            vehicleNum.setText(count);
                         }
+                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        animalNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                // Inflate the custom layout/view
+                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+                mPopupWindow = new PopupWindow(
+                        customView,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        true
+                );
+
+                // Set an elevation value for popup window
+                // Call requires API level 21
+                if(Build.VERSION.SDK_INT>=21){
+                    mPopupWindow.setElevation(5.0f);
+                }
+
+                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+                RecyclerView.Adapter mAdapter = new RecyclerAdapter(animalsSub);
+                mRecyclerView.setAdapter(mAdapter);
+
+            }
+        });
+
+        productNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                // Inflate the custom layout/view
+                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+                mPopupWindow = new PopupWindow(
+                        customView,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        true
+                );
+
+                // Set an elevation value for popup window
+                // Call requires API level 21
+                if(Build.VERSION.SDK_INT>=21){
+                    mPopupWindow.setElevation(5.0f);
+                }
+
+                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+                RecyclerView.Adapter mAdapter = new RecyclerAdapter(productsSub);
+                mRecyclerView.setAdapter(mAdapter);
+
+            }
+        });
+
+        peopleNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                // Inflate the custom layout/view
+                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+                mPopupWindow = new PopupWindow(
+                        customView,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        true
+                );
+
+                // Set an elevation value for popup window
+                // Call requires API level 21
+                if(Build.VERSION.SDK_INT>=21){
+                    mPopupWindow.setElevation(5.0f);
+                }
+
+                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+                RecyclerView.Adapter mAdapter = new RecyclerAdapter(peoplesSub);
+                mRecyclerView.setAdapter(mAdapter);
+
+            }
+        });
+
+        vehicleNum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+                // Inflate the custom layout/view
+                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+                mPopupWindow = new PopupWindow(
+                        customView,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        true
+                );
+
+                // Set an elevation value for popup window
+                // Call requires API level 21
+                if(Build.VERSION.SDK_INT>=21){
+                    mPopupWindow.setElevation(5.0f);
+                }
+
+                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+
+                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+                mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+                RecyclerView.Adapter mAdapter = new RecyclerAdapter(vehiclesSub);
+                mRecyclerView.setAdapter(mAdapter);
+
             }
         });
 
@@ -430,7 +592,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         });
 
         ImageView next = findViewById(R.id.next);
-        back.setOnClickListener(new View.OnClickListener() {
+        next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UploadToDB();

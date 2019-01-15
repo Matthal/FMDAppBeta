@@ -13,7 +13,6 @@
     <string name="insert_notes">Insert Notes</string>
     <string name="category">Category</string>
     <string name="contact">Direct contact with animal areas</string>
-    <string name="amount">Amount</string>
 
     //MAIN
     <string name="text_main">FMD-DOI | DISEASE OUTBREAK INVESTIGATION</string>
@@ -81,17 +80,7 @@
     <string name="vehicles">Vehicles</string>
 
     //ANIMAL TRACK
-    <string name="text_animal_track">Animal movements - more information</string>
     <string name="species">Species</string>
-
-    //PEOPLE TRACK
-    <string name="text_people_track">People - more information</string>
-
-    //PRODUCT TRACK
-    <string name="text_product_track">Products - more information</string>
-
-    //VEICHLE TRACK
-    <string name="text_veichle_track">Vehicles - more information</string>
 
     //COMPLETE
     <string name="text_complete">LESION AGEING CALCULATOR</string>

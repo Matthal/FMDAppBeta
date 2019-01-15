@@ -129,6 +129,14 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        ImageView back = findViewById(R.id.back);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -178,7 +186,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         for(int i = 0; i < cursor.getCount(); i++){
             List<String> details = new ArrayList<>();
             listDataHeader.add("Animal " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID)));
-            details.add("Name : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME)) + "       Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +  "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)) + "       Age : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE)));
+            details.add("Name : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME)) + "\n" +
+                    "Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +
+                    "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)) + "\n" +
+                    "Age : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE)));
             listDataChild.put(listDataHeader.get(i), details);
             cursor.moveToNext();
         }
@@ -250,11 +261,4 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         db.close();
         return farms;
     }
-
-    @Override
-    public void onBackPressed(){
-        Intent a = new Intent(FarmList.this, MainActivity.class);
-        startActivity(a);
-    }
-
 }

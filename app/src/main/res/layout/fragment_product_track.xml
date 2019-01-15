@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
         android:background="#ffffff"
-        android:spinnerMode="dropdown" />
+        android:spinnerMode="dialog" />
 
     <EditText
         android:id="@+id/other"
