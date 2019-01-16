@@ -115,19 +115,24 @@ public class CompleteFragment extends Fragment {
         String age = bundle.getString("res");
         int old;
 
-        if(age.charAt(1) == '-'){
-            if(age.length() == 3){
-                old = Character.getNumericValue(age.charAt(2));
-            }else{
-                old = Integer.parseInt(age.substring(2,3));
-            }
+        if(age.length() < 2){
+            old = Integer.parseInt(age);
         }else{
-            if(age.charAt(2) == '-'){
-                old = Integer.parseInt(age.substring(3,4));
+            if(age.charAt(1) == '-'){
+                if(age.length() == 3){
+                    old = Character.getNumericValue(age.charAt(2));
+                }else{
+                    old = Integer.parseInt(age.substring(2,3));
+                }
             }else{
-                old = Integer.parseInt(age.substring(0,1));
+                if(age.charAt(2) == '-'){
+                    old = Integer.parseInt(age.substring(3,4));
+                }else{
+                    old = Integer.parseInt(age.substring(0,1));
+                }
             }
         }
+
 
         int like_inf_min = old + 6;
         int like_inf_max = old + 2;

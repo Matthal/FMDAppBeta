@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class DiagnosticsOverview extends FragmentActivity {
 
@@ -23,6 +25,21 @@ public class DiagnosticsOverview extends FragmentActivity {
 
         Button structural = findViewById(R.id.structural);
         Button nonStructural = findViewById(R.id.non_structural);
+
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.00f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.00f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
 
         final Bundle b = new Bundle();
 

@@ -14,8 +14,10 @@ import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -28,10 +30,27 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     Spinner sexSpin;
     EditText other;
 
+    boolean lock = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_creation);
+
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.45f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.55f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
 
         ImageView addAnimal = findViewById(R.id.addAnimal);
 
@@ -105,9 +124,70 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             farm = 0;
         }
 
+        Switch locker = findViewById(R.id.locker);
+        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if (!animal.getText().toString().trim().isEmpty()) {
+                        animal.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        animal.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
+                    if (!group.getText().toString().trim().isEmpty()) {
+                        group.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        group.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
+                    yearsSpin.setBackgroundResource(R.color.colorPrimary);
+                    monthsSpin.setBackgroundResource(R.color.colorPrimary);
+                    spinner.setBackgroundResource(R.color.colorPrimary);
+                    sexSpin.setBackgroundResource(R.color.colorPrimary);
+                    if (!sign.getText().toString().trim().isEmpty()) {
+                        sign.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        sign.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
+                    vaccSpin.setBackgroundResource(R.color.colorPrimary);
+                    animal.setEnabled(false);
+                    group.setEnabled(false);
+                    yearsSpin.setEnabled(false);
+                    monthsSpin.setEnabled(false);
+                    spinner.setEnabled(false);
+                    sexSpin.setEnabled(false);
+                    sign.setEnabled(false);
+                    vaccSpin.setEnabled(false);
+                }else{
+                    animal.setEnabled(true);
+                    group.setEnabled(true);
+                    yearsSpin.setEnabled(true);
+                    monthsSpin.setEnabled(true);
+                    spinner.setEnabled(true);
+                    sexSpin.setEnabled(true);
+                    sign.setEnabled(true);
+                    vaccSpin.setEnabled(true);
+                }
+            }
+        });
+
         addAnimal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!locker.isChecked()){
+                    Toast.makeText(getBaseContext(), "Lock the switch before proceed", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(locker.isChecked() && lock){
+                    Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 DatabaseHelper mDbHelper = new DatabaseHelper(AnimalCreation.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -167,50 +247,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             }
         });
 
-        Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    if (!animal.getText().toString().trim().isEmpty()) {
-                        animal.setBackgroundResource(R.color.colorPrimary);
-                    } else {
-                        animal.setBackgroundResource(R.color.TLyellow);
-                    }
-                    if (!group.getText().toString().trim().isEmpty()) {
-                        group.setBackgroundResource(R.color.colorPrimary);
-                    } else {
-                        group.setBackgroundResource(R.color.TLyellow);
-                    }
-                    yearsSpin.setBackgroundResource(R.color.colorPrimary);
-                    monthsSpin.setBackgroundResource(R.color.colorPrimary);
-                    spinner.setBackgroundResource(R.color.colorPrimary);
-                    sexSpin.setBackgroundResource(R.color.colorPrimary);
-                    if (!sign.getText().toString().trim().isEmpty()) {
-                        sign.setBackgroundResource(R.color.colorPrimary);
-                    } else {
-                        sign.setBackgroundResource(R.color.TLyellow);
-                    }
-                    vaccSpin.setBackgroundResource(R.color.colorPrimary);
-                    animal.setEnabled(false);
-                    group.setEnabled(false);
-                    yearsSpin.setEnabled(false);
-                    monthsSpin.setEnabled(false);
-                    spinner.setEnabled(false);
-                    sexSpin.setEnabled(false);
-                    sign.setEnabled(false);
-                    vaccSpin.setEnabled(false);
-                }else{
-                    animal.setEnabled(true);
-                    group.setEnabled(true);
-                    yearsSpin.setEnabled(true);
-                    monthsSpin.setEnabled(true);
-                    spinner.setEnabled(true);
-                    sexSpin.setEnabled(true);
-                    sign.setEnabled(true);
-                    vaccSpin.setEnabled(true);
-                }
-            }
-        });
+
     }
 
     @Override

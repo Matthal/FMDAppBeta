@@ -44,6 +44,8 @@ public class FarmCreation extends Activity {
     double latitude;
     LocationManager lm;
 
+    boolean lock = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +102,45 @@ public class FarmCreation extends Activity {
         }
         registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
 
+        Switch locker = findViewById(R.id.locker);
+        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    if (!name.getText().toString().trim().isEmpty()) {
+                        name.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        name.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
+                    if (!owner.getText().toString().trim().isEmpty()) {
+                        owner.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        owner.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
+                    if (!farm.getText().toString().trim().isEmpty()) {
+                        farm.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        farm.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
+                    spinner.setBackgroundResource(R.color.colorPrimary);
+                    name.setEnabled(false);
+                    owner.setEnabled(false);
+                    farm.setEnabled(false);
+                    spinner.setEnabled(false);
+                }else{
+                    name.setEnabled(true);
+                    owner.setEnabled(true);
+                    farm.setEnabled(true);
+                    spinner.setEnabled(true);
+                }
+            }
+        });
+
         cFarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +157,16 @@ public class FarmCreation extends Activity {
 
                 Intent intent = new Intent(FarmCreation.this, AnimalCreation.class);
                 startActivity(intent);*/
+
+                if(!locker.isChecked()){
+                    Toast.makeText(getBaseContext(), "Lock the switch before proceed", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                if(locker.isChecked() && lock){
+                    Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 //PUT VALUES INTO DB
                 DatabaseHelper mDbHelper = new DatabaseHelper(FarmCreation.this);
@@ -151,39 +202,6 @@ public class FarmCreation extends Activity {
                     startActivity(mIntent);
                 }
 
-            }
-        });
-
-        Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    if (!name.getText().toString().trim().isEmpty()) {
-                        name.setBackgroundResource(R.color.colorPrimary);
-                    } else {
-                        name.setBackgroundResource(R.color.TLyellow);
-                    }
-                    if (!owner.getText().toString().trim().isEmpty()) {
-                        owner.setBackgroundResource(R.color.colorPrimary);
-                    } else {
-                        owner.setBackgroundResource(R.color.TLyellow);
-                    }
-                    if (!farm.getText().toString().trim().isEmpty()) {
-                        farm.setBackgroundResource(R.color.colorPrimary);
-                    } else {
-                        farm.setBackgroundResource(R.color.TLyellow);
-                    }
-                    spinner.setBackgroundResource(R.color.colorPrimary);
-                    name.setEnabled(false);
-                    owner.setEnabled(false);
-                    farm.setEnabled(false);
-                    spinner.setEnabled(false);
-                }else{
-                    name.setEnabled(true);
-                    owner.setEnabled(true);
-                    farm.setEnabled(true);
-                    spinner.setEnabled(true);
-                }
             }
         });
 

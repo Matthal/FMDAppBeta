@@ -467,6 +467,68 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mRecyclerView.addItemDecoration(dividerItemDecoration);
 
                 RecyclerView.Adapter mAdapter = new RecyclerAdapter(animalsSub);
+                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position, String myData) {
+                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        mPopupWindow = new PopupWindow(
+                                customView,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                true
+                        );
+
+                        // Set an elevation value for popup window
+                        // Call requires API level 21
+                        if(Build.VERSION.SDK_INT>=21){
+                            mPopupWindow.setElevation(5.0f);
+                        }
+
+                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                        date = customView.findViewById(R.id.date);
+                        date.setText(animalsDate.get(position));
+
+                        spinner = customView.findViewById(R.id.category);
+                        other = customView.findViewById(R.id.other);
+
+                        final EditText notes = customView.findViewById(R.id.note);
+                        notes.setText(animalsNote.get(position));
+
+                        Button add = customView.findViewById(R.id.done);
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                animalsDate.remove(position);
+                                animalsSub.remove(position);
+                                animalsNote.remove(position);
+                                if(date.getText().toString().length() > 9) {
+                                    int num = date.getText().toString().length() / 9;
+                                    int end = 8;
+                                    for (int i = 0; i < num; i++) {
+                                        animalsDate.add(date.getText().toString().substring(0,end));
+                                        end = end + 9;
+                                        if (spinner.getVisibility() == View.VISIBLE) {
+                                            animalsSub.add(spinner.getSelectedItem().toString());
+                                        } else {
+                                            animalsSub.add(other.getText().toString());
+                                        }
+                                        animalsNote.add(notes.getText().toString());
+                                    }
+                                }else{
+                                    animalsDate.add(date.getText().toString().substring(0,8));
+                                    if (spinner.getVisibility() == View.VISIBLE) {
+                                        animalsSub.add(spinner.getSelectedItem().toString());
+                                    } else {
+                                        animalsSub.add(other.getText().toString());
+                                    }
+                                    animalsNote.add(notes.getText().toString());
+                                }
+                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
                 mRecyclerView.setAdapter(mAdapter);
 
             }
@@ -504,6 +566,70 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mRecyclerView.addItemDecoration(dividerItemDecoration);
 
                 RecyclerView.Adapter mAdapter = new RecyclerAdapter(productsSub);
+
+                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position, String myData) {
+                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        mPopupWindow = new PopupWindow(
+                                customView,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                true
+                        );
+
+                        // Set an elevation value for popup window
+                        // Call requires API level 21
+                        if(Build.VERSION.SDK_INT>=21){
+                            mPopupWindow.setElevation(5.0f);
+                        }
+
+                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                        date = customView.findViewById(R.id.date);
+                        date.setText(productsDate.get(position));
+
+                        spinner = customView.findViewById(R.id.category);
+                        other = customView.findViewById(R.id.other);
+
+                        final EditText notes = customView.findViewById(R.id.note);
+                        notes.setText(productsNote.get(position));
+
+                        Button add = customView.findViewById(R.id.done);
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                productsDate.remove(position);
+                                productsSub.remove(position);
+                                productsNote.remove(position);
+                                if(date.getText().toString().length() > 9) {
+                                    int num = date.getText().toString().length() / 9;
+                                    int end = 8;
+                                    for (int i = 0; i < num; i++) {
+                                        productsDate.add(date.getText().toString().substring(0,end));
+                                        end = end + 9;
+                                        if(spinner.getVisibility() == View.VISIBLE){
+                                            productsSub.add(spinner.getSelectedItem().toString());
+                                        }else{
+                                            productsSub.add(other.getText().toString());
+                                        }
+                                        productsNote.add(notes.getText().toString());
+                                    }
+                                }else{
+                                    productsDate.add(date.getText().toString().substring(0,8));
+                                    if(spinner.getVisibility() == View.VISIBLE){
+                                        productsSub.add(spinner.getSelectedItem().toString());
+                                    }else{
+                                        productsSub.add(other.getText().toString());
+                                    }
+                                    productsNote.add(notes.getText().toString());
+                                }
+                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
                 mRecyclerView.setAdapter(mAdapter);
 
             }
@@ -541,8 +667,72 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mRecyclerView.addItemDecoration(dividerItemDecoration);
 
                 RecyclerView.Adapter mAdapter = new RecyclerAdapter(peoplesSub);
-                mRecyclerView.setAdapter(mAdapter);
 
+                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position, String myData) {
+                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        mPopupWindow = new PopupWindow(
+                                customView,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                true
+                        );
+
+                        // Set an elevation value for popup window
+                        // Call requires API level 21
+                        if(Build.VERSION.SDK_INT>=21){
+                            mPopupWindow.setElevation(5.0f);
+                        }
+
+                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                        date = customView.findViewById(R.id.date);
+                        date.setText(peoplesDate.get(position));
+
+                        spinner = customView.findViewById(R.id.category);
+                        other = customView.findViewById(R.id.other);
+
+                        final Spinner contact = customView.findViewById(R.id.contact);
+
+                        final EditText notes = customView.findViewById(R.id.note);
+                        notes.setText(peoplesNote.get(position));
+
+                        Button add = customView.findViewById(R.id.done);
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                peoplesDate.remove(position);
+                                peoplesSub.remove(position);
+                                peoplesNote.remove(position);
+                                if(date.getText().toString().length() > 9) {
+                                    int num = date.getText().toString().length() / 9;
+                                    int end = 8;
+                                    for (int i = 0; i < num; i++) {
+                                        peoplesDate.add(date.getText().toString().substring(0,end));
+                                        end = end + 9;
+                                        if(spinner.getVisibility() == View.VISIBLE){
+                                            peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                        }else{
+                                            peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                        }
+                                        peoplesNote.add(notes.getText().toString());
+                                    }
+                                }else{
+                                    peoplesDate.add(date.getText().toString().substring(0,8));
+                                    if(spinner.getVisibility() == View.VISIBLE){
+                                        peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                    }else{
+                                        peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                    }
+                                    peoplesNote.add(notes.getText().toString());
+                                }
+                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+                mRecyclerView.setAdapter(mAdapter);
             }
         });
 
@@ -578,7 +768,72 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mRecyclerView.addItemDecoration(dividerItemDecoration);
 
                 RecyclerView.Adapter mAdapter = new RecyclerAdapter(vehiclesSub);
+                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClickListener(View view, int position, String myData) {
+                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        mPopupWindow = new PopupWindow(
+                                customView,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                                true
+                        );
+
+                        // Set an elevation value for popup window
+                        // Call requires API level 21
+                        if(Build.VERSION.SDK_INT>=21){
+                            mPopupWindow.setElevation(5.0f);
+                        }
+
+                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                        date = customView.findViewById(R.id.date);
+                        date.setText(vehiclesDate.get(position));
+
+                        spinner = customView.findViewById(R.id.category);
+                        other = customView.findViewById(R.id.other);
+
+                        final Spinner contact = customView.findViewById(R.id.contact);
+
+                        final EditText notes = customView.findViewById(R.id.note);
+                        notes.setText(vehiclesNote.get(position));
+                        Button add = customView.findViewById(R.id.done);
+                        add.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                vehiclesDate.remove(position);
+                                vehiclesSub.remove(position);
+                                vehiclesNote.remove(position);
+                                if(date.getText().toString().length() > 9) {
+                                    int num = date.getText().toString().length() / 9;
+                                    int end = 8;
+                                    for (int i = 0; i < num; i++) {
+                                        vehiclesDate.add(date.getText().toString().substring(0,end));
+                                        end = end + 9;
+                                        if(spinner.getVisibility() == View.VISIBLE){
+                                            vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                        }else{
+                                            vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                        }
+                                        vehiclesNote.add(notes.getText().toString());
+                                    }
+                                }else{
+                                    vehiclesDate.add(date.getText().toString().substring(0,8));
+                                    if(spinner.getVisibility() == View.VISIBLE){
+                                        vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                    }else{
+                                        vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                                    }
+                                    vehiclesNote.add(notes.getText().toString());
+                                }
+                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
+
                 mRecyclerView.setAdapter(mAdapter);
+
 
             }
         });

@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
+                System.out.println(DatabaseHelper.getTableAsString(db, "farms"));
                 /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
                 startActivity(intent);*/
             }

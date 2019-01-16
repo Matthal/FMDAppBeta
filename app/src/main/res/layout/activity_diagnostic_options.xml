@@ -79,27 +79,24 @@
 
         </ScrollView>
 
-        <TextView
-            android:id="@+id/par_two"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/par_two"
-            android:layout_below="@+id/scroll"
-            android:paddingTop="5dp"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
         <ScrollView
-            android:layout_width="wrap_content"
+            android:id="@+id/scroll2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/par_two"
+            android:layout_below="@id/scroll"
             android:layout_above="@id/gray">
 
-            <TextView
-                android:id="@+id/test"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ExpandableListView
+                    android:id="@+id/antibody"
+                    android:layout_height="220dp"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="25dp" />
+
+            </LinearLayout>
 
         </ScrollView>
 

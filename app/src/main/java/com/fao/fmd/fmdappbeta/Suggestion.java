@@ -24,7 +24,7 @@ public class Suggestion extends FragmentActivity {
         String val4 = bundle.getString("Q4");
 
         if(val1.equals("a")){
-            bundle.putString("res","1-2");
+            bundle.putString("res","1");
             fragmentComplete(bundle);
         }else{
             if(val3.equals("c")){

@@ -524,7 +524,9 @@ public class Timeline extends AppCompatActivity {
             db.close();
         }
 
+        System.out.println(dates);
         return Collections.max(dates);
+
     }
 
     public Date getMinDate(List<Integer> lesions, List<Integer> tracings) throws ParseException {
@@ -602,17 +604,21 @@ public class Timeline extends AppCompatActivity {
                 do {
                     String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
                     String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
-                    if(age.charAt(1) == '-'){
-                        if(age.length() == 3){
-                            old = Character.getNumericValue(age.charAt(2));
-                        }else{
-                            old = Integer.parseInt(age.substring(2,3));
-                        }
+                    if(age.length() < 2){
+                        old = Integer.parseInt(age);
                     }else{
-                        if(age.charAt(2) == '-'){
-                            old = Integer.parseInt(age.substring(3,4));
+                        if(age.charAt(1) == '-'){
+                            if(age.length() == 3){
+                                old = Character.getNumericValue(age.charAt(2));
+                            }else{
+                                old = Integer.parseInt(age.substring(2,3));
+                            }
                         }else{
-                            old = Integer.parseInt(age.substring(0,1));
+                            if(age.charAt(2) == '-'){
+                                old = Integer.parseInt(age.substring(3,4));
+                            }else{
+                                old = Integer.parseInt(age.substring(0,1));
+                            }
                         }
                     }
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);

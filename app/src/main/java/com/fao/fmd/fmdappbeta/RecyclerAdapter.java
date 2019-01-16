@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
     private ArrayList<String> mDataset;
+    private OnItemClickListener listener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -21,6 +22,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
             super(v);
             mTextView = v.findViewById(R.id.lesion);
         }
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClickListener(View view, int position, String myData);
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
@@ -43,6 +52,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTextView.setText(mDataset.get(position));
+        holder.mTextView.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClickListener(v, position, mDataset.get(position));
+                }
+            }
+        });
 
     }
 

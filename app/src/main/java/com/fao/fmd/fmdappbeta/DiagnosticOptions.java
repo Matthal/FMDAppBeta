@@ -23,12 +23,15 @@ public class DiagnosticOptions extends Activity {
         String res = b.getString("res");
 
         ExpandableListView diagnList = findViewById(R.id.diagnList);
-        TextView test = findViewById(R.id.test);
+        ExpandableListView antibody = findViewById(R.id.antibody);
 
         List<String> listDataHeader = new ArrayList<>();
         HashMap<String, List<String>> listDataChild = new HashMap<>();
 
-        if(res.equals("1-2") || res.equals("2-3")){
+        List<String> antibodyHeader = new ArrayList<>();
+        HashMap<String, List<String>> antibodyChild = new HashMap<>();
+
+        if(res.equals("1") || res.equals("2-3")){
 
             listDataHeader.add("Vesicular fluid");
             listDataHeader.add("Epithelium samples");
@@ -72,9 +75,11 @@ public class DiagnosticOptions extends Activity {
             listDataChild.put(listDataHeader.get(3), car);
             listDataChild.put(listDataHeader.get(4), blo);
 
-            String text = "For an animal with a 1-2 day lesion, it is too early for an antibody response to be detected. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with around 4 day old lesions.\n\n" +
-                    "In an endemic country, the animal may already be positive due to previous infection or vaccination.";
-            test.setText(text);
+            antibodyHeader.add("Tests for antibody");
+            List<String> anti = new ArrayList<>();
+            anti.add("For an animal with a 1-2 day lesion, it is too early for an antibody response to be detected. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with around 4 day old lesions.\n\n" +
+                    "In an endemic country, the animal may already be positive due to previous infection or vaccination.");
+            antibodyChild.put(antibodyHeader.get(0), anti);
         }
 
         if(res.equals("3-4")){
@@ -105,15 +110,17 @@ public class DiagnosticOptions extends Activity {
             listDataChild.put(listDataHeader.get(1), swa);
             listDataChild.put(listDataHeader.get(2), blo);
 
-            String text = "For an animal with a 3-4 day lesion, you should be able to detect antibodies to structural proteins but maybe not to non-structural proteins which typically appear with 4 day old lesions but not earlier.\n\n" +
+            antibodyHeader.add("Tests for antibody");
+            List<String> anti = new ArrayList<>();
+            anti.add("For an animal with a 3-4 day lesion, you should be able to detect antibodies to structural proteins but maybe not to non-structural proteins which typically appear with 4 day old lesions but not earlier.\n\n" +
                     "In an endemic country, the animal may already be positive to either SP or NSP antibodies due to previous infection or vaccination.\n\n" +
                     "Take a plain blood tube (serum), and you can do a variety of structural protein antibody tests including:\n" +
                     "•\tVirus neutralisation tests (VNTs)\n" +
                     "•\tSolid-phase competition ELISA (SPCE)\n" +
                     "•\tLiquid-phase blocking ELISA (LPBE)\n" +
                     "•\tvarious commercial tests\n\n" +
-                    "Note that VNTs are highly specialised tests that can only be done in laboratories equipped for cell culture work and for handling live FMD virus.";
-            test.setText(text);
+                    "Note that VNTs are highly specialised tests that can only be done in laboratories equipped for cell culture work and for handling live FMD virus.");
+            antibodyChild.put(antibodyHeader.get(0), anti);
         }
 
         if(res.equals("4-5")){
@@ -150,14 +157,16 @@ public class DiagnosticOptions extends Activity {
             listDataChild.put(listDataHeader.get(1), pro);
             listDataChild.put(listDataHeader.get(2), blo);
 
-            String text = "For an animal with a 4-5 day old lesion, you should be able to detect antibodies to structural and non-structural proteins. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with 4 day old lesions.\n\n" +
+            antibodyHeader.add("Tests for antibody");
+            List<String> anti = new ArrayList<>();
+            anti.add("For an animal with a 4-5 day old lesion, you should be able to detect antibodies to structural and non-structural proteins. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with 4 day old lesions.\n\n" +
                     "In an endemic country, the animal may still be positive to either SP or NSP antibodies due to previous infection or vaccination.\n\n" +
                     "Take a plain blood tube (serum), and you can do a variety of structural protein antibody tests including:\n" +
                     "•\tVirus neutralisation tests (VNTs)\n" +
                     "•\tSolid-phase competition ELISA (SPCE)\n" +
                     "•\tLiquid-phase blocking ELISA (LPBE)\n\n" +
-                    "Note that VNTs are highly specialised tests that can only be done in specialised laboratories equipped for handling live FMD virus";
-            test.setText(text);
+                    "Note that VNTs are highly specialised tests that can only be done in specialised laboratories equipped for handling live FMD virus");
+            antibodyChild.put(antibodyHeader.get(0), anti);
         }
 
         if(res.equals("5-7")){
@@ -187,15 +196,17 @@ public class DiagnosticOptions extends Activity {
             listDataChild.put(listDataHeader.get(0), swa);
             listDataChild.put(listDataHeader.get(1), pro);
 
-            String text = "For an animal with a 5-7 day lesion, you should be able to detect antibodies to structural proteins and non-structural proteins. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with 4 day old lesions.\n\n" +
+            antibodyHeader.add("Tests for antibody");
+            List<String> anti = new ArrayList<>();
+            anti.add("For an animal with a 5-7 day lesion, you should be able to detect antibodies to structural proteins and non-structural proteins. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with 4 day old lesions.\n\n" +
                     "In an endemic country, the animal may still be positive to either SP or NSP antibodies due to previous infection or vaccination.\n\n" +
                     "Take a plain blood tube (serum), and you can do a variety of structural protein antibody tests including:\n" +
                     "•\tVirus neutralisation tests (VNTs)\n" +
                     "•\tSolid-phase competition ELISA (SPCE)\n" +
                     "•\tLiquid-phase blocking ELISA (LPBE)\n\n" +
                     "Note that VNTs are highly specialised tests that can only be done in specialised laboratories equipped for handling live FMD virus\n\n" +
-                    "Serum from a plain blood tube can also be used for NSP antibody using a commercial NSP-ELISA test.";
-            test.setText(text);
+                    "Serum from a plain blood tube can also be used for NSP antibody using a commercial NSP-ELISA test.");
+            antibodyChild.put(antibodyHeader.get(0), anti);
         }
 
         if(res.equals("7-10") || res.equals("10-14") || res.equals("14+")){
@@ -218,19 +229,24 @@ public class DiagnosticOptions extends Activity {
 
             listDataChild.put(listDataHeader.get(0), pro);
 
-            String text = "For an animal with a ≥7 day old lesion, you should be able to detect antibodies to structural proteins and non-structural proteins. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with 4 day old lesions.\n\n" +
+            antibodyHeader.add("Tests for antibody");
+            List<String> anti = new ArrayList<>();
+            anti.add("For an animal with a ≥7 day old lesion, you should be able to detect antibodies to structural proteins and non-structural proteins. Antibodies to structural proteins usually begin to appear with 3 day old lesions. Antibodies to non-structural proteins begin to appear with 4 day old lesions.\n\n" +
                     "In an endemic country, the animal may still be positive to either SP or NSP antibodies due to previous infection or vaccination.\n\n" +
                     "Take a plain blood tube (serum), and you can do a variety of structural protein antibody tests including:\n" +
                     "•\tVirus neutralisation tests (VNTs)\n" +
                     "•\tSolid-phase competition ELISA (SPCE)\n" +
                     "•\tLiquid-phase blocking ELISA (LPBE)\n\n" +
                     "Note that VNTs are highly specialised tests that can only be done in specialised laboratories equipped for handling live FMD virus\n\n" +
-                    "Serum from a plain blood tube can also be used for NSP antibody using a commercial NSP-ELISA test.";
-            test.setText(text);
+                    "Serum from a plain blood tube can also be used for NSP antibody using a commercial NSP-ELISA test.");
+            antibodyChild.put(antibodyHeader.get(0), anti);
         }
 
         ExpandableListAdapter listAdapter = new TextAdapter(this, listDataHeader, listDataChild);
         diagnList.setAdapter(listAdapter);
+
+        ExpandableListAdapter antibodyAdapter = new TextAdapter(this, antibodyHeader, antibodyChild);
+        antibody.setAdapter(antibodyAdapter);
 
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {

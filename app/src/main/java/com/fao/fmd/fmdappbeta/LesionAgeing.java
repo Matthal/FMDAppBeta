@@ -9,8 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LesionAgeing extends Activity {
 
@@ -18,6 +21,21 @@ public class LesionAgeing extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lesion_ageing);
+
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.60f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.40f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
 
         //Get animal ID from previous page
         Bundle oldBundle = getIntent().getExtras();
@@ -247,7 +265,7 @@ public class LesionAgeing extends Activity {
                     }
                 }else{
                     newBundle.putString("Q4", "b");
-                    if(!redClicked[0]){
+                    if(!redClicked[0] || (redClicked[0] && fibSpin.getSelectedItem().toString().equals("FIBRIN | YES"))){
                         healSpin.setEnabled(false);
                     }else{
                         healSpin.setEnabled(true);
@@ -363,6 +381,12 @@ public class LesionAgeing extends Activity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if(!locker.isChecked()){
+                    Toast.makeText(getBaseContext(), "Lock the switch before proceed", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 newBundle.putInt("id",animal);
                 Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
                 intent.putExtras(newBundle);
