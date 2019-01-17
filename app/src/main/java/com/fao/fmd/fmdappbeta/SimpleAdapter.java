@@ -45,7 +45,7 @@ public class SimpleAdapter extends RecyclerView.Adapter<SimpleAdapter.SimpleView
     }
 
     @Override
-    public void onBindViewHolder(final SimpleViewHolder holder, final int position) {
+    public void onBindViewHolder(final SimpleViewHolder holder,  int position) {
         final Integer[] IMAGES = {R.drawable.ves_photo_1,R.drawable.ves_photo_2,R.drawable.ves_photo_3,R.drawable.ves_photo_4,R.drawable.ves_photo_5,R.drawable.ves_photo_6,R.drawable.ves_photo_7,
                 R.drawable.fib_photo_1,R.drawable.fib_photo_2,R.drawable.fib_photo_3,R.drawable.fib_photo_4,R.drawable.fib_photo_5,R.drawable.fib_photo_6,R.drawable.fib_photo_7,
                 R.drawable.redyes_photo_1,R.drawable.redyes_photo_2,R.drawable.redyes_photo_3,R.drawable.redyes_photo_4,R.drawable.redyes_photo_5,R.drawable.redyes_photo_6,R.drawable.redyes_photo_7,

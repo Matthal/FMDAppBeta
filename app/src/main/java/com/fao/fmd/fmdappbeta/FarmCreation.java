@@ -133,6 +133,10 @@ public class FarmCreation extends Activity {
                     farm.setEnabled(false);
                     spinner.setEnabled(false);
                 }else{
+                    name.setBackgroundResource(R.color.white);
+                    owner.setBackgroundResource(R.color.white);
+                    farm.setBackgroundResource(R.color.white);
+                    spinner.setBackgroundResource(R.color.white);
                     name.setEnabled(true);
                     owner.setEnabled(true);
                     farm.setEnabled(true);

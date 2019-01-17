@@ -12,12 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -72,6 +72,21 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tracing);
 
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1.00f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.00f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
+
         final Bundle bundle = getIntent().getExtras();
         farm = bundle.getInt("id");
 
@@ -109,8 +124,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -148,8 +162,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
                             int end = 8;
+                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                animalsDate.add(date.getText().toString().substring(0,end));
+                                animalsDate.add(date.getText().toString().substring(start,end));
+                                start = end + 1;
                                 end = end + 9;
                                 if (spinner.getVisibility() == View.VISIBLE) {
                                     animalsSub.add(spinner.getSelectedItem().toString());
@@ -176,6 +192,14 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                Button esc = customView.findViewById(R.id.esc);
+                esc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPopupWindow.dismiss();
+                    }
+                });
             }
         });
 
@@ -189,8 +213,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -229,8 +252,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
                             int end = 8;
+                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                productsDate.add(date.getText().toString().substring(0,end));
+                                productsDate.add(date.getText().toString().substring(start,end));
+                                start = end + 1;
                                 end = end + 9;
                                 if(spinner.getVisibility() == View.VISIBLE){
                                     productsSub.add(spinner.getSelectedItem().toString());
@@ -257,6 +282,14 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                Button esc = customView.findViewById(R.id.esc);
+                esc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPopupWindow.dismiss();
+                    }
+                });
             }
         });
 
@@ -270,8 +303,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -316,8 +348,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
                             int end = 8;
+                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                peoplesDate.add(date.getText().toString().substring(0,end));
+                                peoplesDate.add(date.getText().toString().substring(start,end));
+                                start = end + 1;
                                 end = end + 9;
                                 if(spinner.getVisibility() == View.VISIBLE){
                                     peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
@@ -344,6 +378,14 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                Button esc = customView.findViewById(R.id.esc);
+                esc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPopupWindow.dismiss();
+                    }
+                });
             }
         });
 
@@ -357,8 +399,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -393,7 +434,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 other = customView.findViewById(R.id.other);
 
                 final EditText notes = customView.findViewById(R.id.note);
-                vehiclesNote.add(notes.getText().toString());
 
                 mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
@@ -403,9 +443,12 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     public void onClick(View v) {
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
+                            System.out.println(num);
                             int end = 8;
+                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                vehiclesDate.add(date.getText().toString().substring(0,end));
+                                vehiclesDate.add(date.getText().toString().substring(start,end));
+                                start = end + 1;
                                 end = end + 9;
                                 if(spinner.getVisibility() == View.VISIBLE){
                                     vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
@@ -417,6 +460,9 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 String count = Integer.toString(vehicleCount[0]);
                                 vehicleNum.setText(count);
                             }
+                            System.out.println(vehiclesDate);
+                            System.out.println(vehiclesSub);
+                            System.out.println(vehiclesNote);
                         }else{
                             vehiclesDate.add(date.getText().toString().substring(0,8));
                             if(spinner.getVisibility() == View.VISIBLE){
@@ -432,6 +478,14 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+                Button esc = customView.findViewById(R.id.esc);
+                esc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPopupWindow.dismiss();
+                    }
+                });
             }
         });
 
@@ -445,8 +499,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -527,6 +580,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        Button esc = customView.findViewById(R.id.esc);
+                        esc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopupWindow.dismiss();
+                            }
+                        });
                     }
                 });
                 mRecyclerView.setAdapter(mAdapter);
@@ -544,8 +604,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -627,6 +686,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        Button esc = customView.findViewById(R.id.esc);
+                        esc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopupWindow.dismiss();
+                            }
+                        });
                     }
                 });
 
@@ -645,8 +711,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -675,8 +740,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         mPopupWindow = new PopupWindow(
                                 customView,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                true
+                                RelativeLayout.LayoutParams.WRAP_CONTENT
                         );
 
                         // Set an elevation value for popup window
@@ -730,6 +794,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        Button esc = customView.findViewById(R.id.esc);
+                        esc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopupWindow.dismiss();
+                            }
+                        });
                     }
                 });
                 mRecyclerView.setAdapter(mAdapter);
@@ -746,8 +817,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow = new PopupWindow(
                         customView,
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        true
+                        RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
 
                 // Set an elevation value for popup window
@@ -775,8 +845,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         mPopupWindow = new PopupWindow(
                                 customView,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                true
+                                RelativeLayout.LayoutParams.WRAP_CONTENT
                         );
 
                         // Set an elevation value for popup window
@@ -829,6 +898,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        Button esc = customView.findViewById(R.id.esc);
+                        esc.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mPopupWindow.dismiss();
+                            }
+                        });
                     }
                 });
 
@@ -867,6 +943,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, animalsSub.get(i));
             values.put(Tracings.TracingEntry.COLUMN_DATE, animalsDate.get(i));
             values.put(Tracings.TracingEntry.COLUMN_NOTES, animalsNote.get(i));
+            long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
+            if(newRowId == -1) {
+                Toast.makeText(this, "Error in the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+                return;
+            }
         }
 
         for(int i = 0; i < productsSub.size(); i++){
@@ -875,6 +958,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, productsSub.get(i));
             values.put(Tracings.TracingEntry.COLUMN_DATE, productsDate.get(i));
             values.put(Tracings.TracingEntry.COLUMN_NOTES, productsNote.get(i));
+            long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
+            if(newRowId == -1) {
+                Toast.makeText(this, "Error in the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+                return;
+            }
         }
 
         for(int i = 0; i < peoplesSub.size(); i++){
@@ -883,7 +973,15 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, peoplesSub.get(i));
             values.put(Tracings.TracingEntry.COLUMN_DATE, peoplesDate.get(i));
             values.put(Tracings.TracingEntry.COLUMN_NOTES, peoplesNote.get(i));
+            long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
+            if(newRowId == -1) {
+                Toast.makeText(this, "Error in the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+                return;
+            }
         }
+
 
         for(int i = 0; i < vehiclesSub.size(); i++){
             values.put(Tracings.TracingEntry.COLUMN_FARM, farm);
@@ -891,19 +989,17 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_SUB_CATEGORY, vehiclesSub.get(i));
             values.put(Tracings.TracingEntry.COLUMN_DATE, vehiclesDate.get(i));
             values.put(Tracings.TracingEntry.COLUMN_NOTES, vehiclesNote.get(i));
+            long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
+            if(newRowId == -1) {
+                Toast.makeText(this, "Error in the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+                return;
+            }
         }
 
-        long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
+        db.close();
 
-        if(newRowId == -1){
-            Toast.makeText(this, "Error in the DB",
-                    Toast.LENGTH_LONG).show();
-            db.close();
-        }else {
-            Toast.makeText(this, "New entry added to the DB",
-                    Toast.LENGTH_LONG).show();
-            db.close();
-        }
     }
 
     public List<Integer> getAnimals(int id) {
@@ -966,17 +1062,21 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 do {
                     String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
                     String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
-                    if(age.charAt(1) == '-'){
-                        if(age.length() == 3){
-                            old = Character.getNumericValue(age.charAt(2));
-                        }else{
-                            old = Integer.parseInt(age.substring(2,3));
-                        }
+                    if(age.length() < 2){
+                        old = Integer.parseInt(age);
                     }else{
-                        if(age.charAt(2) == '-'){
-                            old = Integer.parseInt(age.substring(3,4));
+                        if(age.charAt(1) == '-'){
+                            if(age.length() == 3){
+                                old = Character.getNumericValue(age.charAt(2));
+                            }else{
+                                old = Integer.parseInt(age.substring(2,3));
+                            }
                         }else{
-                            old = Integer.parseInt(age.substring(0,1));
+                            if(age.charAt(2) == '-'){
+                                old = Integer.parseInt(age.substring(3,4));
+                            }else{
+                                old = Integer.parseInt(age.substring(0,1));
+                            }
                         }
                     }
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);

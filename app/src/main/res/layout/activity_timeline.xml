@@ -58,10 +58,12 @@
                         android:gravity="center"/>
                     <TextView
                         android:text="@string/sub_category"
-                        android:padding="3dip" />
+                        android:padding="3dip"
+                        android:gravity="center"/>
                     <TextView
                         android:text="@string/notes"
-                        android:padding="3dip"/>
+                        android:padding="3dip"
+                        android:gravity="center"/>
                 </TableRow>
 
             </TableLayout>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +35,21 @@ public class CompleteFragment extends Fragment {
 
         bundle = this.getArguments();
 
+        TextView light = view.findViewById(R.id.light);
+        TextView dark = view.findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.75f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.25f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
+
         TextView id = view.findViewById(R.id.lesID);
         id.append("Lesion ID");
 
@@ -53,7 +69,7 @@ public class CompleteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 bundle.putString("tag","complete");
-                Intent intent = new Intent(getActivity(), VesiclesGallery.class); //To change with days gallery
+                Intent intent = new Intent(getActivity(), LesionAgeingGallery.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -132,7 +148,6 @@ public class CompleteFragment extends Fragment {
                 }
             }
         }
-
 
         int like_inf_min = old + 6;
         int like_inf_max = old + 2;

@@ -20,7 +20,7 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
+import android.widget.Toast;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
@@ -45,6 +45,7 @@ import java.util.Map;
 public class Timeline extends AppCompatActivity {
 
     Date minDate;
+    Date maxDate;
     Date dayZero;
     long days;
     int id;
@@ -71,7 +72,7 @@ public class Timeline extends AppCompatActivity {
         List<Integer> tracings = getTracings(id);
 
         try {
-            Date maxDate = getMaxDate(lesions);
+            maxDate = getMaxDate(lesions);
             minDate = getMinDate(lesions,tracings);
             long diff = maxDate.getTime() - minDate.getTime();
             days = (diff / (1000*60*60*24));
@@ -141,15 +142,32 @@ public class Timeline extends AppCompatActivity {
             TextView subCat = new TextView(this);
             subCat.setGravity(Gravity.CENTER);
             TextView notes = new TextView(this);
+            notes.setGravity(Gravity.CENTER);
 
+            List<Date> pastTrack = new ArrayList<>();
             for (Map.Entry<String,List<String>> entry : trackAttr.entrySet()) {
                 List<String> values = entry.getValue();
                 try {
                     Date date1 = new SimpleDateFormat("dd/MM/yy",Locale.UK).parse(values.get(3));
                     if(newDate.compareTo(date1) == 0){
-                        category.append(values.get(0));
-                        subCat.append(values.get(1));
-                        notes.append(values.get(2));
+                        if(pastTrack.size() > 0){
+                            for(int x = 0; x < pastTrack.size(); x++){
+                                if(date1.compareTo(pastTrack.get(x)) == 0){
+                                    category.append("\n"+ values.get(0));
+                                    subCat.append("\n"+ values.get(1));
+                                    notes.append("\n"+ values.get(2));
+                                }else{
+                                    category.append(values.get(0));
+                                    subCat.append(values.get(1));
+                                    notes.append(values.get(2));
+                                }
+                            }
+                        }else{
+                            category.append(values.get(0));
+                            subCat.append(values.get(1));
+                            notes.append(values.get(2));
+                            pastTrack.add(date1);
+                        }
                     }
                 } catch (ParseException e) {
                     e.printStackTrace();
@@ -157,7 +175,9 @@ public class Timeline extends AppCompatActivity {
             }
 
             if(!category.getText().toString().matches("[a-zA-Z.? ]*")){
-                spread.setHeight(105);
+                int count = category.getText().toString().length() - category.getText().toString().replaceAll("\\n","").length();
+                infection.setHeight(52*(count+1));
+                spread.setHeight(52*(count+1));
             }
 
             row.addView(date);
@@ -211,30 +231,35 @@ public class Timeline extends AppCompatActivity {
         if (!Environment.MEDIA_MOUNTED.equals(state)) {
         }
         //Create a directory for your PDF
-        File pdfDir = new File(Environment.getExternalStorageDirectory(), "EuFMDApp");
+        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
         if (!pdfDir.exists()){
             pdfDir.mkdir();
         }
         Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline)); // here give id of our root layout (here its my RelativeLayout's id)
         //Now create the name of your PDF file that you will generate
-        File pdfFile = new File(pdfDir, "Farm " + id + " Timeline.pdf");
-        try {
-            Document document = new Document();
-            PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
-            document.open();
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            Image image = Image.getInstance(byteArray);
-            image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
-            document.add(image);
-            document.close();
-        }
-        catch (Exception e){
-            e.printStackTrace();
+        SimpleDateFormat mdyFormat = new SimpleDateFormat("dd_MMM_yyyy",Locale.UK);
+        String currentDate = mdyFormat.format(new Date());
+        File pdfFile = new File(pdfDir, "FMD_DOI_timeline_ " + id + "_" + currentDate + ".pdf");
+        if(!pdfFile.exists()){
+            try {
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+                document.open();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                Image image = Image.getInstance(byteArray);
+                image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+                document.add(image);
+                document.close();
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  "Farm " + id + " Timeline.pdf"));
+        File[] dirFiles = pdfDir.listFiles();
+        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  dirFiles[0].getName()));
         intent.setDataAndType(uri, "application/pdf");
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -243,11 +268,24 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void sendEmail(){
-        File pdfDir = new File(Environment.getExternalStorageDirectory(), "EuFMDApp");
+        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
+        if(!pdfDir.exists()){
+            Toast.makeText(this, "You must create a pdf file first", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        File[] dirFiles = pdfDir.listFiles();
+        Date lastModDate = new Date(dirFiles[0].lastModified());
+        SimpleDateFormat mdyFormat = new SimpleDateFormat("dd MMM yyyy",Locale.UK);
+        String timelineGenereted = mdyFormat.format(maxDate);
+        String pdfGenerated = mdyFormat.format(lastModDate);
         Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_SUBJECT, "Farm " + id + " Timeline");
-        email.putExtra(Intent.EXTRA_TEXT, "This is the timeline of farm " + id);
-        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  "Farm " + id + " Timeline.pdf"));
+        email.putExtra(Intent.EXTRA_SUBJECT, "FMD DOI app timeline");
+        email.putExtra(Intent.EXTRA_TEXT, "Attached is a PDF file containing a timeline generated using the EuFMD Disease Outbreak Investigation mobile phone application.\n" +
+                "Unique ID: " + id + "\n" +
+                "Farm Name: " + getFarmName(id) + "\n" +
+                "Date timeline generated: " + timelineGenereted + "\n" +
+                "Time of generation: " + pdfGenerated);
+        Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  dirFiles[0].getName()));
         email.putExtra(Intent.EXTRA_STREAM, uri);
         email.setType("application/pdf");
         email.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -265,6 +303,25 @@ public class Timeline extends AppCompatActivity {
         }
         view.draw(canvas);
         return returnedBitmap;
+    }
+
+    public String getFarmName(int id){
+        String name = null;
+        String selectQuery = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE id=" + id;
+
+        DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                name = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_NAME));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return name;
     }
 
     public List<Integer> getAnimals(int id) {
@@ -304,6 +361,7 @@ public class Timeline extends AppCompatActivity {
                     lesions.add(lesion);
                 } while (cursor.moveToNext());
             }
+
             cursor.close();
             db.close();
         }
@@ -464,6 +522,7 @@ public class Timeline extends AppCompatActivity {
         DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
+        System.out.println(tracings);
         for(int i = 0; i < tracings.size(); i++){
             String selectQuery = "SELECT * FROM " + Tracings.TracingEntry.TABLE_NAME + " WHERE id=" + tracings.get(i);
 
@@ -477,10 +536,10 @@ public class Timeline extends AppCompatActivity {
                     String notes;
                     String date;
                     if(i != tracings.size() - 1){
-                        cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY)) + "\n";
-                        subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY)) + "\n";
-                        notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES)) + "\n";
-                        date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE)) + "\n";
+                        cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
+                        subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
+                        notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
+                        date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
                     }else{
                         cat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
                         subCat = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));

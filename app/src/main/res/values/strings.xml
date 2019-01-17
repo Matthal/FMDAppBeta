@@ -13,6 +13,7 @@
     <string name="insert_notes">Insert Notes</string>
     <string name="category">Category</string>
     <string name="contact">Direct contact with animal areas</string>
+    <string name="X">X</string>
 
     //MAIN
     <string name="text_main">FMD-DOI | DISEASE OUTBREAK INVESTIGATION</string>
@@ -125,8 +126,9 @@
     //ASSUMPTIONS
     <string name="text_asssumpt">ASSUMPTIONS</string>
 
-    //GALLERY
+    //GALLERIES
     <string name="text_gallery">LESION LIBRARY</string>
+    <string name="lesion_age_gallery">LESION AGEING GALLERY</string>
 
     //PARSE KEY
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>

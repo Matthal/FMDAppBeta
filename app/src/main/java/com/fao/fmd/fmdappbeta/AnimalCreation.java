@@ -163,6 +163,14 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                     sign.setEnabled(false);
                     vaccSpin.setEnabled(false);
                 }else{
+                    animal.setBackgroundResource(R.color.white);
+                    group.setBackgroundResource(R.color.white);
+                    yearsSpin.setBackgroundResource(R.color.white);
+                    monthsSpin.setBackgroundResource(R.color.white);
+                    spinner.setBackgroundResource(R.color.white);
+                    sexSpin.setBackgroundResource(R.color.white);
+                    sign.setBackgroundResource(R.color.white);
+                    vaccSpin.setBackgroundResource(R.color.white);
                     animal.setEnabled(true);
                     group.setEnabled(true);
                     yearsSpin.setEnabled(true);

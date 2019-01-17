@@ -19,7 +19,7 @@
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="X"
+        android:text="@string/X"
         android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

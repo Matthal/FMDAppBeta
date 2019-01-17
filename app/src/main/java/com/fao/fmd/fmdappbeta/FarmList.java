@@ -38,6 +38,8 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     Button farmTL;
     ImageView map;
 
+    boolean lock;
+
     //private DatabaseReference mDatabase;
 
     @Override
@@ -66,23 +68,31 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         addTrace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = spinner.getSelectedItemPosition();
-                Intent intent = new Intent(FarmList.this, Tracing.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id",id);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if(lock){
+                    Toast.makeText(FarmList.this, "You must add an animal in the farm before adding tracings", Toast.LENGTH_LONG).show();
+                }else{
+                    int id = spinner.getSelectedItemPosition();
+                    Intent intent = new Intent(FarmList.this, Tracing.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id",id);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
         farmTL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int id = spinner.getSelectedItemPosition();
-                Intent intent = new Intent(FarmList.this, Timeline.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id",id);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if(lock){
+                    Toast.makeText(FarmList.this, "You must add an animal in the farm before view timeline", Toast.LENGTH_LONG).show();
+                }else{
+                    int id = spinner.getSelectedItemPosition();
+                    Intent intent = new Intent(FarmList.this, Timeline.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("id",id);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
             }
         });
         map.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +165,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             addAnimal.setVisibility(View.VISIBLE);
             addTrace.setVisibility(View.VISIBLE);
             farmTL.setVisibility(View.VISIBLE);
-            map.setVisibility(View.VISIBLE);
+            //map.setVisibility(View.VISIBLE);
 
             // preparing list data
             prepareListData(pos);
@@ -192,6 +202,12 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                     "Age : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE)));
             listDataChild.put(listDataHeader.get(i), details);
             cursor.moveToNext();
+        }
+
+        if(listDataHeader.isEmpty()){
+            lock = true;
+        }else{
+            lock = false;
         }
 
         cursor.close();

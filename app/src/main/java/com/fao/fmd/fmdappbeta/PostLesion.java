@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -24,6 +26,21 @@ public class PostLesion extends Activity {
         setContentView(R.layout.activity_post_lesion);
 
         final Bundle bundle = getIntent().getExtras();
+
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.90f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.10f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
 
         Button addAnimal = findViewById(R.id.animal);
         Button addTracing = findViewById(R.id.tracing);

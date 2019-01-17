@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -18,6 +19,21 @@ public class DiagnosticOptions extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_diagnostic_options);
+
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.75f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.25f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
 
         Bundle b = getIntent().getExtras();
         String res = b.getString("res");
