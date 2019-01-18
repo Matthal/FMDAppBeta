@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -126,6 +127,8 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
+
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -189,7 +192,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             String count = Integer.toString(animalCount[0]);
                             animalNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -215,6 +218,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -279,7 +283,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             String count = Integer.toString(productCount[0]);
                             productNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -305,6 +309,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -375,7 +380,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             String count = Integer.toString(peopleCount[0]);
                             peopleNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -401,6 +406,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -475,7 +481,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             String count = Integer.toString(vehicleCount[0]);
                             vehicleNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -501,6 +507,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -523,7 +530,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        View customView = inflater.inflate(R.layout.fragment_animal_track, findViewById(R.id.animal_popup));
                         mPopupWindow = new PopupWindow(
                                 customView,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -541,8 +548,21 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(animalsDate.get(position));
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        date.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DatePicker datePicker = picker.build();
+                                datePicker.show();
+                            }
+                        });
 
-                        spinner = customView.findViewById(R.id.category);
+                        String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
+                        spinner = customView.findViewById(R.id.species);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                        spinner.setAdapter(adapter);
+                        spinner.setOnItemSelectedListener(Tracing.this);
+
                         other = customView.findViewById(R.id.other);
 
                         final EditText notes = customView.findViewById(R.id.note);
@@ -606,12 +626,14 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
                 if(Build.VERSION.SDK_INT>=21){
                     mPopupWindow.setElevation(5.0f);
                 }
+
 
                 mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
@@ -629,7 +651,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        View customView = inflater.inflate(R.layout.fragment_product_track, findViewById(R.id.product_popup));
                         mPopupWindow = new PopupWindow(
                                 customView,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -647,8 +669,22 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(productsDate.get(position));
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        date.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DatePicker datePicker = picker.build();
+                                datePicker.show();
+                            }
+                        });
 
+                        String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
                         spinner = customView.findViewById(R.id.category);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+                        spinner.setOnItemSelectedListener(Tracing.this);
+
                         other = customView.findViewById(R.id.other);
 
                         final EditText notes = customView.findViewById(R.id.note);
@@ -713,6 +749,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -736,12 +773,13 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                        View customView = inflater.inflate(R.layout.fragment_people_track, findViewById(R.id.people_popup));
                         mPopupWindow = new PopupWindow(
                                 customView,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                                 RelativeLayout.LayoutParams.WRAP_CONTENT
                         );
+                        mPopupWindow.setFocusable(true);
 
                         // Set an elevation value for popup window
                         // Call requires API level 21
@@ -753,11 +791,29 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(peoplesDate.get(position));
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        date.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DatePicker datePicker = picker.build();
+                                datePicker.show();
+                            }
+                        });
 
+                        String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
                         spinner = customView.findViewById(R.id.category);
-                        other = customView.findViewById(R.id.other);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+                        spinner.setOnItemSelectedListener(Tracing.this);
 
+                        String[] cont = new String[]{"Direct contact", "Indirect contact"};
                         final Spinner contact = customView.findViewById(R.id.contact);
+                        ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
+                        contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        contact.setAdapter(contAdapter);
+
+                        other = customView.findViewById(R.id.other);
 
                         final EditText notes = customView.findViewById(R.id.note);
                         notes.setText(peoplesNote.get(position));
@@ -819,6 +875,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         RelativeLayout.LayoutParams.WRAP_CONTENT,
                         RelativeLayout.LayoutParams.WRAP_CONTENT
                 );
+                mPopupWindow.setFocusable(true);
 
                 // Set an elevation value for popup window
                 // Call requires API level 21
@@ -858,11 +915,29 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(vehiclesDate.get(position));
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        date.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DatePicker datePicker = picker.build();
+                                datePicker.show();
+                            }
+                        });
 
+                        final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
                         spinner = customView.findViewById(R.id.category);
-                        other = customView.findViewById(R.id.other);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        spinner.setAdapter(adapter);
+                        spinner.setOnItemSelectedListener(Tracing.this);
 
+                        String[] cont = new String[]{"Direct contact", "Indirect contact"};
                         final Spinner contact = customView.findViewById(R.id.contact);
+                        ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
+                        contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        contact.setAdapter(contAdapter);
+
+                        other = customView.findViewById(R.id.other);
 
                         final EditText notes = customView.findViewById(R.id.note);
                         notes.setText(vehiclesNote.get(position));
@@ -998,6 +1073,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             }
         }
 
+        Toast.makeText(this, "Tracing added to DB", Toast.LENGTH_LONG).show();
         db.close();
 
     }

@@ -145,6 +145,13 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                     yearsSpin.setBackgroundResource(R.color.colorPrimary);
                     monthsSpin.setBackgroundResource(R.color.colorPrimary);
                     spinner.setBackgroundResource(R.color.colorPrimary);
+                    if (!other.getText().toString().trim().isEmpty()) {
+                        other.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        other.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
                     sexSpin.setBackgroundResource(R.color.colorPrimary);
                     if (!sign.getText().toString().trim().isEmpty()) {
                         sign.setBackgroundResource(R.color.colorPrimary);
@@ -168,6 +175,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                     yearsSpin.setBackgroundResource(R.color.white);
                     monthsSpin.setBackgroundResource(R.color.white);
                     spinner.setBackgroundResource(R.color.white);
+                    other.setBackgroundResource(R.color.white);
                     sexSpin.setBackgroundResource(R.color.white);
                     sign.setBackgroundResource(R.color.white);
                     vaccSpin.setBackgroundResource(R.color.white);

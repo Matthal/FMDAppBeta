@@ -8,7 +8,7 @@
     <android.support.v7.widget.Toolbar
         android:id="@+id/basictoolbar"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
+        android:layout_height="45dp"
         style="@style/MyToolbar">
 
         <ImageView
@@ -31,7 +31,7 @@
         <TextView
             android:id="@+id/appHeader"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentTop="true"
             android:background="#498F75"
             android:fontFamily="@font/roboto"

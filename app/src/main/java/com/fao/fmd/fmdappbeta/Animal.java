@@ -23,7 +23,7 @@ public class Animal {
                     AnimalEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     AnimalEntry.COLUMN_NAME + " TEXT," +
                     AnimalEntry.COLUMN_FARM + " INTEGER," +
-                    AnimalEntry.COLUMN_GROUP + " INTEGER," +
+                    AnimalEntry.COLUMN_GROUP + " TEXT," +
                     AnimalEntry.COLUMN_AGE + " TEXT," +
                     AnimalEntry.COLUMN_BREED + " TEXT," +
                     AnimalEntry.COLUMN_REPORT + " TEXT," +
