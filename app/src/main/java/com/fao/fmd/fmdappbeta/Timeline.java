@@ -52,6 +52,8 @@ public class Timeline extends AppCompatActivity {
     Map<String,Date> infectionDates;
     Map<String,Date> spreadDates;
 
+    Bundle bundle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,14 +64,16 @@ public class Timeline extends AppCompatActivity {
 
         final TableLayout timeline = findViewById(R.id.timeline);
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle != null){
-            id = bundle.getInt("id");
-        }
+        bundle = getIntent().getExtras();
+        id = bundle.getInt("farm");
+
 
         List<Integer> animals = getAnimals(id);
         List<Integer> lesions = getLesions(animals);
         List<Integer> tracings = getTracings(id);
+        System.out.println(id);
+        System.out.println(animals);
+        System.out.println(lesions);
 
         try {
             maxDate = getMaxDate(lesions);
@@ -336,6 +340,7 @@ public class Timeline extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 int animal = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID));
+                System.out.println("animal id: " + animal);
                 animals.add(animal);
             } while (cursor.moveToNext());
         }
@@ -583,7 +588,6 @@ public class Timeline extends AppCompatActivity {
             db.close();
         }
 
-        System.out.println(dates);
         return Collections.max(dates);
 
     }

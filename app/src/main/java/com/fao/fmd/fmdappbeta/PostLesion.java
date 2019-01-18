@@ -19,13 +19,17 @@ import java.io.ByteArrayOutputStream;
 public class PostLesion extends Activity {
 
     private static final int CAMERA_PIC_REQUEST = 1;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_lesion);
 
-        final Bundle bundle = getIntent().getExtras();
+        bundle = getIntent().getExtras();
+
+        int farm = getFarm(bundle.getInt("id"));
+        bundle.putInt("farm",farm);
 
         TextView light = findViewById(R.id.light);
         TextView dark = findViewById(R.id.dark);
@@ -61,7 +65,6 @@ public class PostLesion extends Activity {
         addTracing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int farm = getFarm(bundle.getInt("id"));
                 Bundle b = new Bundle();
                 b.putInt("id", farm);
                 Intent intent = new Intent(PostLesion.this, Tracing.class);
@@ -80,7 +83,12 @@ public class PostLesion extends Activity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(PostLesion.this, Timeline.class);
-                intent.putExtras(bundle);
+                if(bundle.isEmpty()){
+                    Toast.makeText(getBaseContext(), "Problem showing timeline", Toast.LENGTH_LONG).show();
+                    return;
+                }else{
+                    intent.putExtras(bundle);
+                }
                 startActivity(intent);
             }
         });

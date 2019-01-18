@@ -51,7 +51,7 @@ public class CompleteFragment extends Fragment {
         dark.setLayoutParams(paramDark);
 
         TextView id = view.findViewById(R.id.lesID);
-        id.append(bundle.getString("animal"));
+        id.append(Integer.toString(bundle.getInt("id")));
 
         TextView text = view.findViewById(R.id.days);
         text.append(bundle.getString("res"));

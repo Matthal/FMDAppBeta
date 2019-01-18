@@ -193,7 +193,6 @@ public class LesionAgeing extends Activity {
                     pink.setTextColor(getResources().getColor(R.color.grey));
                     white.setBackgroundResource(R.color.white);
                     white.setTextColor(getResources().getColor(R.color.grey));
-                    System.out.println(newBundle);
                 }else{
                     if(fibSpin.getSelectedItem().toString().equals("FIBRIN | YES")){
                         yellow.setEnabled(false);

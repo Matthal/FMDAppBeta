@@ -89,7 +89,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                     int id = spinner.getSelectedItemPosition();
                     Intent intent = new Intent(FarmList.this, Timeline.class);
                     Bundle bundle = new Bundle();
-                    bundle.putInt("id",id);
+                    bundle.putInt("farm",id);
                     intent.putExtras(bundle);
                     startActivity(intent);
                 }

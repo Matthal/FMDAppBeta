@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity {
         bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                /*DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "animals"));
+                System.out.println(DatabaseHelper.getTableAsString(db, "animals"));*/
                 /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
                 startActivity(intent);*/
             }
