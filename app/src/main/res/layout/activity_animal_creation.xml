@@ -55,23 +55,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="39dp"
-            android:layout_marginTop="65dp"
-            android:text="@string/id"
-            android:textSize="14sp"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="39dp" />
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="68dp"
+            android:text="@string/id"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/animalID"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="39dp"
-            android:layout_marginLeft="39dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="90dp"
             android:background="#ffffff"
             android:ems="10"
@@ -82,13 +82,13 @@
 
         <EditText
             android:id="@+id/groupID"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/animalID"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="39dp"
-            android:layout_marginRight="39dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
             android:background="#ffffff"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -100,36 +100,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="147dp"
-            android:layout_marginStart="39dp"
-            android:layout_marginLeft="39dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
             android:text="@string/age"
             android:textSize="14sp" />
 
         <Spinner
             android:id="@+id/animalYears"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="44dp"
             android:layout_alignStart="@+id/animalID"
             android:layout_alignParentTop="true"
             android:layout_marginTop="175dp"
             android:background="#ffffff"
-            android:ems="10"
-            android:hint="@string/hint_years"
-            android:inputType="number"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:layout_alignLeft="@+id/animalID" />
 
         <Spinner
             android:id="@+id/animalMonths"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="44dp"
             android:layout_alignStart="@+id/groupID"
             android:layout_alignTop="@+id/animalYears"
             android:background="#ffffff"
-            android:ems="10"
-            android:hint="@string/hint_months"
-            android:inputType="number"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:layout_alignLeft="@+id/groupID" />
@@ -140,13 +134,13 @@
             android:layout_alignStart="@+id/animalID"
             android:layout_alignParentTop="true"
             android:layout_marginTop="234dp"
-            android:text="@string/animal"
+            android:text="@string/species"
             android:textSize="14sp"
             android:layout_alignLeft="@+id/animalID" />
 
         <Spinner
             android:id="@+id/breed"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="44dp"
             android:layout_alignStart="@+id/animalID"
             android:layout_alignTop="@+id/other"
@@ -157,10 +151,10 @@
 
         <EditText
             android:id="@+id/other"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="44dp"
-            android:layout_marginStart="39dp"
-            android:layout_marginLeft="39dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginLeft="35dp"
             android:layout_marginTop="260dp"
             android:background="#ffffff"
             android:paddingTop="10dp"
@@ -169,9 +163,19 @@
             android:inputType="text"
             android:visibility="invisible" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/sex"
+            android:layout_alignLeft="@+id/sex"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="234dp"
+            android:text="@string/sex"
+            android:textSize="14sp" />
+
         <Spinner
             android:id="@+id/sex"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="44dp"
             android:layout_alignStart="@+id/groupID"
             android:layout_alignTop="@+id/breed"
@@ -180,22 +184,32 @@
             android:spinnerMode="dropdown"
             android:layout_alignLeft="@+id/groupID" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/sign"
+            android:layout_alignLeft="@+id/sign"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="310dp"
+            android:text="@string/sign"
+            android:textSize="14sp" />
+
         <EditText
             android:id="@+id/sign"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="324dp"
+            android:layout_marginTop="330dp"
             android:background="#ffffff"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:focusable="false"
-            android:hint="@string/hint_sign" />
+            android:hint="@string/enter_date"
+            android:gravity="center"/>
 
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="182dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/vaccinated"
             android:layout_alignStart="@+id/breed"
@@ -207,7 +221,7 @@
         <Spinner
             android:id="@+id/vaccinated"
             style="@style/Widget.AppCompat.DropDownItem.Spinner"
-            android:layout_width="130dp"
+            android:layout_width="140dp"
             android:layout_height="50dp"
             android:layout_alignStart="@+id/breed"
             android:layout_alignLeft="@+id/breed"

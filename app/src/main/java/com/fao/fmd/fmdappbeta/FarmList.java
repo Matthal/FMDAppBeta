@@ -12,15 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,12 +35,26 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
 
     boolean lock;
 
-    //private DatabaseReference mDatabase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_farm_list);
+
+        TextView light = findViewById(R.id.light);
+        TextView dark = findViewById(R.id.dark);
+        LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.30f
+        );
+        LinearLayout.LayoutParams paramDark = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                0.70f
+        );
+        light.setLayoutParams(paramLight);
+        dark.setLayoutParams(paramDark);
+
         final Spinner spinner = findViewById(R.id.farmSpinner);
         animalList = findViewById(R.id.animalList);
 
@@ -54,98 +63,62 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         farmTL = findViewById(R.id.farmTL);
         map = findViewById(R.id.map);
 
-        addAnimal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        addAnimal.setOnClickListener(v -> {
+            int id = spinner.getSelectedItemPosition();
+            Intent intent = new Intent(FarmList.this, AnimalCreation.class);
+            Bundle mBundle = new Bundle();
+            mBundle.putInt("id",id);
+            intent.putExtras(mBundle);
+            startActivity(intent);
+        });
+        addTrace.setOnClickListener(v -> {
+            if(lock){
+                Toast.makeText(FarmList.this, "You must add an animal in the farm before adding tracings", Toast.LENGTH_LONG).show();
+            }else{
                 int id = spinner.getSelectedItemPosition();
-                Intent intent = new Intent(FarmList.this, AnimalCreation.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putInt("id",id);
-                intent.putExtras(mBundle);
+                Intent intent = new Intent(FarmList.this, Tracing.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("id",id);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
-        addTrace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(lock){
-                    Toast.makeText(FarmList.this, "You must add an animal in the farm before adding tracings", Toast.LENGTH_LONG).show();
-                }else{
-                    int id = spinner.getSelectedItemPosition();
-                    Intent intent = new Intent(FarmList.this, Tracing.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("id",id);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            }
-        });
-        farmTL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(lock){
-                    Toast.makeText(FarmList.this, "You must add an animal in the farm before view timeline", Toast.LENGTH_LONG).show();
-                }else{
-                    int id = spinner.getSelectedItemPosition();
-                    Intent intent = new Intent(FarmList.this, Timeline.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("farm",id);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            }
-        });
-        map.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String selectQuery = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE id=" + spinner.getSelectedItemPosition();
-                DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                Cursor cursor = db.rawQuery(selectQuery, null);
-                cursor.moveToFirst();
-                double latitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
-                double longitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
-                Uri uri = Uri.parse("https://www.google.com/maps/search/?api=1&query="+ latitude + "," + longitude);
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        farmTL.setOnClickListener(v -> {
+            if(lock){
+                Toast.makeText(FarmList.this, "You must add an animal in the farm before view timeline", Toast.LENGTH_LONG).show();
+            }else{
+                int id = spinner.getSelectedItemPosition();
+                Intent intent = new Intent(FarmList.this, Timeline.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("farm",id);
+                intent.putExtras(bundle);
                 startActivity(intent);
-                cursor.close();
-                db.close();
             }
+        });
+        map.setOnClickListener(v -> {
+            String selectQuery = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE id=" + spinner.getSelectedItemPosition();
+            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            cursor.moveToFirst();
+            double latitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
+            double longitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
+            Uri uri = Uri.parse("https://www.google.com/maps/search/?api=1&query="+ latitude + "," + longitude);
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+            cursor.close();
+            db.close();
         });
 
         final List<String> farmList = getAllFarms();
 
-        /*mDatabase = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference farmsRef = mDatabase.child("farms");
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Farm farm = snapshot.getValue(Farm.class);
-                    farmList.add("placeholder");//WRONG
-                    //A ROW MISSED
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("DBError", "Failed to read value.", error.toException());
-            }
-        };
-        farmsRef.addListenerForSingleValueEvent(valueEventListener);*/
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,farmList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item, farmList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
 
     }
 
@@ -213,34 +186,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         cursor.close();
         db.close();
 
-        /*mDatabase = FirebaseDatabase.getInstance().getReference();
-        final DatabaseReference farmsRef = mDatabase.child("animals");
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Animal animal = snapshot.getValue(Animal.class);
-                    listDataHeader.add(animal.name);
-                    details.add("ID : " + snapshot.getKey() +  "\n" +  "Name : " + animal.type);
-                    listDataChild.put(listDataHeader.get(0), details);
-                    listAdapter.notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("DBError", "Failed to read value.", error.toException());
-            }
-        };
-        farmsRef.addListenerForSingleValueEvent(valueEventListener);
-
-        for (int i = 0; i < 10; i++){
-            listDataHeader.add("Animal " + Integer.toString(i+1));
-            listDataChild.put(listDataHeader.get(i), details);
-        }*/
-
-
     }
 
     public int getFarmCount() {
@@ -268,7 +213,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                String farm = "Farm " + cursor.getInt(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+                String farm = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_NAME));
                 farms.add(farm);
             } while (cursor.moveToNext());
         }

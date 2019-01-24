@@ -1,6 +1,8 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -265,6 +267,10 @@ public class Timeline extends AppCompatActivity {
         File[] dirFiles = pdfDir.listFiles();
         Uri uri = FileProvider.getUriForFile(getApplication(), getBaseContext().getApplicationContext().getPackageName() + ".provider", new File(pdfDir,  dirFiles[0].getName()));
         intent.setDataAndType(uri, "application/pdf");
+        if(!canDisplayPdf(getApplicationContext())){
+            Toast.makeText(getBaseContext(), "Impossible to open PDF, install a PDF reader", Toast.LENGTH_LONG).show();
+            return;
+        }
         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
@@ -708,5 +714,16 @@ public class Timeline extends AppCompatActivity {
         cal.setTime(date);
         cal.add(Calendar.DATE, -days);
         return cal.getTime();
+    }
+
+    public static boolean canDisplayPdf(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent testIntent = new Intent(Intent.ACTION_VIEW);
+        testIntent.setType("application/pdf");
+        if (packageManager.queryIntentActivities(testIntent, PackageManager.MATCH_DEFAULT_ONLY).size() > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

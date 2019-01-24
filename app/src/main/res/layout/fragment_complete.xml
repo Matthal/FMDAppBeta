@@ -59,7 +59,7 @@
             android:layout_alignStart="@+id/lesID"
             android:layout_alignLeft="@+id/lesID"
             android:layout_alignBottom="@+id/lesID"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="44dp"
             android:text="@string/lesion_id"
             android:textSize="14sp" />
 

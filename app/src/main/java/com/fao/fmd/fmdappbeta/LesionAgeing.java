@@ -43,8 +43,8 @@ public class LesionAgeing extends Activity {
 
         final Bundle newBundle = new Bundle();
 
-        final String[] vesItems = new String[]{"VESICLES | YES", "VESICLES | NO"};
-        final String[] fibItems = new String[]{"FIBRIN | YES", "FIBRIN | NO"};
+        final String[] vesItems = new String[]{"YES", "NO"};
+        final String[] fibItems = new String[]{"YES", "NO"};
         final String[] edgeItems = new String[]{"SMOOTH/ROUNDED", "SHARP"};
         final String[] healItems = new String[]{"HEALING(SMALL)", "HEALING(A LOT)", "NO"};
 
@@ -102,7 +102,7 @@ public class LesionAgeing extends Activity {
                 white.setTextColor(getResources().getColor(R.color.grey));
                 newBundle.putString("Q3","a");
                 edgeSpin.setEnabled(true);
-                if(fibSpin.getSelectedItem().toString().equals("FIBRIN | YES") && edgeSpin.getSelectedItem().toString().equals("SHARP")){
+                if(fibSpin.getSelectedItem().toString().equals("YES") && edgeSpin.getSelectedItem().toString().equals("SHARP")){
                     healSpin.setEnabled(false);
                 }else{
                     redClicked[0] = true;
@@ -176,7 +176,7 @@ public class LesionAgeing extends Activity {
         vesSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(vesSpin.getSelectedItem().toString().equals("VESICLES | YES")){
+                if(vesSpin.getSelectedItem().toString().equals("YES")){
                     newBundle.putString("Q1", "a");
                     fibSpin.setEnabled(false);
                     red.setEnabled(false);
@@ -194,7 +194,7 @@ public class LesionAgeing extends Activity {
                     white.setBackgroundResource(R.color.white);
                     white.setTextColor(getResources().getColor(R.color.grey));
                 }else{
-                    if(fibSpin.getSelectedItem().toString().equals("FIBRIN | YES")){
+                    if(fibSpin.getSelectedItem().toString().equals("YES")){
                         yellow.setEnabled(false);
                         white.setEnabled(false);
                     }else{
@@ -220,7 +220,7 @@ public class LesionAgeing extends Activity {
         fibSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(fibSpin.getSelectedItem().toString().equals("FIBRIN | YES")){
+                if(fibSpin.getSelectedItem().toString().equals("YES")){
                     newBundle.putString("Q2", "a");
                     yellow.setEnabled(false);
                     white.setEnabled(false);
@@ -228,7 +228,7 @@ public class LesionAgeing extends Activity {
                     yellow.setTextColor(getResources().getColor(R.color.grey));
                     white.setBackgroundResource(R.color.white);
                     white.setTextColor(getResources().getColor(R.color.grey));
-                    if(vesSpin.getSelectedItem().toString().equals("VESICLES | YES")){
+                    if(vesSpin.getSelectedItem().toString().equals("YES")){
                         edgeSpin.setEnabled(false);
                         healSpin.setEnabled(false);
                     }else{
@@ -257,14 +257,14 @@ public class LesionAgeing extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(edgeSpin.getSelectedItem().toString().equals("SMOOTH/ROUNDED")){
                     newBundle.putString("Q4", "a");
-                    if(vesSpin.getSelectedItem().toString().equals("VESICLES | YES")){
+                    if(vesSpin.getSelectedItem().toString().equals("YES")){
                         healSpin.setEnabled(false);
                     }else{
                         healSpin.setEnabled(true);
                     }
                 }else{
                     newBundle.putString("Q4", "b");
-                    if(!redClicked[0] || (redClicked[0] && fibSpin.getSelectedItem().toString().equals("FIBRIN | YES"))){
+                    if(!redClicked[0] || (redClicked[0] && fibSpin.getSelectedItem().toString().equals("YES"))){
                         healSpin.setEnabled(false);
                     }else{
                         healSpin.setEnabled(true);
@@ -349,12 +349,12 @@ public class LesionAgeing extends Activity {
                     white.setTextColor(getResources().getColor(R.color.grey));
                     edgeSpin.setBackgroundResource(R.color.white);
                     healSpin.setBackgroundResource(R.color.white);
-                    if(vesSpin.getSelectedItem().toString().equals("VESICLES | YES")){
+                    if(vesSpin.getSelectedItem().toString().equals("YES")){
                         vesSpin.setEnabled(true);
                     }else{
                         vesSpin.setEnabled(true);
                         fibSpin.setEnabled(true);
-                        if(fibSpin.getSelectedItem().toString().equals("FIBRIN | YES")){
+                        if(fibSpin.getSelectedItem().toString().equals("YES")){
                             red.setEnabled(true);
                             pink.setEnabled(true);
                         }else{
@@ -382,7 +382,7 @@ public class LesionAgeing extends Activity {
             public void onClick(View v) {
 
                 if(!locker.isChecked()){
-                    Toast.makeText(getBaseContext(), "Lock the switch before proceed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
                     return;
                 }
 

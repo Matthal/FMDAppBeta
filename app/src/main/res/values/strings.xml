@@ -13,6 +13,7 @@
     <string name="insert_notes">Insert Notes</string>
     <string name="category">Category</string>
     <string name="contact">Direct contact with animal areas</string>
+    <string name="species">Species</string>
     <string name="X">X</string>
 
     //MAIN
@@ -26,26 +27,26 @@
 
     //FARM CREATION
     <string name="text_farm_creation">FARM INFORMATION</string>
-    <string name="hint_vet">Vet name</string>
-    <string name="hint_owner">Farm owner</string>
+    <string name="text_info">Enter the following information</string>
+    <string name="hint_investigator">Investigator name</string>
+    <string name="hint_Interviewee">Interviewee name</string>
     <string name="hint_farm">Farm name</string>
+    <string name="address">Address</string>
     <string name="country">Select a country</string>
 
     //ANIMAL CREATION
     <string name="text_animal_creation">ANIMAL INFORMATION</string>
     <string name="id">Identification</string>
-    <string name="hint_ID">ID/Name</string>
-    <string name="hint_Group_ID">Group</string>
+    <string name="hint_ID">ID Number/Name</string>
+    <string name="hint_Group_ID">Group ID/Name</string>
     <string name="age">Age</string>
-    <string name="hint_years">Years</string>
-    <string name="hint_months">Months</string>
-    <string name="animal">Animal</string>
     <string name="hint_other">Other</string>
-    <string name="hint_sign">Reported onset of clinical sign</string>
-    <string name="vaccinated">Vaccination</string>
+    <string name="sex">Sex</string>
+    <string name="sign">Reported date of onset of clinical signs</string>
+    <string name="vaccinated">Vaccination status</string>
 
     //LESION AGEING
-    <string name="text_lesion_ageing">LESION REPORT</string>
+    <string name="text_lesion_ageing">LESION DESCRIPTION</string>
     <string name="vesicles">Vesicles</string>
     <string name="fibrin">Fibrin</string>
     <string name="gallery">Gallery</string>
@@ -80,9 +81,6 @@
     <string name="people">People</string>
     <string name="vehicles">Vehicles</string>
 
-    //ANIMAL TRACK
-    <string name="species">Species</string>
-
     //COMPLETE
     <string name="text_complete">LESION AGEING CALCULATOR</string>
     <string name="lesion_id">Lesion ID</string>
@@ -96,18 +94,6 @@
     //ERROR
     <string name="error">ERROR</string>
     <string name="text_error">Please try again. </string>
-
-    //QUESTIONS
-    <string name="q1">Is there a vesicle?</string>
-    <string name="q2">Is there fibrin present?</string>
-    <string name="q3">What colour is the base of the erosion?</string>
-    <string name="q4">How do the edges appear?</string>
-    <string name="round">Round/Smooth</string>
-    <string name="sharp">Sharp</string>
-    <string name="q5">What is the extent of healing (re-epithelialisation) from around the edges of the lesion?</string>
-    <string name="small">Healing (small)</string>
-    <string name="lot">Healing (a lot)</string>
-    <string name="photo">See photo examples</string>
 
     //DIAGNOSTICS OVERVIEW
     <string name="text_diagn_ovw">DIAGNOSTIC OVERVIEW</string>

@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -37,12 +38,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class FarmCreation extends Activity {
+public class FarmCreation extends Activity implements AdapterView.OnItemSelectedListener{
 
     //private DatabaseReference mDatabase;
     double longitude;
     double latitude;
     LocationManager lm;
+
+    Spinner position;
+    EditText other;
 
     boolean lock = false;
 
@@ -60,8 +64,18 @@ public class FarmCreation extends Activity {
         final EditText name = findViewById(R.id.vetName);
         final EditText owner = findViewById(R.id.owner);
         final EditText farm = findViewById(R.id.farmName);
+        final EditText address = findViewById(R.id.address);
 
+        position = findViewById(R.id.position);
         final Spinner spinner = findViewById(R.id.country);
+
+        other = findViewById(R.id.other);
+
+        final String[] pos = new String[]{"Owner", "Farm manager", "Farm worker", "Other"};
+        ArrayAdapter<String> posAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, pos);
+        posAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        position.setAdapter(posAdapter);
+        position.setOnItemSelectedListener(this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, CountryDetails.country);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -120,6 +134,14 @@ public class FarmCreation extends Activity {
                         owner.setBackgroundResource(R.color.TLyellow);
                         lock = true;
                     }
+                    position.setBackgroundResource(R.color.colorPrimary);
+                    if (!other.getText().toString().trim().isEmpty()) {
+                        other.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        other.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
                     if (!farm.getText().toString().trim().isEmpty()) {
                         farm.setBackgroundResource(R.color.colorPrimary);
                         lock = false;
@@ -127,19 +149,33 @@ public class FarmCreation extends Activity {
                         farm.setBackgroundResource(R.color.TLyellow);
                         lock = true;
                     }
+                    if (!address.getText().toString().trim().isEmpty()) {
+                        address.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    } else {
+                        address.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
+                    }
                     spinner.setBackgroundResource(R.color.colorPrimary);
                     name.setEnabled(false);
                     owner.setEnabled(false);
+                    position.setEnabled(false);
                     farm.setEnabled(false);
+                    address.setEnabled(false);
                     spinner.setEnabled(false);
                 }else{
                     name.setBackgroundResource(R.color.white);
                     owner.setBackgroundResource(R.color.white);
+                    position.setBackgroundResource(R.color.white);
+                    other.setBackgroundResource(R.color.white);
                     farm.setBackgroundResource(R.color.white);
+                    address.setBackgroundResource(R.color.white);
                     spinner.setBackgroundResource(R.color.white);
                     name.setEnabled(true);
                     owner.setEnabled(true);
+                    position.setEnabled(true);
                     farm.setEnabled(true);
+                    address.setEnabled(true);
                     spinner.setEnabled(true);
                 }
             }
@@ -163,7 +199,7 @@ public class FarmCreation extends Activity {
                 startActivity(intent);*/
 
                 if(!locker.isChecked()){
-                    Toast.makeText(getBaseContext(), "Lock the switch before proceed", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -254,5 +290,17 @@ public class FarmCreation extends Activity {
         }
     };
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        if(parent.getItemAtPosition(pos) == "Other"){
+            position.setVisibility(View.INVISIBLE);
+            other.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+
+    }
 
 }

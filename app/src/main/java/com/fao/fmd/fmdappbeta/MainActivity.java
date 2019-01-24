@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
                 /*DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 System.out.println(DatabaseHelper.getTableAsString(db, "animals"));*/
-                /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
-                startActivity(intent);*/
+                Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
+                startActivity(intent);
             }
         });
 

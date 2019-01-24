@@ -125,7 +125,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="1dp"
             android:text="Sync"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"/>
 
         <TextView
             android:layout_width="match_parent"
