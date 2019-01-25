@@ -60,7 +60,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final String[] sex = new String[]{"M", "F"};
         final String[] years = new String[]{"0 year","1 year","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10 years","11 years","12 years","13 years","14 years","15 years"};
         final String[] months = new String[]{"1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months","12 months"};
-        final String[] vaccination = new String[]{"≤6 months", ">6 months"};
+        final String[] vaccination = new String[]{"No", "≤6 months", ">6 months"};
 
         final Spinner yearsSpin = findViewById(R.id.animalYears);
         ArrayAdapter<String> yearsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
@@ -199,7 +199,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             }
 
             int vaccined;
-            if(vaccSpin.getSelectedItem().toString().equals("<6 months")){
+            if(vaccSpin.getSelectedItem().toString().equals(">6 months")){
                 vaccined = 1;
             }else{
                 vaccined = 0;
