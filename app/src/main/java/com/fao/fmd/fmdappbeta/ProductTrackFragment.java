@@ -1,6 +1,5 @@
 package com.fao.fmd.fmdappbeta;
 
-
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -29,14 +28,13 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
-
 public class ProductTrackFragment extends Fragment implements AdapterView.OnItemSelectedListener{
 
     View view;
     Date dayZero;
     Spinner category;
     EditText other;
-
+    Button close;
 
     public ProductTrackFragment() {
         // Required empty public constructor
@@ -87,6 +85,15 @@ public class ProductTrackFragment extends Fragment implements AdapterView.OnItem
 
         final EditText notes = view.findViewById(R.id.note);
         other = view.findViewById(R.id.other);
+        close = view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            }
+        });
 
         String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
 
@@ -240,6 +247,7 @@ public class ProductTrackFragment extends Fragment implements AdapterView.OnItem
         if(parent.getItemAtPosition(pos) == "Other"){
             category.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
+            close.setVisibility(View.VISIBLE);
         }
     }
 

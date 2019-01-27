@@ -114,6 +114,19 @@
             android:inputType="text"
             android:visibility="invisible" />
 
+        <Button
+            android:id="@+id/close"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/owner"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:text="@string/X"
+            android:visibility="invisible"/>
+
         <EditText
             android:id="@+id/farmName"
             android:layout_width="140dp"
@@ -167,7 +180,6 @@
             android:background="#ffffff"
             style="@style/Widget.AppCompat.DropDownItem.Spinner"
             android:spinnerMode="dropdown" />
-
 
         <TextView
             android:layout_width="match_parent"

@@ -1,21 +1,24 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class VesiclesGallery extends Activity {
 
-    List<SectionedGridRecyclerViewAdapter.Section> sections;
-    SectionedGridRecyclerViewAdapter mSectionedAdapter;
+    private ArrayList<Integer> ImagesArray = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,39 +40,23 @@ public class VesiclesGallery extends Activity {
         light.setLayoutParams(paramLight);
         dark.setLayoutParams(paramDark);
 
-        //Your RecyclerView
-        RecyclerView mRecyclerView = findViewById(R.id.recycler);
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(VesiclesGallery.this,4));
+        Bundle g = getIntent().getExtras();
 
-        //Your RecyclerView.Adapter
-        SimpleAdapter mAdapter = new SimpleAdapter(VesiclesGallery.this);
+        init(g.getString("img"));
 
-        //This is the code to provide a sectioned grid
-        sections = new ArrayList<>();
+        GridView gridView = findViewById(R.id.galleryGridView);
 
-        //Sections
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(0,"Vesicles"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(7,"Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(14,"Red Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(21,"Pink Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(28,"Red No Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(34,"Pink No Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(39,"White Smooth No Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(45,"Red Smooth Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(50,"Red Sharp Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(52,"Pink Smooth Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(57,"Red Smooth No Fibrin"));
-        sections.add(new SectionedGridRecyclerViewAdapter.Section(59,"Red Sharp No Fibrin"));
-        //sections.add(new SectionedGridRecyclerViewAdapter.Section(20,"Pink Smooth"));
+        // Instance of ImageAdapter Class
+        gridView.setAdapter(new ImageAdapter(this, ImagesArray));
 
-        //Add your adapter to the sectionAdapter
-        SectionedGridRecyclerViewAdapter.Section[] dummy = new SectionedGridRecyclerViewAdapter.Section[sections.size()];
-        mSectionedAdapter = new SectionedGridRecyclerViewAdapter(this,R.layout.section,R.id.section_text,mRecyclerView,mAdapter);
-        mSectionedAdapter.setSections(sections.toArray(dummy));
-
-        //Apply this adapter to the RecyclerView
-        mRecyclerView.setAdapter(mSectionedAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Intent i = new Intent(getApplicationContext(), PhotoViewer.class);
+                i.putExtra("img", ImagesArray.get(position));
+                startActivity(i);
+            }
+        });
 
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(new View.OnClickListener() {
@@ -79,5 +66,62 @@ public class VesiclesGallery extends Activity {
             }
         });
 
+    }
+
+    private void init(String id) {
+
+        if(id.equals("1")){
+            final Integer[] IMAGES = {R.drawable.onetwo_photo_1,R.drawable.onetwo_photo_2,R.drawable.onetwo_photo_3,R.drawable.onetwo_photo_4,R.drawable.onetwo_photo_5,R.drawable.onetwo_photo_6};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("2-3")){
+            final Integer[] IMAGES = {R.drawable.twothree_photo_1,R.drawable.twothree_photo_2,R.drawable.twothree_photo_3,R.drawable.twothree_photo_4,R.drawable.twothree_photo_5,R.drawable.twothree_photo_6,R.drawable.twothree_photo_7,R.drawable.twothree_photo_8,R.drawable.twothree_photo_9,R.drawable.twothree_photo_10,R.drawable.twothree_photo_11};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("3-4")){
+            final Integer[] IMAGES = {R.drawable.threefour_photo_1,R.drawable.threefour_photo_2,R.drawable.threefour_photo_3,R.drawable.threefour_photo_4,R.drawable.threefour_photo_5,R.drawable.threefour_photo_6,R.drawable.threefour_photo_7,R.drawable.threefour_photo_8};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("4-5")){
+            final Integer[] IMAGES = {R.drawable.fourfive_photo_1,R.drawable.fourfive_photo_2,R.drawable.fourfive_photo_3,R.drawable.fourfive_photo_4,R.drawable.fourfive_photo_5,R.drawable.fourfive_photo_6,R.drawable.fourfive_photo_7,R.drawable.fourfive_photo_8,R.drawable.fourfive_photo_9,R.drawable.fourfive_photo_10,R.drawable.fourfive_photo_11,R.drawable.fourfive_photo_12,R.drawable.fourfive_photo_13,R.drawable.fourfive_photo_14,R.drawable.fourfive_photo_15,R.drawable.fourfive_photo_16};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("5-7")){
+            final Integer[] IMAGES = {R.drawable.fiveseven_photo_1,R.drawable.fiveseven_photo_2,R.drawable.fiveseven_photo_3,R.drawable.fiveseven_photo_4,R.drawable.fiveseven_photo_5,R.drawable.fiveseven_photo_6,R.drawable.fiveseven_photo_7,R.drawable.fiveseven_photo_8,R.drawable.fiveseven_photo_9,R.drawable.fiveseven_photo_10,R.drawable.fiveseven_photo_11,R.drawable.fiveseven_photo_12,R.drawable.fiveseven_photo_13,R.drawable.fiveseven_photo_14,R.drawable.fiveseven_photo_15,R.drawable.fiveseven_photo_16,R.drawable.fiveseven_photo_17};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("7-10")){
+            final Integer[] IMAGES = {R.drawable.seventen_photo_1};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("10-14")){
+            final Integer[] IMAGES = {R.drawable.tenfourteen_photo_1,R.drawable.tenfourteen_photo_2,R.drawable.tenfourteen_photo_3,R.drawable.tenfourteen_photo_4,R.drawable.tenfourteen_photo_5};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("14+")){
+            final Integer[] IMAGES = {R.drawable.fourteenplus_photo_1,R.drawable.fourteenplus_photo_2,R.drawable.fourteenplus_photo_3};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+
+        if(id.equals("ves")){
+            final Integer[] IMAGES = {R.drawable.ves_photo_1,R.drawable.ves_photo_2,R.drawable.ves_photo_3,R.drawable.ves_photo_4,R.drawable.ves_photo_5,R.drawable.ves_photo_6,R.drawable.ves_photo_7};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("fib")){
+            final Integer[] IMAGES = {R.drawable.fib_photo_1,R.drawable.fib_photo_2,R.drawable.fib_photo_3,R.drawable.fib_photo_4,R.drawable.fib_photo_5,R.drawable.fib_photo_6,R.drawable.fib_photo_7};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("red")){
+            final Integer[] IMAGES = {R.drawable.redyes_photo_1,R.drawable.redyes_photo_2,R.drawable.redyes_photo_3,R.drawable.redyes_photo_4,R.drawable.redyes_photo_5,R.drawable.redyes_photo_6,R.drawable.redyes_photo_7,R.drawable.redno_photo_1,R.drawable.redno_photo_2,R.drawable.redno_photo_3,R.drawable.redno_photo_4,R.drawable.redno_photo_5,R.drawable.redno_photo_6,R.drawable.redyesround_photo_2,R.drawable.redyesround_photo_3,R.drawable.redyesround_photo_4,R.drawable.redyesround_photo_5,R.drawable.redyessharp_photo_2,R.drawable.rednosharp_photo_1,R.drawable.rednosharp_photo_3,R.drawable.rednosharp_photo_4};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("pink")){
+            final Integer[] IMAGES = {R.drawable.pinkyes_photo_1,R.drawable.pinkyes_photo_2,R.drawable.pinkyes_photo_3,R.drawable.pinkyes_photo_4,R.drawable.pinkyes_photo_5,R.drawable.pinkyes_photo_6,R.drawable.pinkyes_photo_7,R.drawable.pinkno_photo_1,R.drawable.pinkno_photo_2,R.drawable.pinkno_photo_3,R.drawable.pinkno_photo_4,R.drawable.pinkno_photo_5,R.drawable.pinkyesround_photo_1,R.drawable.pinkyesround_photo_2,R.drawable.pinkyesround_photo_3,R.drawable.pinkyesround_photo_4};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
+        if(id.equals("white")){
+            final Integer[] IMAGES = {R.drawable.white_photo_1,R.drawable.white_photo_2,R.drawable.white_photo_3,R.drawable.white_photo_4,R.drawable.white_photo_5,R.drawable.white_photo_6};
+            ImagesArray.addAll(Arrays.asList(IMAGES));
+        }
     }
 }

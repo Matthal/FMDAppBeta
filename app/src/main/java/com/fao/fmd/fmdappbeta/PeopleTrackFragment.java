@@ -37,6 +37,7 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
     Date dayZero;
     Spinner category;
     EditText other;
+    Button close;
 
     public PeopleTrackFragment() {
         // Required empty public constructor
@@ -87,6 +88,15 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
 
         final EditText notes = view.findViewById(R.id.note);
         other = view.findViewById(R.id.other);
+        close = view.findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                category.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            }
+        });
 
         String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
 
@@ -238,6 +248,7 @@ public class PeopleTrackFragment extends Fragment implements AdapterView.OnItemS
         if(parent.getItemAtPosition(pos) == "Other"){
             category.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
+            close.setVisibility(View.VISIBLE);
         }
     }
 

@@ -240,6 +240,10 @@ public class Timeline extends AppCompatActivity {
         File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
         if (!pdfDir.exists()){
             boolean i = pdfDir.mkdirs();
+            if(!i){
+                Toast.makeText(getBaseContext(), "Permission to write not granted. Please, verify your permissions", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
         Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline)); // here give id of our root layout (here its my RelativeLayout's id)
         //Now create the name of your PDF file that you will generate

@@ -53,8 +53,9 @@ public class CompleteFragment extends Fragment {
         TextView id = view.findViewById(R.id.lesID);
         id.append(Integer.toString(bundle.getInt("id")));
 
+        String res = bundle.getString("res");
         TextView text = view.findViewById(R.id.days);
-        text.append(bundle.getString("res"));
+        text.append(res);
 
         Button exBtn = view.findViewById(R.id.exBtn);
         Button diagnBtn = view.findViewById(R.id.diagnBtn);
@@ -68,9 +69,10 @@ public class CompleteFragment extends Fragment {
         exBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("tag","complete");
-                Intent intent = new Intent(getActivity(), LesionAgeingGallery.class);
-                intent.putExtras(bundle);
+                Bundle g = new Bundle();
+                g.putString("img",res);
+                Intent intent = new Intent(getActivity(), VesiclesGallery.class);
+                intent.putExtras(g);
                 startActivity(intent);
             }
         });

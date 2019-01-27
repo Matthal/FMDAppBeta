@@ -15,6 +15,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 public class LesionAgeing extends Activity {
 
     @Override
@@ -58,15 +60,6 @@ public class LesionAgeing extends Activity {
         fibAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         fibSpin.setAdapter(fibAdapter);
 
-        Button galleryBtn = findViewById(R.id.gallery);
-        galleryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
-                startActivity(intent);
-            }
-        });
-
         final Button red = findViewById(R.id.colRed);
         final boolean[] redClicked = {false};
         final boolean[] redSel = {false};
@@ -87,6 +80,11 @@ public class LesionAgeing extends Activity {
         healAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         healSpin.setAdapter(healAdapter);
 
+        TextView textFib = findViewById(R.id.text_fib);
+        TextView textColour = findViewById(R.id.text_colour);
+        TextView textEdges = findViewById(R.id.text_edges);
+        TextView textHeal = findViewById(R.id.text_heal);
+
         //LISTENERS
         red.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,12 +99,15 @@ public class LesionAgeing extends Activity {
                 white.setBackgroundResource(R.color.white);
                 white.setTextColor(getResources().getColor(R.color.grey));
                 newBundle.putString("Q3","a");
-                edgeSpin.setEnabled(true);
+                textEdges.setVisibility(View.VISIBLE);
+                edgeSpin.setVisibility(View.VISIBLE);
                 if(fibSpin.getSelectedItem().toString().equals("YES") && edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                    healSpin.setEnabled(false);
+                    textHeal.setVisibility(View.INVISIBLE);
+                    healSpin.setVisibility(View.INVISIBLE);
                 }else{
                     redClicked[0] = true;
-                    healSpin.setEnabled(true);
+                    textHeal.setVisibility(View.VISIBLE);
+                    healSpin.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -124,8 +125,10 @@ public class LesionAgeing extends Activity {
                 white.setBackgroundResource(R.color.white);
                 white.setTextColor(getResources().getColor(R.color.grey));
                 newBundle.putString("Q3","c");
-                edgeSpin.setEnabled(false);
-                healSpin.setEnabled(false);
+                textEdges.setVisibility(View.INVISIBLE);
+                edgeSpin.setVisibility(View.INVISIBLE);
+                textHeal.setVisibility(View.INVISIBLE);
+                healSpin.setVisibility(View.INVISIBLE);
             }
         });
         pink.setOnClickListener(new View.OnClickListener() {
@@ -142,11 +145,14 @@ public class LesionAgeing extends Activity {
                 white.setBackgroundResource(R.color.white);
                 white.setTextColor(getResources().getColor(R.color.grey));
                 newBundle.putString("Q3","b");
-                edgeSpin.setEnabled(true);
+                textEdges.setVisibility(View.VISIBLE);
+                edgeSpin.setVisibility(View.VISIBLE);
                 if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                    healSpin.setEnabled(false);
+                    textHeal.setVisibility(View.INVISIBLE);
+                    healSpin.setVisibility(View.INVISIBLE);
                 }else{
-                    healSpin.setEnabled(true);
+                    textHeal.setVisibility(View.VISIBLE);
+                    healSpin.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -164,11 +170,14 @@ public class LesionAgeing extends Activity {
                 white.setBackgroundResource(R.color.green);
                 white.setTextColor(getResources().getColor(R.color.black));
                 newBundle.putString("Q3","d");
-                edgeSpin.setEnabled(true);
+                textEdges.setVisibility(View.VISIBLE);
+                edgeSpin.setVisibility(View.VISIBLE);
                 if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                    healSpin.setEnabled(false);
+                    textHeal.setVisibility(View.INVISIBLE);
+                    healSpin.setVisibility(View.INVISIBLE);
                 }else{
-                    healSpin.setEnabled(true);
+                    textHeal.setVisibility(View.VISIBLE);
+                    healSpin.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -178,13 +187,17 @@ public class LesionAgeing extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(vesSpin.getSelectedItem().toString().equals("YES")){
                     newBundle.putString("Q1", "a");
-                    fibSpin.setEnabled(false);
-                    red.setEnabled(false);
-                    yellow.setEnabled(false);
-                    pink.setEnabled(false);
-                    white.setEnabled(false);
-                    edgeSpin.setEnabled(false);
-                    healSpin.setEnabled(false);
+                    textFib.setVisibility(View.INVISIBLE);
+                    fibSpin.setVisibility(View.INVISIBLE);
+                    textColour.setVisibility(View.INVISIBLE);
+                    red.setVisibility(View.INVISIBLE);
+                    yellow.setVisibility(View.INVISIBLE);
+                    pink.setVisibility(View.INVISIBLE);
+                    white.setVisibility(View.INVISIBLE);
+                    textEdges.setVisibility(View.INVISIBLE);
+                    edgeSpin.setVisibility(View.INVISIBLE);
+                    textHeal.setVisibility(View.INVISIBLE);
+                    healSpin.setVisibility(View.INVISIBLE);
                     red.setBackgroundResource(R.color.white);
                     red.setTextColor(getResources().getColor(R.color.grey));
                     yellow.setBackgroundResource(R.color.white);
@@ -195,18 +208,22 @@ public class LesionAgeing extends Activity {
                     white.setTextColor(getResources().getColor(R.color.grey));
                 }else{
                     if(fibSpin.getSelectedItem().toString().equals("YES")){
-                        yellow.setEnabled(false);
-                        white.setEnabled(false);
+                        yellow.setVisibility(View.INVISIBLE);
+                        white.setVisibility(View.INVISIBLE);
                     }else{
-                        yellow.setEnabled(true);
-                        white.setEnabled(true);
+                        yellow.setVisibility(View.VISIBLE);
+                        white.setVisibility(View.VISIBLE);
                     }
                     newBundle.putString("Q1", "b");
-                    fibSpin.setEnabled(true);
-                    red.setEnabled(true);
-                    pink.setEnabled(true);
-                    edgeSpin.setEnabled(true);
-                    healSpin.setEnabled(true);
+                    textFib.setVisibility(View.VISIBLE);
+                    fibSpin.setVisibility(View.VISIBLE);
+                    textColour.setVisibility(View.VISIBLE);
+                    red.setVisibility(View.VISIBLE);
+                    pink.setVisibility(View.VISIBLE);
+                    textEdges.setVisibility(View.VISIBLE);
+                    edgeSpin.setVisibility(View.VISIBLE);
+                    textHeal.setVisibility(View.VISIBLE);
+                    healSpin.setVisibility(View.VISIBLE);
                     System.out.println(newBundle);
                 }
             }
@@ -222,28 +239,32 @@ public class LesionAgeing extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(fibSpin.getSelectedItem().toString().equals("YES")){
                     newBundle.putString("Q2", "a");
-                    yellow.setEnabled(false);
-                    white.setEnabled(false);
+                    yellow.setVisibility(View.INVISIBLE);
+                    white.setVisibility(View.INVISIBLE);
                     yellow.setBackgroundResource(R.color.white);
                     yellow.setTextColor(getResources().getColor(R.color.grey));
                     white.setBackgroundResource(R.color.white);
                     white.setTextColor(getResources().getColor(R.color.grey));
                     if(vesSpin.getSelectedItem().toString().equals("YES")){
-                        edgeSpin.setEnabled(false);
-                        healSpin.setEnabled(false);
+                        textEdges.setVisibility(View.INVISIBLE);
+                        edgeSpin.setVisibility(View.INVISIBLE);
+                        textHeal.setVisibility(View.INVISIBLE);
+                        healSpin.setVisibility(View.INVISIBLE);
                     }else{
                         if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                            healSpin.setEnabled(false);
+                            textHeal.setVisibility(View.INVISIBLE);
+                            healSpin.setVisibility(View.INVISIBLE);
                         }else{
-                            healSpin.setEnabled(true);
+                            textHeal.setVisibility(View.VISIBLE);
+                            healSpin.setVisibility(View.VISIBLE);
                         }
-                        edgeSpin.setEnabled(true);
+                        textEdges.setVisibility(View.VISIBLE);
+                        edgeSpin.setVisibility(View.VISIBLE);
                     }
-
                 }else{
                     newBundle.putString("Q2", "b");
-                    yellow.setEnabled(true);
-                    white.setEnabled(true);
+                    yellow.setVisibility(View.VISIBLE);
+                    white.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -258,16 +279,20 @@ public class LesionAgeing extends Activity {
                 if(edgeSpin.getSelectedItem().toString().equals("SMOOTH/ROUNDED")){
                     newBundle.putString("Q4", "a");
                     if(vesSpin.getSelectedItem().toString().equals("YES")){
-                        healSpin.setEnabled(false);
+                        textHeal.setVisibility(View.INVISIBLE);
+                        healSpin.setVisibility(View.INVISIBLE);
                     }else{
-                        healSpin.setEnabled(true);
+                        textHeal.setVisibility(View.VISIBLE);
+                        healSpin.setVisibility(View.VISIBLE);
                     }
                 }else{
                     newBundle.putString("Q4", "b");
                     if(!redClicked[0] || (redClicked[0] && fibSpin.getSelectedItem().toString().equals("YES"))){
-                        healSpin.setEnabled(false);
+                        textHeal.setVisibility(View.INVISIBLE);
+                        healSpin.setVisibility(View.INVISIBLE);
                     }else{
-                        healSpin.setEnabled(true);
+                        textHeal.setVisibility(View.VISIBLE);
+                        healSpin.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -365,6 +390,63 @@ public class LesionAgeing extends Activity {
                         }
                     }
                 }
+            }
+        });
+
+        Bundle g = new Bundle();
+
+        Button vesGalleryBtn = findViewById(R.id.vesGallery);
+        vesGalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.putString("img","ves");
+                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+                intent.putExtras(g);
+                startActivity(intent);
+            }
+        });
+
+        Button fibGalleryBtn = findViewById(R.id.fibGallery);
+        fibGalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.putString("img","fib");
+                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+                intent.putExtras(g);
+                startActivity(intent);
+            }
+        });
+
+        Button redGalleryBtn = findViewById(R.id.redGallery);
+        redGalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.putString("img","red");
+                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+                intent.putExtras(g);
+                startActivity(intent);
+            }
+        });
+
+        Button pinkGalleryBtn = findViewById(R.id.pinkGallery);
+        pinkGalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.putString("img","pink");
+                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+                intent.putExtras(g);
+                startActivity(intent);
+            }
+        });
+
+        Button whiteGalleryBtn = findViewById(R.id.whiteGallery);
+        whiteGalleryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                g.putString("img","white");
+                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+                intent.putExtras(g);
+                startActivity(intent);
             }
         });
 

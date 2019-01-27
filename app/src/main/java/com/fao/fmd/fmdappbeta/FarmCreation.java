@@ -20,6 +20,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,6 +48,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
     Spinner position;
     EditText other;
+    Button close;
 
     boolean lock = false;
 
@@ -70,6 +72,15 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         final Spinner spinner = findViewById(R.id.country);
 
         other = findViewById(R.id.other);
+        close = findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                position.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            }
+        });
 
         final String[] pos = new String[]{"Owner", "Farm manager", "Farm worker", "Other"};
         ArrayAdapter<String> posAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, pos);
@@ -295,6 +306,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         if(parent.getItemAtPosition(pos) == "Other"){
             position.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
+            close.setVisibility(View.VISIBLE);
         }
     }
 

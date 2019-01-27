@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
+    android:background="#f2f2f2"
     tools:context=".VesiclesGallery" >
 
     <android.support.v7.widget.Toolbar
@@ -48,21 +49,24 @@
             android:text="@string/text_gallery"
             android:textSize="16sp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/info">
-
-        </android.support.v7.widget.RecyclerView>
-
-        <ImageView
-            android:id="@+id/expanded_image"
+        <GridView
+            android:id="@+id/galleryGridView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible" />
+            android:layout_below="@+id/info"
+            android:layout_above="@+id/grey"
+            android:paddingTop="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:numColumns="auto_fit"
+            android:columnWidth="172dp"
+            android:horizontalSpacing="5dp"
+            android:verticalSpacing="5dp"
+            android:gravity="center"
+            android:stretchMode="columnWidth" />
 
         <TextView
+            android:id="@+id/grey"
             android:layout_width="match_parent"
             android:layout_height="70sp"
             android:layout_above="@id/progbar"

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +28,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     Spinner spinner;
     Spinner sexSpin;
     EditText other;
+    Button close;
 
     boolean lock = false;
 
@@ -55,6 +57,16 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final EditText animal = findViewById(R.id.animalID);
         final EditText group = findViewById(R.id.groupID);
         other = findViewById(R.id.other);
+
+        close = findViewById(R.id.close);
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                spinner.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            }
+        });
 
         final String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
         final String[] sex = new String[]{"M", "F"};
@@ -248,6 +260,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         if(parent.getItemAtPosition(pos) == "Other"){
            spinner.setVisibility(View.INVISIBLE);
            other.setVisibility(View.VISIBLE);
+           close.setVisibility(View.VISIBLE);
         }
     }
 

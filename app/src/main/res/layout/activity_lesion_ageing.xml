@@ -74,7 +74,21 @@
             android:background="#ffffff"
             android:spinnerMode="dropdown" />
 
+        <Button
+            android:id="@+id/vesGallery"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/ves"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="-5dp"
+            android:text="@string/gallery"
+            android:layout_marginEnd="25dp" />
+
         <TextView
+            android:id="@+id/text_fib"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/fib"
@@ -82,7 +96,8 @@
             android:layout_alignBottom="@+id/fib"
             android:layout_marginBottom="43dp"
             android:text="@string/fibrin"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="invisible"/>
 
         <Spinner
             android:id="@+id/fib"
@@ -95,22 +110,25 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="170dp"
             android:background="#ffffff"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:visibility="invisible"/>
 
         <Button
-            android:id="@+id/gallery"
+            android:id="@+id/fibGallery"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="150dp"
-            android:layout_height="120dp"
-            android:layout_alignTop="@+id/ves"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/fib"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="25dp"
             android:layout_marginTop="-5dp"
             android:text="@string/gallery"
-            android:layout_marginEnd="25dp" />
+            android:layout_marginEnd="25dp"
+            android:visibility="invisible"/>
 
         <TextView
+            android:id="@+id/text_colour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/colRed"
@@ -118,11 +136,12 @@
             android:layout_alignBottom="@+id/colRed"
             android:layout_marginBottom="43dp"
             android:text="@string/color"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/colRed"
-            android:layout_width="150dp"
+            android:layout_width="75dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -131,7 +150,22 @@
             android:layout_marginTop="240dp"
             android:background="@color/white"
             android:textColor="@color/grey"
-            android:text="@string/red" />
+            android:text="@string/red"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/redGallery"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="85dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/colRed"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="-5dp"
+            android:text="@string/gallery"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/colYellow"
@@ -144,11 +178,12 @@
             android:layout_marginTop="240dp"
             android:background="@color/white"
             android:textColor="@color/grey"
-            android:text="@string/yellow" />
+            android:text="@string/yellow"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/colPink"
-            android:layout_width="150dp"
+            android:layout_width="75dp"
             android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
@@ -157,22 +192,53 @@
             android:layout_marginTop="290dp"
             android:background="@color/white"
             android:textColor="@color/grey"
-            android:text="@string/pink" />
+            android:text="@string/pink"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/pinkGallery"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="85dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/colPink"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="100dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="-5dp"
+            android:text="@string/gallery"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/colWhite"
-            android:layout_width="150dp"
+            android:layout_width="75dp"
             android:layout_height="40dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="100dp"
             android:layout_marginRight="25dp"
             android:layout_marginTop="290dp"
             android:background="@color/white"
             android:textColor="@color/grey"
-            android:text="@string/white" />
+            android:text="@string/white"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/whiteGallery"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="85dp"
+            android:layout_height="50dp"
+            android:layout_alignTop="@+id/colWhite"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="-5dp"
+            android:text="@string/gallery"
+            android:visibility="invisible"/>
 
         <TextView
+            android:id="@+id/text_edges"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/edge"
@@ -180,7 +246,8 @@
             android:layout_alignBottom="@+id/edge"
             android:layout_marginBottom="43dp"
             android:text="@string/edges"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="invisible"/>
 
         <Spinner
             android:id="@+id/edge"
@@ -193,9 +260,11 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="360dp"
             android:background="#ffffff"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:visibility="invisible"/>
 
         <TextView
+            android:id="@+id/text_heal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/heal"
@@ -203,7 +272,8 @@
             android:layout_alignBottom="@+id/heal"
             android:layout_marginBottom="43dp"
             android:text="@string/heal"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:visibility="invisible"/>
 
         <Spinner
             android:id="@+id/heal"
@@ -216,7 +286,8 @@
             android:layout_marginRight="25dp"
             android:layout_marginTop="360dp"
             android:background="#ffffff"
-            android:spinnerMode="dropdown" />
+            android:spinnerMode="dropdown"
+            android:visibility="invisible"/>
 
         <TextView
             android:id="@+id/grey"
