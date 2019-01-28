@@ -85,6 +85,12 @@ public class LesionAgeing extends Activity {
         TextView textEdges = findViewById(R.id.text_edges);
         TextView textHeal = findViewById(R.id.text_heal);
 
+        Button vesGalleryBtn = findViewById(R.id.vesGallery);
+        Button fibGalleryBtn = findViewById(R.id.fibGallery);
+        Button redGalleryBtn = findViewById(R.id.redGallery);
+        Button pinkGalleryBtn = findViewById(R.id.pinkGallery);
+        Button whiteGalleryBtn = findViewById(R.id.whiteGallery);
+
         //LISTENERS
         red.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,11 +195,15 @@ public class LesionAgeing extends Activity {
                     newBundle.putString("Q1", "a");
                     textFib.setVisibility(View.INVISIBLE);
                     fibSpin.setVisibility(View.INVISIBLE);
+                    fibGalleryBtn.setVisibility(View.INVISIBLE);
                     textColour.setVisibility(View.INVISIBLE);
                     red.setVisibility(View.INVISIBLE);
+                    redGalleryBtn.setVisibility(View.INVISIBLE);
                     yellow.setVisibility(View.INVISIBLE);
                     pink.setVisibility(View.INVISIBLE);
+                    pinkGalleryBtn.setVisibility(View.INVISIBLE);
                     white.setVisibility(View.INVISIBLE);
+                    whiteGalleryBtn.setVisibility(View.INVISIBLE);
                     textEdges.setVisibility(View.INVISIBLE);
                     edgeSpin.setVisibility(View.INVISIBLE);
                     textHeal.setVisibility(View.INVISIBLE);
@@ -210,21 +220,25 @@ public class LesionAgeing extends Activity {
                     if(fibSpin.getSelectedItem().toString().equals("YES")){
                         yellow.setVisibility(View.INVISIBLE);
                         white.setVisibility(View.INVISIBLE);
+                        whiteGalleryBtn.setVisibility(View.INVISIBLE);
                     }else{
                         yellow.setVisibility(View.VISIBLE);
                         white.setVisibility(View.VISIBLE);
+                        whiteGalleryBtn.setVisibility(View.VISIBLE);
                     }
                     newBundle.putString("Q1", "b");
                     textFib.setVisibility(View.VISIBLE);
                     fibSpin.setVisibility(View.VISIBLE);
+                    fibGalleryBtn.setVisibility(View.VISIBLE);
                     textColour.setVisibility(View.VISIBLE);
                     red.setVisibility(View.VISIBLE);
+                    redGalleryBtn.setVisibility(View.VISIBLE);
                     pink.setVisibility(View.VISIBLE);
+                    pinkGalleryBtn.setVisibility(View.VISIBLE);
                     textEdges.setVisibility(View.VISIBLE);
                     edgeSpin.setVisibility(View.VISIBLE);
                     textHeal.setVisibility(View.VISIBLE);
                     healSpin.setVisibility(View.VISIBLE);
-                    System.out.println(newBundle);
                 }
             }
 
@@ -241,6 +255,7 @@ public class LesionAgeing extends Activity {
                     newBundle.putString("Q2", "a");
                     yellow.setVisibility(View.INVISIBLE);
                     white.setVisibility(View.INVISIBLE);
+                    whiteGalleryBtn.setVisibility(View.INVISIBLE);
                     yellow.setBackgroundResource(R.color.white);
                     yellow.setTextColor(getResources().getColor(R.color.grey));
                     white.setBackgroundResource(R.color.white);
@@ -265,6 +280,7 @@ public class LesionAgeing extends Activity {
                     newBundle.putString("Q2", "b");
                     yellow.setVisibility(View.VISIBLE);
                     white.setVisibility(View.VISIBLE);
+                    whiteGalleryBtn.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -395,7 +411,6 @@ public class LesionAgeing extends Activity {
 
         Bundle g = new Bundle();
 
-        Button vesGalleryBtn = findViewById(R.id.vesGallery);
         vesGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -406,7 +421,6 @@ public class LesionAgeing extends Activity {
             }
         });
 
-        Button fibGalleryBtn = findViewById(R.id.fibGallery);
         fibGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -417,7 +431,6 @@ public class LesionAgeing extends Activity {
             }
         });
 
-        Button redGalleryBtn = findViewById(R.id.redGallery);
         redGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -428,7 +441,6 @@ public class LesionAgeing extends Activity {
             }
         });
 
-        Button pinkGalleryBtn = findViewById(R.id.pinkGallery);
         pinkGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -439,7 +451,6 @@ public class LesionAgeing extends Activity {
             }
         });
 
-        Button whiteGalleryBtn = findViewById(R.id.whiteGallery);
         whiteGalleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

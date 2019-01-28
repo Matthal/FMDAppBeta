@@ -15,8 +15,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -30,10 +28,6 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.IgnoreExtraProperties;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -41,7 +35,6 @@ import java.util.Locale;
 
 public class FarmCreation extends Activity implements AdapterView.OnItemSelectedListener{
 
-    //private DatabaseReference mDatabase;
     double longitude;
     double latitude;
     LocationManager lm;
@@ -73,13 +66,11 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
         other = findViewById(R.id.other);
         close = findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                position.setVisibility(View.VISIBLE);
-                other.setVisibility(View.INVISIBLE);
-                close.setVisibility(View.INVISIBLE);
-            }
+        close.setOnClickListener(v -> {
+            position.setSelection(0);
+            position.setVisibility(View.VISIBLE);
+            other.setVisibility(View.INVISIBLE);
+            close.setVisibility(View.INVISIBLE);
         });
 
         final String[] pos = new String[]{"Owner", "Farm manager", "Farm worker", "Other"};
@@ -127,142 +118,127 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         }
         registerReceiver(mGpsSwitchStateReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
 
+        Button gps = findViewById(R.id.gps);
+        TextView text_gps = findViewById(R.id.text_gps);
+        gps.setOnClickListener(v -> {
+            text_gps.setText("Lat: " + Double.toString(latitude) + "\nLong: " + Double.toString(longitude));
+            text_gps.setVisibility(View.VISIBLE);
+        });
+
+
         Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    if (!name.getText().toString().trim().isEmpty()) {
-                        name.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    } else {
-                        name.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
-                    }
-                    if (!owner.getText().toString().trim().isEmpty()) {
-                        owner.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    } else {
-                        owner.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
-                    }
-                    position.setBackgroundResource(R.color.colorPrimary);
-                    if (!other.getText().toString().trim().isEmpty()) {
-                        other.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    } else {
-                        other.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
-                    }
-                    if (!farm.getText().toString().trim().isEmpty()) {
-                        farm.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    } else {
-                        farm.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
-                    }
-                    if (!address.getText().toString().trim().isEmpty()) {
-                        address.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    } else {
-                        address.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
-                    }
-                    spinner.setBackgroundResource(R.color.colorPrimary);
-                    name.setEnabled(false);
-                    owner.setEnabled(false);
-                    position.setEnabled(false);
-                    farm.setEnabled(false);
-                    address.setEnabled(false);
-                    spinner.setEnabled(false);
-                }else{
-                    name.setBackgroundResource(R.color.white);
-                    owner.setBackgroundResource(R.color.white);
-                    position.setBackgroundResource(R.color.white);
-                    other.setBackgroundResource(R.color.white);
-                    farm.setBackgroundResource(R.color.white);
-                    address.setBackgroundResource(R.color.white);
-                    spinner.setBackgroundResource(R.color.white);
-                    name.setEnabled(true);
-                    owner.setEnabled(true);
-                    position.setEnabled(true);
-                    farm.setEnabled(true);
-                    address.setEnabled(true);
-                    spinner.setEnabled(true);
+        locker.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                if (!name.getText().toString().trim().isEmpty()) {
+                    name.setBackgroundResource(R.color.colorPrimary);
+                    lock = false;
+                } else {
+                    name.setBackgroundResource(R.color.TLyellow);
+                    lock = true;
                 }
+                if (!owner.getText().toString().trim().isEmpty()) {
+                    owner.setBackgroundResource(R.color.colorPrimary);
+                    lock = false;
+                } else {
+                    owner.setBackgroundResource(R.color.TLyellow);
+                    lock = true;
+                }
+                position.setBackgroundResource(R.color.colorPrimary);
+                if (!other.getText().toString().trim().isEmpty()) {
+                    other.setBackgroundResource(R.color.colorPrimary);
+                    lock = false;
+                } else {
+                    other.setBackgroundResource(R.color.TLyellow);
+                    lock = true;
+                }
+                if (!farm.getText().toString().trim().isEmpty()) {
+                    farm.setBackgroundResource(R.color.colorPrimary);
+                    lock = false;
+                } else {
+                    farm.setBackgroundResource(R.color.TLyellow);
+                    lock = true;
+                }
+                if (!address.getText().toString().trim().isEmpty()) {
+                    address.setBackgroundResource(R.color.colorPrimary);
+                    lock = false;
+                } else {
+                    address.setBackgroundResource(R.color.TLyellow);
+                    lock = true;
+                }
+                spinner.setBackgroundResource(R.color.colorPrimary);
+                name.setEnabled(false);
+                owner.setEnabled(false);
+                position.setEnabled(false);
+                farm.setEnabled(false);
+                address.setEnabled(false);
+                spinner.setEnabled(false);
+            }else{
+                name.setBackgroundResource(R.color.white);
+                owner.setBackgroundResource(R.color.white);
+                position.setBackgroundResource(R.color.white);
+                other.setBackgroundResource(R.color.white);
+                farm.setBackgroundResource(R.color.white);
+                address.setBackgroundResource(R.color.white);
+                spinner.setBackgroundResource(R.color.white);
+                name.setEnabled(true);
+                owner.setEnabled(true);
+                position.setEnabled(true);
+                farm.setEnabled(true);
+                address.setEnabled(true);
+                spinner.setEnabled(true);
             }
         });
 
-        cFarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        cFarm.setOnClickListener(v -> {
 
-                /*mDatabase = FirebaseDatabase.getInstance().getReference("farms");
-                String farmId = mDatabase.push().getKey();
-                Farm farm = new Farm(name.getText().toString(), Integer.parseInt(animals.getText().toString()));
-                mDatabase.child(farmId).setValue(farm);
-
-                mDatabase = FirebaseDatabase.getInstance().getReference("animals");
-                String farmId = mDatabase.push().getKey();
-                Animal farm = new Animal("boar","-LP0QEUlxfiIIHWybnXY");
-                mDatabase.child(farmId).setValue(farm);
-
-                Intent intent = new Intent(FarmCreation.this, AnimalCreation.class);
-                startActivity(intent);*/
-
-                if(!locker.isChecked()){
-                    Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                if(locker.isChecked() && lock){
-                    Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                //PUT VALUES INTO DB
-                DatabaseHelper mDbHelper = new DatabaseHelper(FarmCreation.this);
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                ContentValues values = new ContentValues();
-                values.put(Farm.FarmEntry.COLUMN_VET, name.getText().toString());
-                values.put(Farm.FarmEntry.COLUMN_OWNER, owner.getText().toString());
-                values.put(Farm.FarmEntry.COLUMN_DATE, date);
-                values.put(Farm.FarmEntry.COLUMN_LONGITUDE, longitude);
-                values.put(Farm.FarmEntry.COLUMN_LATITUDE, latitude);
-                values.put(Farm.FarmEntry.COLUMN_COUNTRY, spinner.getSelectedItem().toString());
-                values.put(Farm.FarmEntry.COLUMN_NAME, farm.getText().toString());
-
-                long newRowId = db.insert(Farm.FarmEntry.TABLE_NAME, null, values);
-
-                if (newRowId == -1) {
-                    Toast.makeText(getBaseContext(), "Error in the DB",
-                            Toast.LENGTH_LONG).show();
-                    db.close();
-                } else {
-                    Toast.makeText(getBaseContext(), "New entry added to the DB",
-                            Toast.LENGTH_LONG).show();
-                    String selectQuery = "SELECT  * FROM " + Farm.FarmEntry.TABLE_NAME;
-                    Cursor cursor = db.rawQuery(selectQuery, null);
-                    cursor.moveToLast();
-                    int id = cursor.getInt(cursor.getColumnIndex("id"));
-                    cursor.close();
-                    db.close();
-                    Intent mIntent = new Intent(FarmCreation.this, AnimalCreation.class);
-                    Bundle mBundle = new Bundle();
-                    mBundle.putInt("id", id);
-                    mIntent.putExtras(mBundle);
-                    startActivity(mIntent);
-                }
-
+            if(!locker.isChecked()){
+                Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
+                return;
             }
+
+            if(locker.isChecked() && lock){
+                Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            //PUT VALUES INTO DB
+            DatabaseHelper mDbHelper = new DatabaseHelper(FarmCreation.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(Farm.FarmEntry.COLUMN_VET, name.getText().toString());
+            values.put(Farm.FarmEntry.COLUMN_OWNER, owner.getText().toString());
+            values.put(Farm.FarmEntry.COLUMN_DATE, date);
+            values.put(Farm.FarmEntry.COLUMN_LONGITUDE, longitude);
+            values.put(Farm.FarmEntry.COLUMN_LATITUDE, latitude);
+            values.put(Farm.FarmEntry.COLUMN_COUNTRY, spinner.getSelectedItem().toString());
+            values.put(Farm.FarmEntry.COLUMN_NAME, farm.getText().toString());
+
+            long newRowId = db.insert(Farm.FarmEntry.TABLE_NAME, null, values);
+
+            if (newRowId == -1) {
+                Toast.makeText(getBaseContext(), "Error in the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+            } else {
+                Toast.makeText(getBaseContext(), "New entry added to the DB",
+                        Toast.LENGTH_LONG).show();
+                String selectQuery = "SELECT  * FROM " + Farm.FarmEntry.TABLE_NAME;
+                Cursor cursor = db.rawQuery(selectQuery, null);
+                cursor.moveToLast();
+                int id = cursor.getInt(cursor.getColumnIndex("id"));
+                cursor.close();
+                db.close();
+                Intent mIntent = new Intent(FarmCreation.this, AnimalCreation.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("id", id);
+                mIntent.putExtras(mBundle);
+                startActivity(mIntent);
+            }
+
         });
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
 
     }
 

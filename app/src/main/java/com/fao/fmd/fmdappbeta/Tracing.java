@@ -12,7 +12,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,6 +46,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
     Date dayZero;
     Spinner spinner;
     EditText other;
+    Button close;
 
     EditText date;
 
@@ -153,6 +153,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 spinner.setOnItemSelectedListener(Tracing.this);
 
                 other = customView.findViewById(R.id.other);
+                close = customView.findViewById(R.id.close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        spinner.setSelection(0);
+                        spinner.setVisibility(View.VISIBLE);
+                        other.setVisibility(View.INVISIBLE);
+                        close.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 final EditText notes = customView.findViewById(R.id.note);
 
@@ -244,6 +254,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 spinner.setOnItemSelectedListener(Tracing.this);
 
                 other = customView.findViewById(R.id.other);
+                close = customView.findViewById(R.id.close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        spinner.setSelection(0);
+                        spinner.setVisibility(View.VISIBLE);
+                        other.setVisibility(View.INVISIBLE);
+                        close.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 final EditText notes = customView.findViewById(R.id.note);
 
@@ -341,6 +361,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 contact.setAdapter(contAdapter);
 
                 other = customView.findViewById(R.id.other);
+                close = customView.findViewById(R.id.close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        spinner.setSelection(0);
+                        spinner.setVisibility(View.VISIBLE);
+                        other.setVisibility(View.INVISIBLE);
+                        close.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 final EditText notes = customView.findViewById(R.id.note);
 
@@ -438,6 +468,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 contact.setAdapter(contAdapter);
 
                 other = customView.findViewById(R.id.other);
+                close = customView.findViewById(R.id.close);
+                close.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        spinner.setSelection(0);
+                        spinner.setVisibility(View.VISIBLE);
+                        other.setVisibility(View.INVISIBLE);
+                        close.setVisibility(View.INVISIBLE);
+                    }
+                });
 
                 final EditText notes = customView.findViewById(R.id.note);
 
@@ -466,9 +506,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 String count = Integer.toString(vehicleCount[0]);
                                 vehicleNum.setText(count);
                             }
-                            System.out.println(vehiclesDate);
-                            System.out.println(vehiclesSub);
-                            System.out.println(vehiclesNote);
                         }else{
                             vehiclesDate.add(date.getText().toString().substring(0,8));
                             if(spinner.getVisibility() == View.VISIBLE){
@@ -564,6 +601,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         spinner.setOnItemSelectedListener(Tracing.this);
 
                         other = customView.findViewById(R.id.other);
+                        close = customView.findViewById(R.id.close);
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                spinner.setSelection(0);
+                                spinner.setVisibility(View.VISIBLE);
+                                other.setVisibility(View.INVISIBLE);
+                                close.setVisibility(View.INVISIBLE);
+                            }
+                        });
 
                         final EditText notes = customView.findViewById(R.id.note);
                         notes.setText(animalsNote.get(position));
@@ -686,6 +733,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         spinner.setOnItemSelectedListener(Tracing.this);
 
                         other = customView.findViewById(R.id.other);
+                        close = customView.findViewById(R.id.close);
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                spinner.setSelection(0);
+                                spinner.setVisibility(View.VISIBLE);
+                                other.setVisibility(View.INVISIBLE);
+                                close.setVisibility(View.INVISIBLE);
+                            }
+                        });
 
                         final EditText notes = customView.findViewById(R.id.note);
                         notes.setText(productsNote.get(position));
@@ -814,6 +871,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         contact.setAdapter(contAdapter);
 
                         other = customView.findViewById(R.id.other);
+                        close = customView.findViewById(R.id.close);
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                spinner.setSelection(0);
+                                spinner.setVisibility(View.VISIBLE);
+                                other.setVisibility(View.INVISIBLE);
+                                close.setVisibility(View.INVISIBLE);
+                            }
+                        });
 
                         final EditText notes = customView.findViewById(R.id.note);
                         notes.setText(peoplesNote.get(position));
@@ -938,6 +1005,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                         contact.setAdapter(contAdapter);
 
                         other = customView.findViewById(R.id.other);
+                        close = customView.findViewById(R.id.close);
+                        close.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                spinner.setSelection(0);
+                                spinner.setVisibility(View.VISIBLE);
+                                other.setVisibility(View.INVISIBLE);
+                                close.setVisibility(View.INVISIBLE);
+                            }
+                        });
 
                         final EditText notes = customView.findViewById(R.id.note);
                         notes.setText(vehiclesNote.get(position));
@@ -1179,6 +1256,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         if(parent.getItemAtPosition(pos) == "Other"){
             spinner.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
+            close.setVisibility(View.VISIBLE);
         }
     }
 

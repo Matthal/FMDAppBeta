@@ -33,6 +33,7 @@
     <string name="hint_farm">Farm name</string>
     <string name="address">Address</string>
     <string name="country">Select a country</string>
+    <string name="gps">GPS</string>
 
     //ANIMAL CREATION
     <string name="text_animal_creation">ANIMAL INFORMATION</string>

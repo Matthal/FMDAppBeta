@@ -55,7 +55,7 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
             public void onClick(View arg0) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(_context);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                db.delete(Animal.AnimalEntry.TABLE_NAME,"ID = " + childPosition+1,null);
+                db.delete(Animal.AnimalEntry.TABLE_NAME,"ID = " + 6,null);
                 Toast.makeText(_context, "Animal deleted, refresh page", Toast.LENGTH_SHORT).show();
             }
         });

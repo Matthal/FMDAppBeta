@@ -62,6 +62,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         close.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                spinner.setSelection(0);
                 spinner.setVisibility(View.VISIBLE);
                 other.setVisibility(View.INVISIBLE);
                 close.setVisibility(View.INVISIBLE);
