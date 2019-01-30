@@ -69,13 +69,9 @@ public class Timeline extends AppCompatActivity {
         bundle = getIntent().getExtras();
         id = bundle.getInt("farm");
 
-
         List<Integer> animals = getAnimals(id);
         List<Integer> lesions = getLesions(animals);
         List<Integer> tracings = getTracings(id);
-        System.out.println(id);
-        System.out.println(animals);
-        System.out.println(lesions);
 
         try {
             maxDate = getMaxDate(lesions);
@@ -350,7 +346,6 @@ public class Timeline extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 int animal = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID));
-                System.out.println("animal id: " + animal);
                 animals.add(animal);
             } while (cursor.moveToNext());
         }
@@ -671,32 +666,11 @@ public class Timeline extends AppCompatActivity {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
 
-            int old;
-
             if (cursor.moveToFirst()) {
                 do {
-                    String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
-                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
-                    if(age.length() < 2){
-                        old = Integer.parseInt(age);
-                    }else{
-                        if(age.charAt(1) == '-'){
-                            if(age.length() == 3){
-                                old = Character.getNumericValue(age.charAt(2));
-                            }else{
-                                old = Integer.parseInt(age.substring(2,3));
-                            }
-                        }else{
-                            if(age.charAt(2) == '-'){
-                                old = Integer.parseInt(age.substring(3,4));
-                            }else{
-                                old = Integer.parseInt(age.substring(0,1));
-                            }
-                        }
-                    }
+                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);
-                    Date diagnDate = subDays(date,old);
-                    dates.add(diagnDate);
+                    dates.add(date);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -710,13 +684,6 @@ public class Timeline extends AppCompatActivity {
         GregorianCalendar cal = new GregorianCalendar();
         cal.setTime(date);
         cal.add(Calendar.DATE, days);
-        return cal.getTime();
-    }
-
-    public Date subDays(Date date, int days){
-        GregorianCalendar cal = new GregorianCalendar();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, -days);
         return cal.getTime();
     }
 

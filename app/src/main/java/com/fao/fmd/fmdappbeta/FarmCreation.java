@@ -73,7 +73,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
             close.setVisibility(View.INVISIBLE);
         });
 
-        final String[] pos = new String[]{"Owner", "Farm manager", "Farm worker", "Other"};
+        final String[] pos = new String[]{"Owner", "Farm Manager", "Farm Worker", "Other"};
         ArrayAdapter<String> posAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, pos);
         posAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         position.setAdapter(posAdapter);
@@ -192,7 +192,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         cFarm.setOnClickListener(v -> {
 
             if(!locker.isChecked()){
-                Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -216,12 +216,10 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
             long newRowId = db.insert(Farm.FarmEntry.TABLE_NAME, null, values);
 
             if (newRowId == -1) {
-                Toast.makeText(getBaseContext(), "Error in the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
             } else {
-                Toast.makeText(getBaseContext(), "New entry added to the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "New entry added to the DB", Toast.LENGTH_SHORT).show();
                 String selectQuery = "SELECT  * FROM " + Farm.FarmEntry.TABLE_NAME;
                 Cursor cursor = db.rawQuery(selectQuery, null);
                 cursor.moveToLast();

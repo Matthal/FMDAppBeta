@@ -13,13 +13,14 @@
         android:layout_width="130dp"
         android:layout_height="45dp"
         android:layout_centerHorizontal="true"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:layout_marginTop="30dp"
+        android:background="#ffffff"
+        android:focusable="false"
         android:gravity="center"
         android:hint="@string/enter_date"
-        android:focusable="false"
-        android:background="#ffffff"
-        android:layout_marginTop="30dp" />
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="14sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -76,7 +77,8 @@
         android:background="#ffffff"
         android:hint="@string/insert_notes"
         android:inputType="text"
-        android:maxLength="10"/>
+        android:maxLength="10"
+        android:textSize="14sp" />
 
     <Button
         android:id="@+id/done"

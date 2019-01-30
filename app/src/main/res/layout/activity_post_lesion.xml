@@ -15,9 +15,10 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:paddingRight="15dp"
+            android:paddingEnd="15dp"
             android:src="@drawable/logo_white" />
 
     </android.support.v7.widget.Toolbar>
@@ -51,7 +52,7 @@
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="@string/text_post_lesion"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/animal"
@@ -63,7 +64,6 @@
             android:layout_marginStart="50dp"
             android:layout_marginTop="-1dp"
             android:text="@string/add_an_animal"
-            android:textAllCaps="false"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="50dp" />
 
@@ -78,8 +78,7 @@
             android:layout_marginTop="155dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
-            android:text="@string/add_tracing"
-            android:textAllCaps="false" />
+            android:text="@string/add_tracing" />
 
         <Button
             android:id="@+id/photo"
@@ -92,8 +91,7 @@
             android:layout_marginLeft="50dp"
             android:layout_marginStart="50dp"
             android:layout_marginTop="300dp"
-            android:text="@string/take_photo"
-            android:textAllCaps="false" />
+            android:text="@string/take_photo" />
 
         <Button
             android:id="@+id/timeline"
@@ -106,13 +104,12 @@
             android:layout_marginTop="300dp"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="50dp"
-            android:text="@string/timeline"
-            android:textAllCaps="false" />
+            android:text="@string/timeline" />
 
         <TextView
             android:id="@+id/grey"
             android:layout_width="match_parent"
-            android:layout_height="70sp"
+            android:layout_height="65sp"
             android:layout_above="@id/progbar"
             android:background="#D9D9D9" />
 
@@ -151,8 +148,8 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_above="@id/progbar"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/qmark_icon" />
 

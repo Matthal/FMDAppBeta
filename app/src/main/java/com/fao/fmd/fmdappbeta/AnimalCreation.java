@@ -98,6 +98,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
         final Calendar calendar = Calendar.getInstance();
         final EditText sign = findViewById(R.id.sign);
+        ImageView cal = findViewById(R.id.cal);
         final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, monthOfYear);
@@ -106,7 +107,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
             sign.setText(sdf.format(calendar.getTime()));
         };
-        sign.setOnClickListener(v -> new DatePickerDialog(AnimalCreation.this, date, calendar
+        cal.setOnClickListener(v -> new DatePickerDialog(AnimalCreation.this, date, calendar
                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show());
 
@@ -167,6 +168,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 spinner.setEnabled(false);
                 sexSpin.setEnabled(false);
                 sign.setEnabled(false);
+                cal.setEnabled(false);
                 vaccSpin.setEnabled(false);
             }else{
                 animal.setBackgroundResource(R.color.white);
@@ -185,6 +187,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 spinner.setEnabled(true);
                 sexSpin.setEnabled(true);
                 sign.setEnabled(true);
+                cal.setEnabled(true);
                 vaccSpin.setEnabled(true);
             }
         });
@@ -192,7 +195,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         addAnimal.setOnClickListener(v -> {
 
             if(!locker.isChecked()){
-                Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -230,12 +233,10 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             long newRowId = db.insert(Animal.AnimalEntry.TABLE_NAME, null, values);
 
             if(newRowId == -1){
-                Toast.makeText(getBaseContext(), "Error in the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
             }else{
-                Toast.makeText(getBaseContext(), "New entry added to the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "New entry added to the DB", Toast.LENGTH_SHORT).show();
                 String selectQuery = "SELECT  * FROM " + Animal.AnimalEntry.TABLE_NAME;
                 Cursor cursor = db.rawQuery(selectQuery, null);
                 cursor.moveToLast();

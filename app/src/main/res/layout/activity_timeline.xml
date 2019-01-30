@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:titleTextColor="@android:color/white"
-        android:background="?attr/colorPrimary">
+        android:background="#11523A">
     </android.support.v7.widget.Toolbar>
 
     <ScrollView

@@ -8,12 +8,11 @@
     <string name="add_animal">Add an animal</string>
     <string name="add_tracing">Add tracings</string>
     <string name="timeline">View farm timeline</string>
-    <string name="enter_date">Enter Date</string>
+    <string name="enter_date">ENTER DATE</string>
     <string name="zero">0</string>
-    <string name="insert_notes">Insert Notes</string>
-    <string name="category">Category</string>
-    <string name="contact">Direct contact with animal areas</string>
-    <string name="species">Species</string>
+    <string name="insert_notes">INSERT NOTES</string>
+    <string name="category">CATEGORY</string>
+    <string name="species">SPECIES</string>
     <string name="X">X</string>
 
     //MAIN
@@ -27,37 +26,37 @@
 
     //FARM CREATION
     <string name="text_farm_creation">FARM INFORMATION</string>
-    <string name="text_info">Enter the following information</string>
-    <string name="hint_investigator">Investigator name</string>
-    <string name="hint_Interviewee">Interviewee name</string>
-    <string name="hint_farm">Farm name</string>
-    <string name="address">Address</string>
-    <string name="country">Select a country</string>
+    <string name="text_info">ENTER THE FOLLOWING INFORMATION</string>
+    <string name="hint_investigator">INVESTIGATOR NAME</string>
+    <string name="hint_Interviewee">INTERVIEWEE NAME</string>
+    <string name="hint_farm">FARM NAME</string>
+    <string name="address">ADDRESS</string>
+    <string name="country">SELECT A COUNTRY</string>
     <string name="gps">GPS</string>
 
     //ANIMAL CREATION
     <string name="text_animal_creation">ANIMAL INFORMATION</string>
-    <string name="id">Identification</string>
-    <string name="hint_ID">ID Number/Name</string>
-    <string name="hint_Group_ID">Group ID/Name</string>
-    <string name="age">Age</string>
-    <string name="hint_other">Other</string>
-    <string name="sex">Sex</string>
-    <string name="sign">Reported date of onset of clinical signs</string>
-    <string name="vaccinated">Vaccination status</string>
+    <string name="id">IDENTIFICATION</string>
+    <string name="hint_ID">ID NUMBER/NAME</string>
+    <string name="hint_Group_ID">GROUP ID/NAME</string>
+    <string name="age">AGE</string>
+    <string name="hint_other">OTHER</string>
+    <string name="sex">SEX</string>
+    <string name="sign">REPORTED DATE OF ONSET OF CLINICAL SIGNS</string>
+    <string name="vaccinated">VACCINATION STATUS</string>
 
     //LESION AGEING
     <string name="text_lesion_ageing">LESION DESCRIPTION</string>
-    <string name="vesicles">Vesicles</string>
-    <string name="fibrin">Fibrin</string>
+    <string name="vesicles">VESICLES</string>
+    <string name="fibrin">FIBRIN</string>
     <string name="gallery">Gallery</string>
-    <string name="color">Color of the base of the erosion</string>
+    <string name="color">COLOR OF THE BBASE OF THE EROSION</string>
     <string name="red">Red</string>
     <string name="pink">Pink</string>
     <string name="yellow">Yellow</string>
     <string name="white">Grey/White</string>
-    <string name="edges">Edges</string>
-    <string name="heal">Healing/Re-epithelialisation</string>
+    <string name="edges">EDGES</string>
+    <string name="heal">HEALING/RE-EPITHELIALISATION</string>
 
     //POST LESION
     <string name="text_post_lesion">ANIMAL DATA COLLECTION</string>
@@ -68,12 +67,12 @@
     <string name="text_farm_list">FARMS LIST</string>
 
     //TIMELINE
-    <string name="date">Date</string>
-    <string name="lesion">Lesion</string>
-    <string name="source">Source</string>
-    <string name="spread">Spread</string>
-    <string name="sub_category">Sub-Category</string>
-    <string name="notes">Notes</string>
+    <string name="date">DATE</string>
+    <string name="lesion">LESION</string>
+    <string name="source">SOURCE</string>
+    <string name="spread">SPREAD</string>
+    <string name="sub_category">SUB-CATEGORY</string>
+    <string name="notes">NOTES</string>
 
     //TRACING
     <string name="text_tracing">TRACING REPORT</string>
@@ -84,9 +83,9 @@
 
     //COMPLETE
     <string name="text_complete">LESION AGEING CALCULATOR</string>
-    <string name="lesion_id">Lesion ID</string>
+    <string name="lesion_id">LESION ID</string>
     <string name="g_samples">Gallery samples</string>
-    <string name="days">Lesion ageing in days</string>
+    <string name="days">LESION AGEING IN DAYS</string>
     <string name="diagn_opt">View diagnostic options</string>
     <string name="add_lesion">Add another lesion</string>
     <string name="add_timeline">Add to farm timeline</string>
@@ -98,12 +97,12 @@
 
     //DIAGNOSTICS OVERVIEW
     <string name="text_diagn_ovw">DIAGNOSTIC OVERVIEW</string>
-    <string name="par_one">Samples and tests for virus</string>
+    <string name="par_one">SAMPLES AND TESTS FOR VIRUS</string>
     <string name="btn_vesicular">Vesicular fluid</string>
     <string name="btn_epithelium">Epithelium samples</string>
     <string name="btn_swabs">Swabs</string>
     <string name="btn_probang">Probang</string>
-    <string name="par_two">Tests for antibody</string>
+    <string name="par_two">TESTS FOR ANTIBODY</string>
     <string name="btn_structural">Structural protein antibodies</string>
     <string name="btn_non_structural">Non-structural protein antibodies</string>
 

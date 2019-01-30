@@ -8,10 +8,14 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +34,15 @@ import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabase;
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +56,6 @@ public class MainActivity extends AppCompatActivity {
         //Parse Initialization
         Parse.initialize(this);
         ParseInstallation.getCurrentInstallation().saveInBackground();
-
-        /*FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
-        DatabaseReference scoresRef = FirebaseDatabase.getInstance().getReference("farms");
-        scoresRef.keepSynced(true);*/
 
         Button cFarm = findViewById(R.id.newFarm);
         Button lFarm = findViewById(R.id.listFarm);
@@ -81,9 +85,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 /*DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "animals"));*/
+                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));*/
                 /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
                 startActivity(intent);*/
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = null;
+                try {
+                    f = createImageFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Uri photoURI = FileProvider.getUriForFile(MainActivity.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(cameraIntent, 1);
             }
         });
 
@@ -279,6 +293,28 @@ public class MainActivity extends AppCompatActivity {
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                storageDir      // directory
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Intent intent = new Intent(this, DrawOnBitmapActivity.class);
+        intent.putExtra("image", mCurrentPhotoPath);
+        startActivity(intent);
     }
 
 }

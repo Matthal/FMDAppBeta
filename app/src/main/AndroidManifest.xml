@@ -5,8 +5,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".DrawOnBitmapActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -62,8 +63,9 @@
         <activity
             android:name=".VesiclesGallery"
             android:screenOrientation="portrait" />
-        <activity android:name=".LesionAgeingGallery"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".LesionAgeingGallery"
+            android:screenOrientation="portrait" />
 
         <provider
             android:name=".GenericFileProvider"

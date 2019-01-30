@@ -475,7 +475,7 @@ public class LesionAgeing extends Activity {
             public void onClick(View v) {
 
                 if(!locker.isChecked()){
-                    Toast.makeText(getBaseContext(), "Lock the switch before proceeding", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                     return;
                 }
 

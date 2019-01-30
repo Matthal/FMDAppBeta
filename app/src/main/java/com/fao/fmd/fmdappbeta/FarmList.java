@@ -84,9 +84,16 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             }
         });
         farmTL.setOnClickListener(v -> {
+
             if(lock){
                 Toast.makeText(FarmList.this, "You must add an animal in the farm before view timeline", Toast.LENGTH_LONG).show();
             }else{
+                List<Integer> animals = getAnimals(spinner.getSelectedItemPosition());
+                List<Integer> lesions = getLesions(animals);
+                if(lesions.isEmpty()){
+                    Toast.makeText(FarmList.this, "There is no lesion related to the animals in the farms", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 int id = spinner.getSelectedItemPosition();
                 Intent intent = new Intent(FarmList.this, Timeline.class);
                 Bundle bundle = new Bundle();
@@ -221,5 +228,50 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         cursor.close();
         db.close();
         return farms;
+    }
+
+    public List<Integer> getAnimals(int id) {
+        List<Integer> animals = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE farm=" + id;
+
+        DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int animal = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID));
+                animals.add(animal);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return animals;
+    }
+
+    public List<Integer> getLesions(List<Integer> animals) {
+        List<Integer> lesions = new ArrayList<>();
+
+        for(int i = 0; i < animals.size(); i++){
+            String selectQuery = "SELECT * FROM " + Lesion.LesionEntry.TABLE_NAME + " WHERE animal=" + animals.get(i);
+
+            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    int lesion = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ID));
+                    lesions.add(lesion);
+                } while (cursor.moveToNext());
+            }
+
+            cursor.close();
+            db.close();
+        }
+
+        return lesions;
     }
 }

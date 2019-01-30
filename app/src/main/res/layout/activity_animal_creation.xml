@@ -15,9 +15,10 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:paddingRight="15dp"
+            android:paddingEnd="15dp"
             android:src="@drawable/logo_white" />
 
     </android.support.v7.widget.Toolbar>
@@ -49,7 +50,7 @@
             android:fontFamily="@font/roboto"
             android:gravity="center"
             android:text="@string/text_animal_creation"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +67,7 @@
         <EditText
             android:id="@+id/animalID"
             android:layout_width="140dp"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -78,23 +79,25 @@
             android:hint="@string/hint_ID"
             android:inputType="text"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp" />
+            android:paddingBottom="10dp"
+            android:textSize="14sp" />
 
         <EditText
             android:id="@+id/groupID"
             android:layout_width="140dp"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:layout_alignBottom="@+id/animalID"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="35dp"
             android:layout_marginRight="35dp"
             android:background="#ffffff"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
             android:ems="10"
             android:hint="@string/hint_Group_ID"
-            android:inputType="text" />
+            android:inputType="text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textSize="14sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -196,28 +199,44 @@
             android:layout_alignLeft="@+id/groupID" />
 
         <TextView
+            android:id="@+id/text_sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/sign"
-            android:layout_alignLeft="@+id/sign"
             android:layout_alignParentTop="true"
             android:layout_marginTop="310dp"
+            android:layout_centerHorizontal="true"
             android:text="@string/sign"
             android:textSize="14sp" />
 
         <EditText
             android:id="@+id/sign"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
+            android:layout_height="44dp"
+            android:layout_alignStart="@+id/text_sign"
+            android:layout_alignLeft="@+id/text_sign"
             android:layout_marginTop="330dp"
             android:background="#ffffff"
+            android:focusable="false"
+            android:gravity="center"
+            android:hint="@string/enter_date"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:focusable="false"
-            android:hint="@string/enter_date"
-            android:gravity="center"/>
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/cal"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="335dp"
+            android:layout_marginEnd="35dp"
+            android:layout_marginRight="35dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/calendar_icon" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -237,6 +256,7 @@
             android:layout_alignStart="@+id/breed"
             android:layout_alignLeft="@+id/breed"
             android:layout_above="@+id/grey"
+            android:layout_marginBottom="10dp"
             android:background="#ffffff"
             android:spinnerMode="dropdown" />
 
@@ -251,12 +271,13 @@
             android:thumb="@drawable/customswitchselector"
             android:track="@drawable/custom_track"
             android:layout_alignLeft="@+id/groupID"
-            android:layout_marginStart="30dp" />
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="10dp"/>
 
         <TextView
             android:id="@+id/grey"
             android:layout_width="match_parent"
-            android:layout_height="70sp"
+            android:layout_height="65sp"
             android:layout_above="@id/progbar"
             android:background="#D9D9D9" />
 
@@ -294,8 +315,8 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginLeft="5dp"
             android:layout_marginBottom="10dp"
             android:layout_above="@id/progbar"
             android:src="@drawable/qmark_icon" />

@@ -24,6 +24,8 @@ public class CompleteFragment extends Fragment {
     View view;
     Bundle bundle;
 
+    boolean added = false;
+
     public CompleteFragment() {
         // Required empty public constructor
     }
@@ -109,7 +111,10 @@ public class CompleteFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Mettere Controllo Timeline aggiunta a DB
+                if(!added){
+                    Toast.makeText(getActivity(), "You must add the lesion to the farm timeline before continue", Toast.LENGTH_LONG).show();
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), PostLesion.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
@@ -155,9 +160,10 @@ public class CompleteFragment extends Fragment {
         int like_inf_max = old + 2;
         int pos_inf_min = old + 14;
         int pos_inf_max = old + 1;
-        int like_spr_min = old + 1;
+        int like_spr_min = old;
         int like_spr_max = old - 2;
-        int pos_spr_min = old + 3;
+        int pos_spr_min = old + 2;
+        int pos_spr_max = old - 14;
 
         ContentValues values = new ContentValues();
         values.put(Lesion.LesionEntry.COLUMN_ANIMAL, bundle.getInt("id"));
@@ -169,17 +175,16 @@ public class CompleteFragment extends Fragment {
         values.put(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN, subDays(like_spr_min));
         values.put(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX, subDays(like_spr_max));
         values.put(Lesion.LesionEntry.COLUMN_POSS_SPR_MIN, subDays(pos_spr_min));
-        values.put(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX, subDays(0));
+        values.put(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX, subDays(pos_spr_max));
 
         long newRowId = db.insert(Lesion.LesionEntry.TABLE_NAME, null, values);
 
         if(newRowId == -1){
-            Toast.makeText(getActivity(), "Error in the DB",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Error in the DB", Toast.LENGTH_LONG).show();
             db.close();
         }else {
-            Toast.makeText(getActivity(), "New entry added to the DB",
-                    Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "New entry added to the DB", Toast.LENGTH_SHORT).show();
+            added = true;
             db.close();
         }
     }
