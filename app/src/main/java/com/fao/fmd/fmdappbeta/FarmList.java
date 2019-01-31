@@ -1,11 +1,13 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -84,7 +86,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             }
         });
         farmTL.setOnClickListener(v -> {
-
             if(lock){
                 Toast.makeText(FarmList.this, "You must add an animal in the farm before view timeline", Toast.LENGTH_LONG).show();
             }else{
@@ -176,10 +177,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         for(int i = 0; i < cursor.getCount(); i++){
             List<String> details = new ArrayList<>();
             listDataHeader.add("Animal " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID)));
-            details.add("Name : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME)) + "\n" +
-                    "Group ID : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +
-                    "Breed : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)) + "\n" +
-                    "Age : " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE)));
+            details.add("Name: " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME)) + "\n" +
+                    "Group ID: " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)) +  "\n" +
+                    "Breed: " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED)) + "\n" +
+                    "Age: " + cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE)));
             listDataChild.put(listDataHeader.get(i), details);
             cursor.moveToNext();
         }

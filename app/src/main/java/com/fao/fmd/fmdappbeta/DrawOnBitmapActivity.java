@@ -1,15 +1,25 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +27,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -25,6 +36,7 @@ import java.util.Date;
 
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
+import ja.burhanrashid52.photoeditor.SaveSettings;
 
 public class DrawOnBitmapActivity extends FragmentActivity implements View.OnClickListener,PropertiesBSFragment.Properties{
 
@@ -34,6 +46,7 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
     PhotoEditor mPhotoEditor;
 
     private PropertiesBSFragment mPropertiesBSFragment;
+    private ProgressDialog mProgressDialog;
 
     private String mCurrentPhotoPath;
     Bitmap mImageBitmap;
@@ -106,7 +119,7 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
                 break;
 
             case R.id.imgSave:
-                //saveImage();
+                saveImage();
                 break;
 
             case R.id.imgClose:
@@ -115,12 +128,18 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
 
             case R.id.imgCamera:
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File f = new File(image);
-                System.out.println(image);
-                if (f.delete()) {
-                    System.out.println("file Deleted ");
-                } else {
-                    System.out.println("file not Deleted ");
+                Uri tempUri = getImageUri(getApplicationContext(), mImageBitmap);
+                // CALL THIS METHOD TO GET THE ACTUAL PATH
+                File f = new File(getRealPathFromURI(tempUri));
+                System.out.println(getRealPathFromURI(tempUri));
+                if(f.exists()){
+                    if (f.delete()) {
+                        System.out.println("file Deleted ");
+                    } else {
+                        System.out.println("file not Deleted ");
+                    }
+                }else{
+                    System.out.println("file not Exists");
                 }
                 try {
                     f = createImageFile();
@@ -161,7 +180,7 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = new File(Environment.getExternalStorageDirectory(),"Pictures/FMD-DOI");
         File image = File.createTempFile(
                 imageFileName,  // prefix
                 ".jpg",         // suffix
@@ -172,6 +191,47 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
         mCurrentPhotoPath = "file:" + image.getAbsolutePath();
         return image;
     }
+
+    @SuppressLint("MissingPermission")
+    private void saveImage() {
+        if (requestPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            showLoading("Saving...");
+            File storageDir = new File(Environment.getExternalStorageDirectory(),"Pictures/FMD-DOI");
+            File file = new File(storageDir
+                    + File.separator + ""
+                    + System.currentTimeMillis() + ".png");
+            try {
+                file.createNewFile();
+                galleryAddPic(file);
+
+                SaveSettings saveSettings = new SaveSettings.Builder()
+                        .setClearViewsEnabled(true)
+                        .setTransparencyEnabled(true)
+                        .build();
+
+                mPhotoEditor.saveAsFile(file.getAbsolutePath(), saveSettings, new PhotoEditor.OnSaveListener() {
+                    @Override
+                    public void onSuccess(@NonNull String imagePath) {
+                        hideLoading();
+                        showSnackbar("Image Saved Successfully");
+                        mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
+                        System.out.println(imagePath);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        hideLoading();
+                        showSnackbar("Failed to save Image");
+                    }
+                });
+            } catch (IOException e) {
+                e.printStackTrace();
+                hideLoading();
+                showSnackbar(e.getMessage());
+            }
+        }
+    }
+
 
     @Override
     public void onColorChanged(int colorCode) {
@@ -186,6 +246,61 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
     @Override
     public void onBrushSizeChanged(int brushSize) {
         mPhotoEditor.setBrushSize(brushSize);
+    }
+
+    public boolean requestPermission(String permission) {
+        boolean isGranted = ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED;
+        if (!isGranted) {
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{permission},
+                    52);
+        }
+        return isGranted;
+    }
+
+    protected void showLoading(@NonNull String message) {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(message);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+
+    protected void hideLoading() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+    protected void showSnackbar(@NonNull String message) {
+        View view = findViewById(android.R.id.content);
+        if (view != null) {
+            Snackbar.make(view, message, Snackbar.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+    private void galleryAddPic(File file) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(file);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 }

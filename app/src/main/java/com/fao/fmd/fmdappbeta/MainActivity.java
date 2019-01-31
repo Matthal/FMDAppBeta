@@ -39,9 +39,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static android.os.Environment.getExternalStoragePublicDirectory;
+
 public class MainActivity extends AppCompatActivity {
 
-    private DatabaseReference mDatabase;
     private String mCurrentPhotoPath;
 
     @Override
@@ -83,12 +84,12 @@ public class MainActivity extends AppCompatActivity {
         bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));*/
+                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
                 /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
                 startActivity(intent);*/
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 File f = null;
                 try {
                     f = createImageFile();
@@ -97,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 Uri photoURI = FileProvider.getUriForFile(MainActivity.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(cameraIntent, 1);
+                startActivityForResult(cameraIntent, 1);*/
             }
         });
 
@@ -298,8 +299,9 @@ public class MainActivity extends AppCompatActivity {
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        String imageFileName = timeStamp + "_";
+        File storageDir = new File(Environment.getExternalStorageDirectory(),"Pictures/FMD-DOI");
+        storageDir.mkdirs();
         File image = File.createTempFile(
                 imageFileName,  // prefix
                 ".jpg",         // suffix
@@ -307,14 +309,30 @@ public class MainActivity extends AppCompatActivity {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        mCurrentPhotoPath = image.getAbsolutePath();
+        System.out.println(mCurrentPhotoPath);
         return image;
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Intent intent = new Intent(this, DrawOnBitmapActivity.class);
-        intent.putExtra("image", mCurrentPhotoPath);
-        startActivity(intent);
+        if (requestCode == 1 && resultCode != 0) {
+            galleryAddPic();
+            Intent intent = new Intent(this, DrawOnBitmapActivity.class);
+            String filePath = "file:" + mCurrentPhotoPath;
+            intent.putExtra("image", filePath);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getBaseContext(), "Photo cancelled",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 }

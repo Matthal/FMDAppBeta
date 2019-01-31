@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
@@ -53,9 +54,10 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                String name = childText.substring(childText.indexOf(' ')+1, childText.indexOf('\n'));
                 DatabaseHelper mDbHelper = new DatabaseHelper(_context);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                db.delete(Animal.AnimalEntry.TABLE_NAME,"ID = " + 6,null);
+                db.delete(Animal.AnimalEntry.TABLE_NAME,Animal.AnimalEntry.COLUMN_NAME + "='" + name + "'",null);
                 Toast.makeText(_context, "Animal deleted, refresh page", Toast.LENGTH_SHORT).show();
             }
         });
