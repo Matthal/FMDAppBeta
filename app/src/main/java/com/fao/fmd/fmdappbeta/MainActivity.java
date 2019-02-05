@@ -22,11 +22,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -84,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
         bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                /*DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
+                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));*/
                 /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
                 startActivity(intent);*/
                 /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);

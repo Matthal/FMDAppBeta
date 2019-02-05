@@ -114,7 +114,7 @@
             android:layout_height="44dp"
             android:layout_alignStart="@+id/animalID"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="175dp"
+            android:layout_marginTop="170dp"
             android:background="#ffffff"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -136,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/animalID"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="234dp"
+            android:layout_marginTop="230dp"
             android:text="@string/species"
             android:textSize="14sp"
             android:layout_alignLeft="@+id/animalID" />
@@ -158,7 +158,7 @@
             android:layout_height="44dp"
             android:layout_marginStart="35dp"
             android:layout_marginLeft="35dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="250dp"
             android:background="#ffffff"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
@@ -173,7 +173,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="145dp"
             android:layout_marginLeft="145dp"
-            android:layout_marginTop="260dp"
+            android:layout_marginTop="250dp"
             android:text="@string/X"
             android:visibility="invisible"/>
 
@@ -183,7 +183,7 @@
             android:layout_alignStart="@+id/sex"
             android:layout_alignLeft="@+id/sex"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="234dp"
+            android:layout_marginTop="230dp"
             android:text="@string/sex"
             android:textSize="14sp" />
 
@@ -241,10 +241,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/vaccinated"
             android:layout_alignStart="@+id/breed"
             android:layout_alignLeft="@+id/breed"
-            android:layout_marginBottom="47dp"
+            android:layout_above="@+id/vaccinated"
             android:text="@string/vaccinated"
             android:textSize="14sp" />
 
@@ -256,7 +255,7 @@
             android:layout_alignStart="@+id/breed"
             android:layout_alignLeft="@+id/breed"
             android:layout_above="@+id/grey"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:background="#ffffff"
             android:spinnerMode="dropdown" />
 

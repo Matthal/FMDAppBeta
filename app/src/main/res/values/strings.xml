@@ -29,10 +29,12 @@
     <string name="text_info">ENTER THE FOLLOWING INFORMATION</string>
     <string name="hint_investigator">INVESTIGATOR NAME</string>
     <string name="hint_Interviewee">INTERVIEWEE NAME</string>
+    <string name="role">ROLE ON FARM</string>
     <string name="hint_farm">FARM NAME</string>
     <string name="address">ADDRESS</string>
     <string name="country">SELECT A COUNTRY</string>
     <string name="gps">GPS</string>
+    <string name="text_gps">TAP TO SET LOCATION</string>
 
     //ANIMAL CREATION
     <string name="text_animal_creation">ANIMAL INFORMATION</string>
@@ -50,7 +52,7 @@
     <string name="vesicles">VESICLES</string>
     <string name="fibrin">FIBRIN</string>
     <string name="gallery">Gallery</string>
-    <string name="color">COLOR OF THE BBASE OF THE EROSION</string>
+    <string name="color">COLOR OF THE BASE OF THE EROSION</string>
     <string name="red">Red</string>
     <string name="pink">Pink</string>
     <string name="yellow">Yellow</string>
@@ -84,7 +86,7 @@
     //COMPLETE
     <string name="text_complete">LESION AGEING CALCULATOR</string>
     <string name="lesion_id">LESION ID</string>
-    <string name="g_samples">Gallery samples</string>
+    <string name="g_samples">See Examples</string>
     <string name="days">LESION AGEING IN DAYS</string>
     <string name="diagn_opt">View diagnostic options</string>
     <string name="add_lesion">Add another lesion</string>

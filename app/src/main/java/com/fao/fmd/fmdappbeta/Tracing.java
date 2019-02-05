@@ -2,6 +2,7 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
@@ -137,7 +138,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -203,6 +204,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             animalNum.setText(count);
                         }
                         Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        mPopupWindow.dismiss();
                     }
                 });
 
@@ -237,7 +239,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -304,6 +306,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             productNum.setText(count);
                         }
                         Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        mPopupWindow.dismiss();
                     }
                 });
 
@@ -338,7 +341,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -411,6 +414,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             peopleNum.setText(count);
                         }
                         Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        mPopupWindow.dismiss();
                     }
                 });
 
@@ -445,7 +449,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -519,6 +523,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                             vehicleNum.setText(count);
                         }
                         Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        mPopupWindow.dismiss();
                     }
                 });
 
@@ -585,7 +590,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(animalsDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -645,6 +650,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     animalsNote.add(notes.getText().toString());
                                 }
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                                mPopupWindow.dismiss();
                             }
                         });
                         Button esc = customView.findViewById(R.id.esc);
@@ -716,7 +722,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(productsDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -777,6 +783,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     productsNote.add(notes.getText().toString());
                                 }
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                                mPopupWindow.dismiss();
                             }
                         });
                         Button esc = customView.findViewById(R.id.esc);
@@ -848,7 +855,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(peoplesDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -915,6 +922,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     peoplesNote.add(notes.getText().toString());
                                 }
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                                mPopupWindow.dismiss();
                             }
                         });
                         Button esc = customView.findViewById(R.id.esc);
@@ -982,7 +990,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(vehiclesDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.colorPrimary);
+                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1048,6 +1056,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     vehiclesNote.add(notes.getText().toString());
                                 }
                                 Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
+                                mPopupWindow.dismiss();
                             }
                         });
                         Button esc = customView.findViewById(R.id.esc);
@@ -1097,8 +1106,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_NOTES, animalsNote.get(i));
             long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
             if(newRowId == -1) {
-                Toast.makeText(this, "Error in the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
                 return;
             }
@@ -1112,8 +1120,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_NOTES, productsNote.get(i));
             long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
             if(newRowId == -1) {
-                Toast.makeText(this, "Error in the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
                 return;
             }
@@ -1127,8 +1134,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_NOTES, peoplesNote.get(i));
             long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
             if(newRowId == -1) {
-                Toast.makeText(this, "Error in the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
                 return;
             }
@@ -1143,16 +1149,16 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             values.put(Tracings.TracingEntry.COLUMN_NOTES, vehiclesNote.get(i));
             long newRowId = db.insert(Tracings.TracingEntry.TABLE_NAME, null, values);
             if(newRowId == -1) {
-                Toast.makeText(this, "Error in the DB",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
                 return;
             }
         }
 
-        Toast.makeText(this, "Tracing added to DB", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Tracing added to farm timeline", Toast.LENGTH_LONG).show();
         db.close();
-
+        Intent intent = new Intent(Tracing.this, MainActivity.class);
+        startActivity(intent);
     }
 
     public List<Integer> getAnimals(int id) {

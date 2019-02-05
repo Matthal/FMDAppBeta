@@ -9,16 +9,16 @@
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/basictoolbar"
+        style="@style/MyToolbar"
         android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        style="@style/MyToolbar">
+        android:layout_height="45dp">
 
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="15dp"
             android:paddingEnd="15dp"
+            android:paddingRight="15dp"
             android:src="@drawable/logo_white" />
 
     </android.support.v7.widget.Toolbar>
@@ -169,28 +169,14 @@
             android:visibility="invisible"/>
 
         <Button
-            android:id="@+id/colYellow"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="240dp"
-            android:background="@color/white"
-            android:textColor="@color/grey"
-            android:text="@string/yellow"
-            android:visibility="invisible"/>
-
-        <Button
             android:id="@+id/colPink"
             android:layout_width="75dp"
             android:layout_height="40dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginStart="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="290dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginTop="240dp"
             android:background="@color/white"
             android:textColor="@color/grey"
             android:text="@string/pink"
@@ -202,12 +188,26 @@
             android:layout_width="85dp"
             android:layout_height="50dp"
             android:layout_alignTop="@+id/colPink"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100dp"
-            android:layout_marginStart="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="15dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="-5dp"
             android:text="@string/gallery"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/colYellow"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="290dp"
+            android:background="@color/white"
+            android:textColor="@color/grey"
+            android:text="@string/yellow"
             android:visibility="invisible"/>
 
         <Button
@@ -217,7 +217,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="100dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="100dp"
             android:layout_marginTop="290dp"
             android:background="@color/white"
             android:textColor="@color/grey"
@@ -233,7 +233,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginEnd="15dp"
-            android:layout_marginRight="25dp"
+            android:layout_marginRight="15dp"
             android:layout_marginTop="-5dp"
             android:text="@string/gallery"
             android:visibility="invisible"/>
@@ -245,7 +245,7 @@
             android:layout_alignStart="@+id/edge"
             android:layout_alignLeft="@+id/edge"
             android:layout_alignBottom="@+id/edge"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="40dp"
             android:text="@string/edges"
             android:textSize="14sp"
             android:visibility="invisible"/>
@@ -259,7 +259,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginStart="25dp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="360dp"
+            android:layout_marginTop="365dp"
             android:background="#ffffff"
             android:spinnerMode="dropdown"
             android:visibility="invisible"/>
@@ -271,10 +271,10 @@
             android:layout_alignStart="@+id/heal"
             android:layout_alignLeft="@+id/heal"
             android:layout_alignBottom="@+id/heal"
-            android:layout_marginBottom="43dp"
+            android:layout_marginBottom="38dp"
             android:text="@string/heal"
             android:textSize="14sp"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
 
         <Spinner
             android:id="@+id/heal"
@@ -285,7 +285,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginEnd="25dp"
             android:layout_marginRight="25dp"
-            android:layout_marginTop="360dp"
+            android:layout_marginTop="365dp"
             android:background="#ffffff"
             android:spinnerMode="dropdown"
             android:visibility="invisible"/>
@@ -301,7 +301,7 @@
             android:id="@+id/locker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="420dp"
+            android:layout_marginTop="425dp"
             android:layout_marginLeft="30dp"
             android:layout_centerHorizontal="true"
             android:thumb="@drawable/customswitchselector"
@@ -347,6 +347,21 @@
             android:layout_marginLeft="5dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/qmark_icon" />
+
+        <ImageView
+            android:id="@+id/camera"
+            android:layout_width="50dp"
+            android:layout_height="60dp"
+            android:layout_above="@id/progbar"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/camera_icon" />
 
         <include
             android:id="@+id/progbar"

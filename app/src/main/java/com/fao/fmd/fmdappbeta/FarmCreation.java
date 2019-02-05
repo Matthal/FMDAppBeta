@@ -19,7 +19,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -31,9 +30,12 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class FarmCreation extends Activity implements AdapterView.OnItemSelectedListener{
+public class FarmCreation extends Activity implements AdapterView.OnItemSelectedListener {
+
+    LocationManager mLocationManager;
 
     double longitude;
     double latitude;
@@ -103,16 +105,14 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
         }
         if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location location = getLastKnownLocation();
             if (location != null) {
-                //System.out.println("location not null");
                 longitude = location.getLongitude();
                 latitude = location.getLatitude();
-            }else{
-                //System.out.println("location null");
+            } else {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
             }
-        }else{
+        } else {
             Toast.makeText(getBaseContext(), "Please, enable GPS",
                     Toast.LENGTH_LONG).show();
         }
@@ -120,15 +120,16 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
         Button gps = findViewById(R.id.gps);
         TextView text_gps = findViewById(R.id.text_gps);
+        String lat = String.format(Locale.UK,"%.2f", latitude);
+        String lon = String.format(Locale.UK,"%.2f", longitude);
         gps.setOnClickListener(v -> {
-            text_gps.setText("Lat: " + Double.toString(latitude) + "\nLong: " + Double.toString(longitude));
+            text_gps.setText("Lat: " + lat + "\nLong: " + lon);
             text_gps.setVisibility(View.VISIBLE);
         });
 
-
         Switch locker = findViewById(R.id.locker);
         locker.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
+            if (isChecked) {
                 if (!name.getText().toString().trim().isEmpty()) {
                     name.setBackgroundResource(R.color.colorPrimary);
                     lock = false;
@@ -172,7 +173,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
                 farm.setEnabled(false);
                 address.setEnabled(false);
                 spinner.setEnabled(false);
-            }else{
+            } else {
                 name.setBackgroundResource(R.color.white);
                 owner.setBackgroundResource(R.color.white);
                 position.setBackgroundResource(R.color.white);
@@ -191,12 +192,12 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
         cFarm.setOnClickListener(v -> {
 
-            if(!locker.isChecked()){
+            if (!locker.isChecked()) {
                 Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                 return;
             }
 
-            if(locker.isChecked() && lock){
+            if (locker.isChecked() && lock) {
                 Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -277,7 +278,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        if(parent.getItemAtPosition(pos) == "Other"){
+        if (parent.getItemAtPosition(pos) == "Other") {
             position.setVisibility(View.INVISIBLE);
             other.setVisibility(View.VISIBLE);
             close.setVisibility(View.VISIBLE);
@@ -287,6 +288,26 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
+    }
+
+    private Location getLastKnownLocation() {
+        mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
+        List<String> providers = mLocationManager.getProviders(true);
+        Location bestLocation = null;
+        for (String provider : providers) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            }
+            Location l = mLocationManager.getLastKnownLocation(provider);
+            if (l == null) {
+                continue;
+            }
+            if (bestLocation == null || l.getAccuracy() < bestLocation.getAccuracy()) {
+                // Found best last known location: %s", l);
+                bestLocation = l;
+            }
+        }
+        return bestLocation;
     }
 
 }

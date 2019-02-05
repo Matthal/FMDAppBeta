@@ -2,7 +2,11 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,7 +21,18 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class LesionAgeing extends Activity {
+
+    private static final int CAMERA_PIC_REQUEST = 1;
+    private String mCurrentPhotoPath;
+
+    boolean lock = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +60,10 @@ public class LesionAgeing extends Activity {
 
         final Bundle newBundle = new Bundle();
 
-        final String[] vesItems = new String[]{"YES", "NO"};
-        final String[] fibItems = new String[]{"YES", "NO"};
-        final String[] edgeItems = new String[]{"SMOOTH/ROUNDED", "SHARP"};
-        final String[] healItems = new String[]{"HEALING(SMALL)", "HEALING(A LOT)", "NO"};
+        final String[] vesItems = new String[]{"SELECT", "YES", "NO"};
+        final String[] fibItems = new String[]{"SELECT", "YES", "NO"};
+        final String[] edgeItems = new String[]{"SELECT", "SMOOTH/ROUNDED", "SHARP"};
+        final String[] healItems = new String[]{"SELECT", "HEALING(SMALL)", "HEALING(A LOT)", "NO"};
 
         final Spinner vesSpin = findViewById(R.id.ves);
         ArrayAdapter<String> vesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vesItems);
@@ -341,33 +356,62 @@ public class LesionAgeing extends Activity {
         locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    if(vesSpin.isEnabled()){
+                    if(vesSpin.isEnabled() && !vesSpin.getSelectedItem().toString().equals("SELECT")){
                         vesSpin.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    }else{
+                        vesSpin.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
                     }
-                    if(fibSpin.isEnabled()){
+                    if(fibSpin.isEnabled() && !fibSpin.getSelectedItem().toString().equals("SELECT")){
                         fibSpin.setBackgroundResource(R.color.colorPrimary);
+                    }else{
+                        fibSpin.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
                     }
                     if(redSel[0]){
                         red.setBackgroundResource(R.color.colorPrimary);
                         red.setTextColor(getResources().getColor(R.color.black));
+                        lock = false;
                     }
                     if(yellowSel[0]){
                         yellow.setBackgroundResource(R.color.colorPrimary);
                         yellow.setTextColor(getResources().getColor(R.color.black));
+                        lock = false;
                     }
                     if(pinkSel[0]){
                         pink.setBackgroundResource(R.color.colorPrimary);
                         pink.setTextColor(getResources().getColor(R.color.black));
+                        lock = false;
                     }
                     if(whiteSel[0]){
                         white.setBackgroundResource(R.color.colorPrimary);
                         white.setTextColor(getResources().getColor(R.color.black));
+                        lock = false;
                     }
-                    if(edgeSpin.isEnabled()){
+                    if(!redSel[0] || !pinkSel[0] || !yellowSel[0] || !whiteSel[0]){
+                        red.setBackgroundResource(R.color.TLyellow);
+                        red.setTextColor(getResources().getColor(R.color.black));
+                        yellow.setBackgroundResource(R.color.TLyellow);
+                        yellow.setTextColor(getResources().getColor(R.color.black));
+                        pink.setBackgroundResource(R.color.TLyellow);
+                        pink.setTextColor(getResources().getColor(R.color.black));
+                        white.setBackgroundResource(R.color.TLyellow);
+                        white.setTextColor(getResources().getColor(R.color.black));
+                    }
+                    if(edgeSpin.isEnabled() && !edgeSpin.getSelectedItem().toString().equals("SELECT")){
                         edgeSpin.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    }else{
+                        edgeSpin.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
                     }
-                    if(healSpin.isEnabled()){
+                    if(healSpin.isEnabled() && !healSpin.getSelectedItem().toString().equals("SELECT")){
                         healSpin.setBackgroundResource(R.color.colorPrimary);
+                        lock = false;
+                    }else{
+                        healSpin.setBackgroundResource(R.color.TLyellow);
+                        lock = true;
                     }
                     vesSpin.setEnabled(false);
                     fibSpin.setEnabled(false);
@@ -478,6 +522,10 @@ public class LesionAgeing extends Activity {
                     Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                     return;
                 }
+                if(locker.isChecked() && lock){
+                    Toast.makeText(getBaseContext(), "There is an error in the item selections", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 newBundle.putInt("id",animal);
                 Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
@@ -485,6 +533,81 @@ public class LesionAgeing extends Activity {
                 startActivity(intent);
             }
         });
+
+        ImageView camera = findViewById(R.id.camera);
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = null;
+                try {
+                    f = createImageFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Uri photoURI = FileProvider.getUriForFile(LesionAgeing.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+            }
+        });
+
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_PIC_REQUEST && resultCode != 0) {
+            /*DatabaseHelper mDbHelper = new DatabaseHelper(PostLesion.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            Bitmap image = (Bitmap) data.getExtras().get("data");
+            ContentValues cv = new ContentValues();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            image.compress(Bitmap.CompressFormat.PNG, 100, out);
+            cv.put(Photo.PhotoEntry.COLUMN_PHOTO, out.toByteArray());
+            cv.put(Photo.PhotoEntry.COLUMN_LESION, getLesion());
+            long newRowId = db.insert(Photo.PhotoEntry.TABLE_NAME, null, cv);
+            if(newRowId == -1){
+                Toast.makeText(getBaseContext(), "Error in the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+            }else {
+                Toast.makeText(getBaseContext(), "Photo added to the DB",
+                        Toast.LENGTH_LONG).show();
+                db.close();
+            }*/
+            galleryAddPic();
+            Intent intent = new Intent(this, DrawOnBitmapActivity.class);
+            String filePath = "file:" + mCurrentPhotoPath;
+            intent.putExtra("image", filePath);
+            startActivity(intent);
+        }else{
+            Toast.makeText(getBaseContext(), "Photo cancelled",
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.UK).format(new Date());
+        String imageFileName = timeStamp + "_";
+        File storageDir = new File(Environment.getExternalStorageDirectory(),"Pictures/FMD-DOI");
+        storageDir.mkdirs();
+        File image = File.createTempFile(
+                imageFileName,  // prefix
+                ".jpg",         // suffix
+                storageDir      // directory
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        System.out.println(mCurrentPhotoPath);
+        return image;
+    }
+
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
     }
 
 }
