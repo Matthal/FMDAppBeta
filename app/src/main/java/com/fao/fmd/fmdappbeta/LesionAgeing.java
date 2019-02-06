@@ -60,10 +60,10 @@ public class LesionAgeing extends Activity {
 
         final Bundle newBundle = new Bundle();
 
-        final String[] vesItems = new String[]{"SELECT", "YES", "NO"};
-        final String[] fibItems = new String[]{"SELECT", "YES", "NO"};
-        final String[] edgeItems = new String[]{"SELECT", "SMOOTH/ROUNDED", "SHARP"};
-        final String[] healItems = new String[]{"SELECT", "HEALING(SMALL)", "HEALING(A LOT)", "NO"};
+        final String[] vesItems = new String[]{"YES", "NO"};
+        final String[] fibItems = new String[]{"YES", "NO"};
+        final String[] edgeItems = new String[]{"SMOOTH/ROUNDED", "SHARP"};
+        final String[] healItems = new String[]{"HEALING(SMALL)", "HEALING(A LOT)", "NO"};
 
         final Spinner vesSpin = findViewById(R.id.ves);
         ArrayAdapter<String> vesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vesItems);
@@ -110,7 +110,10 @@ public class LesionAgeing extends Activity {
         red.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redSel[0] = true;
+                redSel[0] = !redSel[0];
+                pinkSel[0] = false;
+                yellowSel[0] = false;
+                whiteSel[0] = false;
                 red.setBackgroundResource(R.color.green);
                 red.setTextColor(getResources().getColor(R.color.black));
                 yellow.setBackgroundResource(R.color.white);
@@ -135,8 +138,11 @@ public class LesionAgeing extends Activity {
         yellow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                yellowSel[0] = true;
+                yellowSel[0] = !yellowSel[0];
                 redClicked[0] = false;
+                pinkSel[0] = false;
+                redSel[0] = false;
+                whiteSel[0] = false;
                 red.setBackgroundResource(R.color.white);
                 red.setTextColor(getResources().getColor(R.color.grey));
                 yellow.setBackgroundResource(R.color.green);
@@ -155,8 +161,11 @@ public class LesionAgeing extends Activity {
         pink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pinkSel[0] = true;
+                pinkSel[0] = !pinkSel[0];
                 redClicked[0] = false;
+                redSel[0] = false;
+                yellowSel[0] = false;
+                whiteSel[0] = false;
                 red.setBackgroundResource(R.color.white);
                 red.setTextColor(getResources().getColor(R.color.grey));
                 yellow.setBackgroundResource(R.color.white);
@@ -180,8 +189,11 @@ public class LesionAgeing extends Activity {
         white.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whiteSel[0] = true;
+                whiteSel[0] = !whiteSel[0];
                 redClicked[0] = false;
+                pinkSel[0] = false;
+                yellowSel[0] = false;
+                redSel[0] = false;
                 red.setBackgroundResource(R.color.white);
                 red.setTextColor(getResources().getColor(R.color.grey));
                 yellow.setBackgroundResource(R.color.white);
@@ -356,18 +368,11 @@ public class LesionAgeing extends Activity {
         locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    if(vesSpin.isEnabled() && !vesSpin.getSelectedItem().toString().equals("SELECT")){
+                    if(vesSpin.isEnabled()){
                         vesSpin.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    }else{
-                        vesSpin.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
                     }
-                    if(fibSpin.isEnabled() && !fibSpin.getSelectedItem().toString().equals("SELECT")){
+                    if(fibSpin.isEnabled()){
                         fibSpin.setBackgroundResource(R.color.colorPrimary);
-                    }else{
-                        fibSpin.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
                     }
                     if(redSel[0]){
                         red.setBackgroundResource(R.color.colorPrimary);
@@ -389,7 +394,7 @@ public class LesionAgeing extends Activity {
                         white.setTextColor(getResources().getColor(R.color.black));
                         lock = false;
                     }
-                    if(!redSel[0] || !pinkSel[0] || !yellowSel[0] || !whiteSel[0]){
+                    if(!redSel[0] && !pinkSel[0] && !yellowSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
                         red.setBackgroundResource(R.color.TLyellow);
                         red.setTextColor(getResources().getColor(R.color.black));
                         yellow.setBackgroundResource(R.color.TLyellow);
@@ -398,20 +403,13 @@ public class LesionAgeing extends Activity {
                         pink.setTextColor(getResources().getColor(R.color.black));
                         white.setBackgroundResource(R.color.TLyellow);
                         white.setTextColor(getResources().getColor(R.color.black));
+                        lock = true;
                     }
-                    if(edgeSpin.isEnabled() && !edgeSpin.getSelectedItem().toString().equals("SELECT")){
+                    if(edgeSpin.isEnabled()){
                         edgeSpin.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    }else{
-                        edgeSpin.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
                     }
-                    if(healSpin.isEnabled() && !healSpin.getSelectedItem().toString().equals("SELECT")){
+                    if(healSpin.isEnabled()){
                         healSpin.setBackgroundResource(R.color.colorPrimary);
-                        lock = false;
-                    }else{
-                        healSpin.setBackgroundResource(R.color.TLyellow);
-                        lock = true;
                     }
                     vesSpin.setEnabled(false);
                     fibSpin.setEnabled(false);
@@ -434,21 +432,18 @@ public class LesionAgeing extends Activity {
                     white.setTextColor(getResources().getColor(R.color.grey));
                     edgeSpin.setBackgroundResource(R.color.white);
                     healSpin.setBackgroundResource(R.color.white);
-                    if(vesSpin.getSelectedItem().toString().equals("YES")){
-                        vesSpin.setEnabled(true);
-                    }else{
-                        vesSpin.setEnabled(true);
-                        fibSpin.setEnabled(true);
-                        if(fibSpin.getSelectedItem().toString().equals("YES")){
-                            red.setEnabled(true);
-                            pink.setEnabled(true);
-                        }else{
-                            red.setEnabled(true);
-                            yellow.setEnabled(true);
-                            pink.setEnabled(true);
-                            white.setEnabled(true);
-                        }
-                    }
+                    vesSpin.setEnabled(true);
+                    fibSpin.setEnabled(true);
+                    red.setEnabled(true);
+                    pink.setEnabled(true);
+                    yellow.setEnabled(true);
+                    white.setEnabled(true);
+                    edgeSpin.setEnabled(true);
+                    healSpin.setEnabled(true);
+                    redSel[0] = false;
+                    pinkSel[0] = false;
+                    yellowSel[0] = false;
+                    whiteSel[0] = false;
                 }
             }
         });

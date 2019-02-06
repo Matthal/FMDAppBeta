@@ -66,10 +66,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         map = findViewById(R.id.map);
 
         addAnimal.setOnClickListener(v -> {
-            int id = spinner.getSelectedItemPosition();
+            int farm = spinner.getSelectedItemPosition();
             Intent intent = new Intent(FarmList.this, AnimalCreation.class);
             Bundle mBundle = new Bundle();
-            mBundle.putInt("id",id);
+            mBundle.putInt("id",farm);
             intent.putExtras(mBundle);
             startActivity(intent);
         });
@@ -77,10 +77,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             if(lock){
                 Toast.makeText(FarmList.this, "You must add an animal in the farm before adding tracings", Toast.LENGTH_LONG).show();
             }else{
-                int id = spinner.getSelectedItemPosition();
+                int farm = spinner.getSelectedItemPosition();
                 Intent intent = new Intent(FarmList.this, Tracing.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("id",id);
+                bundle.putInt("id",farm);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

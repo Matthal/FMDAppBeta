@@ -79,10 +79,10 @@ public class MainActivity extends AppCompatActivity {
         bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));*/
-                /*Intent intent = new Intent(MainActivity.this, VesiclesGallery.class);
+                System.out.println(DatabaseHelper.getTableAsString(db, "tracings"));
+                /*Intent intent = new Intent(MainActivity.this, DiagnosticOptions.class);
                 startActivity(intent);*/
                 /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 File f = null;

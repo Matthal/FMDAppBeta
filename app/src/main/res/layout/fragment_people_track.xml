@@ -5,8 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="400dp"
     android:layout_gravity="center"
-    android:background="@drawable/custom_border"
-    tools:context=".PeopleTrackFragment">
+    android:background="@drawable/custom_border">
 
     <EditText
         android:id="@+id/date"
