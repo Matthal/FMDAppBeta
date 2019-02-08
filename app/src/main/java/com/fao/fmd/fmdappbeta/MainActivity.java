@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "tracings"));
+                System.out.println(DatabaseHelper.getTableAsString(db, "farms"));
                 /*Intent intent = new Intent(MainActivity.this, DiagnosticOptions.class);
                 startActivity(intent);*/
                 /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
@@ -124,8 +124,8 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst() ){
             do {
                 final int id = cursor.getInt(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
-                String vet = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_VET));
-                String owner = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_OWNER));
+                String vet = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_INVESTIGATOR));
+                String owner = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_INTERVIEWEE));
                 String date = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_DATE));
                 Long lon = cursor.getLong(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
                 Long lat = cursor.getLong(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
@@ -169,9 +169,9 @@ public class MainActivity extends AppCompatActivity {
                 int farm = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_FARM));
                 String group = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP));
                 String age = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE));
-                String breed = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_BREED));
+                String breed = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_SPECIES));
                 String report = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_REPORT));
-                int vaccinated = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATED));
+                String vaccinated = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION));
 
                 ParseObject entity = new ParseObject("Animals");
 

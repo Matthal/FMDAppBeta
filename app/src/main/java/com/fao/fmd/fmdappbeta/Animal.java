@@ -13,9 +13,9 @@ public class Animal {
         public static final String COLUMN_FARM = "farm";
         public static final String COLUMN_GROUP = "group_id";
         public static final String COLUMN_AGE = "age";
-        public static final String COLUMN_BREED = "breed";
+        public static final String COLUMN_SPECIES = "species";
         public static final String COLUMN_REPORT = "report";
-        public static final String COLUMN_VACCINATED = "vaccinated";
+        public static final String COLUMN_VACCINATION = "vaccination_status";
     }
 
     public static final String CREATE_ANIMAL_TABLE =
@@ -25,9 +25,9 @@ public class Animal {
                     AnimalEntry.COLUMN_FARM + " INTEGER," +
                     AnimalEntry.COLUMN_GROUP + " TEXT," +
                     AnimalEntry.COLUMN_AGE + " TEXT," +
-                    AnimalEntry.COLUMN_BREED + " TEXT," +
+                    AnimalEntry.COLUMN_SPECIES + " TEXT," +
                     AnimalEntry.COLUMN_REPORT + " TEXT," +
-                    AnimalEntry.COLUMN_VACCINATED + " INTEGER," +
+                    AnimalEntry.COLUMN_VACCINATION + " TEXT," +
                     " FOREIGN KEY ("+AnimalEntry.COLUMN_FARM+") REFERENCES "+Farm.FarmEntry.TABLE_NAME +"("+Farm.FarmEntry.COLUMN_ID +") ON DELETE CASCADE)";
 
     public static final String DELETE_ENTRIES =

@@ -214,21 +214,14 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 breed = other.getText().toString();
             }
 
-            int vaccined;
-            if(vaccSpin.getSelectedItem().toString().equals(">6 months")){
-                vaccined = 1;
-            }else{
-                vaccined = 0;
-            }
-
             ContentValues values = new ContentValues();
             values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
             values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
             values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
             values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
-            values.put(Animal.AnimalEntry.COLUMN_BREED, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
+            values.put(Animal.AnimalEntry.COLUMN_SPECIES, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
             values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
-            values.put(Animal.AnimalEntry.COLUMN_VACCINATED, vaccined);
+            values.put(Animal.AnimalEntry.COLUMN_VACCINATION, vaccSpin.getSelectedItem().toString());
 
             long newRowId = db.insert(Animal.AnimalEntry.TABLE_NAME, null, values);
 

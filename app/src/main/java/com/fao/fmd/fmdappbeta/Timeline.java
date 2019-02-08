@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,9 +53,14 @@ public class Timeline extends AppCompatActivity {
     long days;
     int id;
     Map<String,Date> infectionDates;
-    Map<String,Date> spreadDates;
+    Map<String,List<Date>> spreadDates;
 
     Bundle bundle;
+
+    boolean firstYellowInf = true;
+    boolean firstRedInf = true;
+    boolean firstYellowSpr = true;
+    boolean firstRedSpr = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,20 +130,53 @@ public class Timeline extends AppCompatActivity {
             TextView infection = new TextView(this);
             if(newDate.compareTo(infectionDates.get("likely_inf_min")) == 0 || (newDate.compareTo(infectionDates.get("likely_inf_min")) > 0 && newDate.compareTo(infectionDates.get("likely_inf_max")) < 0) || newDate.compareTo(infectionDates.get("likely_inf_max")) == 0){
                 infection.setBackgroundResource(R.color.TLred);
+                if(firstRedInf){
+                    infection.setText("High");
+                    infection.setGravity(Gravity.CENTER);
+                    firstRedInf = false;
+                }
             }else{
                 if(newDate.compareTo(infectionDates.get("poss_inf_min")) == 0 || (newDate.compareTo(infectionDates.get("poss_inf_min")) > 0 && newDate.compareTo(infectionDates.get("poss_inf_max")) < 0) || newDate.compareTo(infectionDates.get("poss_inf_max")) == 0){
                     infection.setBackgroundResource(R.color.TLyellow);
+                    if(firstYellowInf){
+                        infection.setText("Low");
+                        infection.setGravity(Gravity.CENTER);
+                        firstYellowInf = false;
+                    }
                 }
             }
 
+
             TextView spread = new TextView(this);
-            if(newDate.compareTo(spreadDates.get("likely_spr_min")) == 0 || (newDate.compareTo(spreadDates.get("likely_spr_min")) > 0 && newDate.compareTo(spreadDates.get("likely_spr_max")) < 0) || newDate.compareTo(spreadDates.get("likely_spr_max")) == 0){
-                spread.setBackgroundResource(R.color.TLred);
-            }else{
-                if(newDate.compareTo(spreadDates.get("poss_spr_min")) == 0 || (newDate.compareTo(spreadDates.get("poss_spr_min")) > 0 && newDate.compareTo(spreadDates.get("poss_spr_max")) < 0) || newDate.compareTo(spreadDates.get("poss_spr_max")) == 0){
-                    spread.setBackgroundResource(R.color.TLyellow);
+            List<Date> likeSprMin = spreadDates.get("likely_spr_min");
+            List<Date> likeSprMax = spreadDates.get("likely_spr_max");
+            List<Date> possSprMin = spreadDates.get("poss_spr_min");
+            List<Date> possSprMax = spreadDates.get("poss_spr_max");
+            boolean isRed = false;
+            for(int x = 0; x < likeSprMin.size(); x++){
+                if(newDate.compareTo(likeSprMin.get(x)) == 0 || (newDate.compareTo(likeSprMin.get(x)) > 0 && newDate.compareTo(likeSprMax.get(x)) < 0) || newDate.compareTo(likeSprMax.get(x)) == 0){
+                    spread.setBackgroundResource(R.color.TLred);
+                    isRed = true;
+                    if(firstRedSpr){
+                        spread.setText("High");
+                        spread.setGravity(Gravity.CENTER);
+                        firstRedSpr = false;
+                    }
+                }else{
+                    if(!isRed){
+                        if(newDate.compareTo(possSprMin.get(x)) == 0 || (newDate.compareTo(possSprMin.get(x)) > 0 && newDate.compareTo(possSprMax.get(x)) < 0) || newDate.compareTo(possSprMax.get(x)) == 0){
+                            spread.setBackgroundResource(R.color.TLyellow);
+                            if(firstYellowSpr){
+                                spread.setText("Low");
+                                spread.setGravity(Gravity.CENTER);
+                                firstYellowSpr = false;
+                            }
+                        }
+                    }
                 }
             }
+            isRed = false;
+
 
             TextView category = new TextView(this);
             category.setGravity(Gravity.CENTER);
@@ -241,7 +280,7 @@ public class Timeline extends AppCompatActivity {
                 return;
             }
         }
-        Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline)); // here give id of our root layout (here its my RelativeLayout's id)
+        Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline));
         //Now create the name of your PDF file that you will generate
         SimpleDateFormat mdyFormat = new SimpleDateFormat("dd_MMM_yyyy",Locale.UK);
         String currentDate = mdyFormat.format(new Date());
@@ -435,8 +474,13 @@ public class Timeline extends AppCompatActivity {
 
     }
 
-    public Map<String,Date> getSpreadDates(List<Integer> animals) throws ParseException {
-        Map<String,Date> lesions = new HashMap<>();
+    public Map<String,List<Date>> getSpreadDates(List<Integer> animals) throws ParseException {
+
+        Map<String,List<Date>> dates = new HashMap<>();
+        List<Date> likeSprMinList = new ArrayList<>();
+        List<Date> possSprMinList = new ArrayList<>();
+        List<Date> likeSprMaxList = new ArrayList<>();
+        List<Date> possSprMaxList = new ArrayList<>();
 
         DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -448,58 +492,28 @@ public class Timeline extends AppCompatActivity {
 
             if (cursor.moveToFirst()) {
                 do {
-                    String strDate = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_INF_MIN));
-                    Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(strDate);
-                    int id = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ID));
-                    lesions.put(Integer.toString(id),date);
+                    String likeSprMin = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
+                    String possSprMin = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MIN));
+                    String likeSprMax = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX));
+                    String possSprMax = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
+                    Date likeSprMinDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(likeSprMin);
+                    Date possSprMinDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(possSprMin);
+                    Date likeSprMaxDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(likeSprMax);
+                    Date possSprMaxDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(possSprMax);
+                    likeSprMinList.add(likeSprMinDate);
+                    possSprMinList.add(possSprMinDate);
+                    likeSprMaxList.add(likeSprMaxDate);
+                    possSprMaxList.add(possSprMaxDate);
                 } while (cursor.moveToNext());
             }
             cursor.close();
         }
+        db.close();
 
-        Date oldLesion = Collections.min(lesions.values());
-        Date youngLesion = Collections.max(lesions.values());
-
-        String oldKey = null;
-        String youngKey = null;
-
-        for(Map.Entry entry: lesions.entrySet()){
-            if(oldLesion.equals(entry.getValue())){
-                oldKey = (String) entry.getKey();
-                break; //breaking because its one to one map
-            }
-        }
-
-        for(Map.Entry entry: lesions.entrySet()){
-            if(youngLesion.equals(entry.getValue())){
-                youngKey = (String) entry.getKey();
-                break; //breaking because its one to one map
-            }
-        }
-
-        Map<String,Date> dates = new HashMap<>();
-
-        String oldQuery = "SELECT * FROM " + Lesion.LesionEntry.TABLE_NAME + " WHERE id=" + Integer.parseInt(oldKey);
-        Cursor cursor = db.rawQuery(oldQuery, null);
-        cursor.moveToFirst();
-        String likeSprMin = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
-        String possSprMin = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MIN));
-        Date likeSprMinDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(likeSprMin);
-        Date possSprMinDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(possSprMin);
-        dates.put("likely_spr_min",likeSprMinDate);
-        dates.put("poss_spr_min",possSprMinDate);
-        cursor.close();
-
-        String youngQuery = "SELECT * FROM " + Lesion.LesionEntry.TABLE_NAME + " WHERE id=" + Integer.parseInt(youngKey);
-        cursor = db.rawQuery(youngQuery, null);
-        cursor.moveToFirst();
-        String likeSprMax = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX));
-        String possSprMax = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
-        Date likeSprMaxDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(likeSprMax);
-        Date possSprMaxDate = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(possSprMax);
-        dates.put("likely_spr_max",likeSprMaxDate);
-        dates.put("poss_spr_max",possSprMaxDate);
-        cursor.close();
+        dates.put("likely_spr_min",likeSprMinList);
+        dates.put("poss_spr_min",possSprMinList);
+        dates.put("likely_spr_max",likeSprMaxList);
+        dates.put("poss_spr_max",possSprMaxList);
 
         return dates;
 
@@ -578,15 +592,36 @@ public class Timeline extends AppCompatActivity {
         for(int i = 0; i < lesions.size(); i++){
             String selectQuery = "SELECT * FROM " + Lesion.LesionEntry.TABLE_NAME + " WHERE id=" + lesions.get(i);
 
-            DatabaseHelper mDbHelper = new DatabaseHelper(Timeline.this);
+            DatabaseHelper mDbHelper = new DatabaseHelper(this);
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
 
+            int old;
+
             if (cursor.moveToFirst()) {
                 do {
-                    String strDate = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
-                    Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(strDate);
-                    dates.add(date);
+                    String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
+                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
+                    if(age.length() < 2){
+                        old = Integer.parseInt(age);
+                    }else{
+                        if(age.charAt(1) == '-'){
+                            if(age.length() == 3){
+                                old = Character.getNumericValue(age.charAt(2));
+                            }else{
+                                old = Integer.parseInt(age.substring(2,3));
+                            }
+                        }else{
+                            if(age.charAt(2) == '-'){
+                                old = Integer.parseInt(age.substring(3,4));
+                            }else{
+                                old = Integer.parseInt(age.substring(0,1));
+                            }
+                        }
+                    }
+                    Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);
+                    Date diagnDate = addDays(date,old);
+                    dates.add(diagnDate);
                 } while (cursor.moveToNext());
             }
             cursor.close();

@@ -202,17 +202,26 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
                 return;
             }
 
+            String role;
+            if(position.getVisibility() == View.VISIBLE){
+                role = position.getSelectedItem().toString();
+            }else{
+                role = other.getText().toString();
+            }
+
             //PUT VALUES INTO DB
             DatabaseHelper mDbHelper = new DatabaseHelper(FarmCreation.this);
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
-            values.put(Farm.FarmEntry.COLUMN_VET, name.getText().toString());
-            values.put(Farm.FarmEntry.COLUMN_OWNER, owner.getText().toString());
+            values.put(Farm.FarmEntry.COLUMN_INVESTIGATOR, name.getText().toString());
+            values.put(Farm.FarmEntry.COLUMN_INTERVIEWEE, owner.getText().toString());
+            values.put(Farm.FarmEntry.COLUMN_POSITION, role);
             values.put(Farm.FarmEntry.COLUMN_DATE, date);
             values.put(Farm.FarmEntry.COLUMN_LONGITUDE, longitude);
             values.put(Farm.FarmEntry.COLUMN_LATITUDE, latitude);
             values.put(Farm.FarmEntry.COLUMN_COUNTRY, spinner.getSelectedItem().toString());
             values.put(Farm.FarmEntry.COLUMN_NAME, farm.getText().toString());
+            values.put(Farm.FarmEntry.COLUMN_ADDRESS, address.getText().toString());
 
             long newRowId = db.insert(Farm.FarmEntry.TABLE_NAME, null, values);
 

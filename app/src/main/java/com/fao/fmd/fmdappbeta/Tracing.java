@@ -116,6 +116,8 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         final TextView vehicleNum = findViewById(R.id.vehicleNum);
         final int[] vehicleCount = {0};
 
+        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+
         animalTrack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +132,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 );
                 mPopupWindow.setFocusable(true);
 
-
                 // Set an elevation value for popup window
                 // Call requires API level 21
                 if(Build.VERSION.SDK_INT>=21){
@@ -138,7 +139,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -239,7 +239,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -341,7 +340,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -449,7 +447,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 }
 
                 date = customView.findViewById(R.id.date);
-                final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                 date.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -590,7 +587,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(animalsDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -722,7 +718,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(productsDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -855,7 +850,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(peoplesDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -990,7 +984,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                         date = customView.findViewById(R.id.date);
                         date.setText(vehiclesDate.get(position));
-                        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                         date.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -1220,7 +1213,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             if (cursor.moveToFirst()) {
                 do {
                     String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
-                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
+                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX));
                     if(age.length() < 2){
                         old = Integer.parseInt(age);
                     }else{
