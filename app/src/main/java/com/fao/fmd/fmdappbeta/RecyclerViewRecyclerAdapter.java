@@ -2,6 +2,7 @@ package com.fao.fmd.fmdappbeta;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
@@ -31,14 +32,15 @@ public class RecyclerViewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         }
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
         this.context = parent.getContext();
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.recycler_view_list_row, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
         final ItemModel item = data.get(position);
         holder.setIsRecyclable(false);
         holder.textView.setText(item.header);
@@ -62,12 +64,7 @@ public class RecyclerViewRecyclerAdapter extends RecyclerView.Adapter<RecyclerVi
         });
 
         holder.buttonLayout.setRotation(expandState.get(position) ? 180f : 0f);
-        holder.buttonLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                onClickButton(holder.expandableLayout);
-            }
-        });
+        holder.buttonLayout.setOnClickListener(v -> onClickButton(holder.expandableLayout));
 
         holder.text.setText(item.description);
     }

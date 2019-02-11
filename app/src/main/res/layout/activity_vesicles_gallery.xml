@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container"
-    android:background="#f2f2f2"
-    tools:context=".VesiclesGallery" >
+    android:background="#f2f2f2">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/basictoolbar"

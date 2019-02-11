@@ -2,7 +2,6 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,12 +43,7 @@ public class Assumptions extends Activity {
         assumptions.setText(text);
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
 
     }
 }

@@ -60,60 +60,45 @@ public class MainActivity extends AppCompatActivity {
 
         //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
-        cFarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FarmCreation.class);
-                startActivity(intent);
-            }
+        cFarm.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FarmCreation.class);
+            startActivity(intent);
         });
 
-        lFarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, FarmList.class);
-                startActivity(intent);
-            }
+        lFarm.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, FarmList.class);
+            startActivity(intent);
         });
 
-        bio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                System.out.println(DatabaseHelper.getTableAsString(db, "farms"));
-                /*Intent intent = new Intent(MainActivity.this, DiagnosticOptions.class);
-                startActivity(intent);*/
-                /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File f = null;
-                try {
-                    f = createImageFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Uri photoURI = FileProvider.getUriForFile(MainActivity.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(cameraIntent, 1);*/
+        bio.setOnClickListener(v -> {
+            DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            System.out.println(DatabaseHelper.getTableAsString(db, "farms"));
+            /*Intent intent = new Intent(MainActivity.this, DiagnosticOptions.class);
+            startActivity(intent);*/
+            /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            File f = null;
+            try {
+                f = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            Uri photoURI = FileProvider.getUriForFile(MainActivity.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(cameraIntent, 1);*/
         });
 
-        dBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DiagnosticsOverview.class);
-                startActivity(intent);
-            }
+        dBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, DiagnosticsOverview.class);
+            startActivity(intent);
         });
 
         Button sync = findViewById(R.id.sync);
-        sync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UploadFarms();
-                UploadAnimals();
-                UploadLesions();
-                UploadTracings();
-            }
+        sync.setOnClickListener(v -> {
+            UploadFarms();
+            UploadAnimals();
+            UploadLesions();
+            UploadTracings();
         });
     }
 

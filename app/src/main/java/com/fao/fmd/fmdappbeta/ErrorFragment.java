@@ -1,6 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +20,7 @@ public class ErrorFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_error, container, false);
 
         bundle = this.getArguments();
@@ -44,12 +45,7 @@ public class ErrorFragment extends Fragment {
 
         ImageView back = view.findViewById((R.id.back));
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> getActivity().onBackPressed());
 
         return view;
     }

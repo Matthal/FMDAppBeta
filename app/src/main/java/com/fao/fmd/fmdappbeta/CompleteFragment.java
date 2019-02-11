@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,7 @@ public class CompleteFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_complete, container, false);
 
@@ -68,65 +69,40 @@ public class CompleteFragment extends Fragment {
         ImageView next = view.findViewById(R.id.next);
         ImageView back = view.findViewById(R.id.back);
 
-        exBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle g = new Bundle();
-                g.putString("img",res);
-                Intent intent = new Intent(getActivity(), VesiclesGallery.class);
-                intent.putExtras(g);
-                startActivity(intent);
-            }
+        exBtn.setOnClickListener(v -> {
+            Bundle g = new Bundle();
+            g.putString("img",res);
+            Intent intent = new Intent(getActivity(), VesiclesGallery.class);
+            intent.putExtras(g);
+            startActivity(intent);
         });
-        lesBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LesionAgeing.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+        lesBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LesionAgeing.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
-        diagnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), DiagnosticOptions.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
+        diagnBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), DiagnosticOptions.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
-        assumptBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Assumptions.class);
-                startActivity(intent);
-            }
+        assumptBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), Assumptions.class);
+            startActivity(intent);
         });
-        timelineBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addDBEntry();
+        timelineBtn.setOnClickListener(v -> addDBEntry());
+
+        next.setOnClickListener(v -> {
+            if(!added){
+                Toast.makeText(getActivity(), "You must add the lesion to the farm timeline before continue", Toast.LENGTH_LONG).show();
+                return;
             }
+            Intent intent = new Intent(getActivity(), PostLesion.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!added){
-                    Toast.makeText(getActivity(), "You must add the lesion to the farm timeline before continue", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                Intent intent = new Intent(getActivity(), PostLesion.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            }
-        });
-
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> getActivity().onBackPressed());
 
         return view;
     }
@@ -156,7 +132,6 @@ public class CompleteFragment extends Fragment {
                 }
             }
         }
-        System.out.println(old);
 
         int like_inf_min = old + 6;
         int like_inf_max = old + 2;

@@ -59,14 +59,11 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         other = findViewById(R.id.other);
 
         close = findViewById(R.id.close);
-        close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.setSelection(0);
-                spinner.setVisibility(View.VISIBLE);
-                other.setVisibility(View.INVISIBLE);
-                close.setVisibility(View.INVISIBLE);
-            }
+        close.setOnClickListener(v -> {
+            spinner.setSelection(0);
+            spinner.setVisibility(View.VISIBLE);
+            other.setVisibility(View.INVISIBLE);
+            close.setVisibility(View.INVISIBLE);
         });
 
         final String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};

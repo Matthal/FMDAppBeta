@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;

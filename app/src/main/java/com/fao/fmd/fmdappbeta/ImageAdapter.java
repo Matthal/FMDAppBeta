@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
@@ -12,8 +11,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class ImageAdapter extends BaseAdapter {
+
     private Context mContext;
-    public ArrayList<Integer> mImages;
+    private ArrayList<Integer> mImages;
 
 
     // Constructor

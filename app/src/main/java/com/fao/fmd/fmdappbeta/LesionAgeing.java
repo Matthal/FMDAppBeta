@@ -11,15 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,111 +104,99 @@ public class LesionAgeing extends Activity {
         Button whiteGalleryBtn = findViewById(R.id.whiteGallery);
 
         //LISTENERS
-        red.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                redSel[0] = !redSel[0];
-                pinkSel[0] = false;
-                yellowSel[0] = false;
-                whiteSel[0] = false;
-                red.setBackgroundResource(R.color.green);
-                red.setTextColor(getResources().getColor(R.color.black));
-                yellow.setBackgroundResource(R.color.white);
-                yellow.setTextColor(getResources().getColor(R.color.grey));
-                pink.setBackgroundResource(R.color.white);
-                pink.setTextColor(getResources().getColor(R.color.grey));
-                white.setBackgroundResource(R.color.white);
-                white.setTextColor(getResources().getColor(R.color.grey));
-                newBundle.putString("Q3","a");
-                textEdges.setVisibility(View.VISIBLE);
-                edgeSpin.setVisibility(View.VISIBLE);
-                if(fibSpin.getSelectedItem().toString().equals("YES") && edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                    textHeal.setVisibility(View.INVISIBLE);
-                    healSpin.setVisibility(View.INVISIBLE);
-                }else{
-                    redClicked[0] = true;
-                    textHeal.setVisibility(View.VISIBLE);
-                    healSpin.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-        yellow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                yellowSel[0] = !yellowSel[0];
-                redClicked[0] = false;
-                pinkSel[0] = false;
-                redSel[0] = false;
-                whiteSel[0] = false;
-                red.setBackgroundResource(R.color.white);
-                red.setTextColor(getResources().getColor(R.color.grey));
-                yellow.setBackgroundResource(R.color.green);
-                yellow.setTextColor(getResources().getColor(R.color.black));
-                pink.setBackgroundResource(R.color.white);
-                pink.setTextColor(getResources().getColor(R.color.grey));
-                white.setBackgroundResource(R.color.white);
-                white.setTextColor(getResources().getColor(R.color.grey));
-                newBundle.putString("Q3","c");
-                textEdges.setVisibility(View.INVISIBLE);
-                edgeSpin.setVisibility(View.INVISIBLE);
+        red.setOnClickListener(v -> {
+            redSel[0] = !redSel[0];
+            pinkSel[0] = false;
+            yellowSel[0] = false;
+            whiteSel[0] = false;
+            red.setBackgroundResource(R.color.green);
+            red.setTextColor(getResources().getColor(R.color.black));
+            yellow.setBackgroundResource(R.color.white);
+            yellow.setTextColor(getResources().getColor(R.color.grey));
+            pink.setBackgroundResource(R.color.white);
+            pink.setTextColor(getResources().getColor(R.color.grey));
+            white.setBackgroundResource(R.color.white);
+            white.setTextColor(getResources().getColor(R.color.grey));
+            newBundle.putString("Q3","a");
+            textEdges.setVisibility(View.VISIBLE);
+            edgeSpin.setVisibility(View.VISIBLE);
+            if(fibSpin.getSelectedItem().toString().equals("YES") && edgeSpin.getSelectedItem().toString().equals("SHARP")){
                 textHeal.setVisibility(View.INVISIBLE);
                 healSpin.setVisibility(View.INVISIBLE);
+            }else{
+                redClicked[0] = true;
+                textHeal.setVisibility(View.VISIBLE);
+                healSpin.setVisibility(View.VISIBLE);
             }
         });
-        pink.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pinkSel[0] = !pinkSel[0];
-                redClicked[0] = false;
-                redSel[0] = false;
-                yellowSel[0] = false;
-                whiteSel[0] = false;
-                red.setBackgroundResource(R.color.white);
-                red.setTextColor(getResources().getColor(R.color.grey));
-                yellow.setBackgroundResource(R.color.white);
-                yellow.setTextColor(getResources().getColor(R.color.grey));
-                pink.setBackgroundResource(R.color.green);
-                pink.setTextColor(getResources().getColor(R.color.black));
-                white.setBackgroundResource(R.color.white);
-                white.setTextColor(getResources().getColor(R.color.grey));
-                newBundle.putString("Q3","b");
-                textEdges.setVisibility(View.VISIBLE);
-                edgeSpin.setVisibility(View.VISIBLE);
-                if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                    textHeal.setVisibility(View.INVISIBLE);
-                    healSpin.setVisibility(View.INVISIBLE);
-                }else{
-                    textHeal.setVisibility(View.VISIBLE);
-                    healSpin.setVisibility(View.VISIBLE);
-                }
+        yellow.setOnClickListener(v -> {
+            yellowSel[0] = !yellowSel[0];
+            redClicked[0] = false;
+            pinkSel[0] = false;
+            redSel[0] = false;
+            whiteSel[0] = false;
+            red.setBackgroundResource(R.color.white);
+            red.setTextColor(getResources().getColor(R.color.grey));
+            yellow.setBackgroundResource(R.color.green);
+            yellow.setTextColor(getResources().getColor(R.color.black));
+            pink.setBackgroundResource(R.color.white);
+            pink.setTextColor(getResources().getColor(R.color.grey));
+            white.setBackgroundResource(R.color.white);
+            white.setTextColor(getResources().getColor(R.color.grey));
+            newBundle.putString("Q3","c");
+            textEdges.setVisibility(View.INVISIBLE);
+            edgeSpin.setVisibility(View.INVISIBLE);
+            textHeal.setVisibility(View.INVISIBLE);
+            healSpin.setVisibility(View.INVISIBLE);
+        });
+        pink.setOnClickListener(v -> {
+            pinkSel[0] = !pinkSel[0];
+            redClicked[0] = false;
+            redSel[0] = false;
+            yellowSel[0] = false;
+            whiteSel[0] = false;
+            red.setBackgroundResource(R.color.white);
+            red.setTextColor(getResources().getColor(R.color.grey));
+            yellow.setBackgroundResource(R.color.white);
+            yellow.setTextColor(getResources().getColor(R.color.grey));
+            pink.setBackgroundResource(R.color.green);
+            pink.setTextColor(getResources().getColor(R.color.black));
+            white.setBackgroundResource(R.color.white);
+            white.setTextColor(getResources().getColor(R.color.grey));
+            newBundle.putString("Q3","b");
+            textEdges.setVisibility(View.VISIBLE);
+            edgeSpin.setVisibility(View.VISIBLE);
+            if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
+                textHeal.setVisibility(View.INVISIBLE);
+                healSpin.setVisibility(View.INVISIBLE);
+            }else{
+                textHeal.setVisibility(View.VISIBLE);
+                healSpin.setVisibility(View.VISIBLE);
             }
         });
-        white.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                whiteSel[0] = !whiteSel[0];
-                redClicked[0] = false;
-                pinkSel[0] = false;
-                yellowSel[0] = false;
-                redSel[0] = false;
-                red.setBackgroundResource(R.color.white);
-                red.setTextColor(getResources().getColor(R.color.grey));
-                yellow.setBackgroundResource(R.color.white);
-                yellow.setTextColor(getResources().getColor(R.color.grey));
-                pink.setBackgroundResource(R.color.white);
-                pink.setTextColor(getResources().getColor(R.color.grey));
-                white.setBackgroundResource(R.color.green);
-                white.setTextColor(getResources().getColor(R.color.black));
-                newBundle.putString("Q3","d");
-                textEdges.setVisibility(View.VISIBLE);
-                edgeSpin.setVisibility(View.VISIBLE);
-                if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                    textHeal.setVisibility(View.INVISIBLE);
-                    healSpin.setVisibility(View.INVISIBLE);
-                }else{
-                    textHeal.setVisibility(View.VISIBLE);
-                    healSpin.setVisibility(View.VISIBLE);
-                }
+        white.setOnClickListener(v -> {
+            whiteSel[0] = !whiteSel[0];
+            redClicked[0] = false;
+            pinkSel[0] = false;
+            yellowSel[0] = false;
+            redSel[0] = false;
+            red.setBackgroundResource(R.color.white);
+            red.setTextColor(getResources().getColor(R.color.grey));
+            yellow.setBackgroundResource(R.color.white);
+            yellow.setTextColor(getResources().getColor(R.color.grey));
+            pink.setBackgroundResource(R.color.white);
+            pink.setTextColor(getResources().getColor(R.color.grey));
+            white.setBackgroundResource(R.color.green);
+            white.setTextColor(getResources().getColor(R.color.black));
+            newBundle.putString("Q3","d");
+            textEdges.setVisibility(View.VISIBLE);
+            edgeSpin.setVisibility(View.VISIBLE);
+            if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
+                textHeal.setVisibility(View.INVISIBLE);
+                healSpin.setVisibility(View.INVISIBLE);
+            }else{
+                textHeal.setVisibility(View.VISIBLE);
+                healSpin.setVisibility(View.VISIBLE);
             }
         });
 
@@ -365,185 +350,157 @@ public class LesionAgeing extends Activity {
         });
 
         Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    if(vesSpin.isEnabled()){
-                        vesSpin.setBackgroundResource(R.color.colorPrimary);
-                    }
-                    if(fibSpin.isEnabled()){
-                        fibSpin.setBackgroundResource(R.color.colorPrimary);
-                    }
-                    if(redSel[0]){
-                        red.setBackgroundResource(R.color.colorPrimary);
-                        red.setTextColor(getResources().getColor(R.color.black));
-                        lock = false;
-                    }
-                    if(yellowSel[0]){
-                        yellow.setBackgroundResource(R.color.colorPrimary);
-                        yellow.setTextColor(getResources().getColor(R.color.black));
-                        lock = false;
-                    }
-                    if(pinkSel[0]){
-                        pink.setBackgroundResource(R.color.colorPrimary);
-                        pink.setTextColor(getResources().getColor(R.color.black));
-                        lock = false;
-                    }
-                    if(whiteSel[0]){
-                        white.setBackgroundResource(R.color.colorPrimary);
-                        white.setTextColor(getResources().getColor(R.color.black));
-                        lock = false;
-                    }
-                    if(!redSel[0] && !pinkSel[0] && !yellowSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
-                        red.setBackgroundResource(R.color.TLyellow);
-                        red.setTextColor(getResources().getColor(R.color.black));
-                        yellow.setBackgroundResource(R.color.TLyellow);
-                        yellow.setTextColor(getResources().getColor(R.color.black));
-                        pink.setBackgroundResource(R.color.TLyellow);
-                        pink.setTextColor(getResources().getColor(R.color.black));
-                        white.setBackgroundResource(R.color.TLyellow);
-                        white.setTextColor(getResources().getColor(R.color.black));
-                        lock = true;
-                    }
-                    if(edgeSpin.isEnabled()){
-                        edgeSpin.setBackgroundResource(R.color.colorPrimary);
-                    }
-                    if(healSpin.isEnabled()){
-                        healSpin.setBackgroundResource(R.color.colorPrimary);
-                    }
-                    vesSpin.setEnabled(false);
-                    fibSpin.setEnabled(false);
-                    red.setEnabled(false);
-                    yellow.setEnabled(false);
-                    pink.setEnabled(false);
-                    white.setEnabled(false);
-                    edgeSpin.setEnabled(false);
-                    healSpin.setEnabled(false);
-                }else{
-                    vesSpin.setBackgroundResource(R.color.white);
-                    fibSpin.setBackgroundResource(R.color.white);
-                    red.setBackgroundResource(R.color.white);
-                    red.setTextColor(getResources().getColor(R.color.grey));
-                    yellow.setBackgroundResource(R.color.white);
-                    yellow.setTextColor(getResources().getColor(R.color.grey));
-                    pink.setBackgroundResource(R.color.white);
-                    pink.setTextColor(getResources().getColor(R.color.grey));
-                    white.setBackgroundResource(R.color.white);
-                    white.setTextColor(getResources().getColor(R.color.grey));
-                    edgeSpin.setBackgroundResource(R.color.white);
-                    healSpin.setBackgroundResource(R.color.white);
-                    vesSpin.setEnabled(true);
-                    fibSpin.setEnabled(true);
-                    red.setEnabled(true);
-                    pink.setEnabled(true);
-                    yellow.setEnabled(true);
-                    white.setEnabled(true);
-                    edgeSpin.setEnabled(true);
-                    healSpin.setEnabled(true);
-                    redSel[0] = false;
-                    pinkSel[0] = false;
-                    yellowSel[0] = false;
-                    whiteSel[0] = false;
+        locker.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if(isChecked){
+                if(vesSpin.isEnabled()){
+                    vesSpin.setBackgroundResource(R.color.colorPrimary);
                 }
+                if(fibSpin.isEnabled()){
+                    fibSpin.setBackgroundResource(R.color.colorPrimary);
+                }
+                if(redSel[0]){
+                    red.setBackgroundResource(R.color.colorPrimary);
+                    red.setTextColor(getResources().getColor(R.color.black));
+                    lock = false;
+                }
+                if(yellowSel[0]){
+                    yellow.setBackgroundResource(R.color.colorPrimary);
+                    yellow.setTextColor(getResources().getColor(R.color.black));
+                    lock = false;
+                }
+                if(pinkSel[0]){
+                    pink.setBackgroundResource(R.color.colorPrimary);
+                    pink.setTextColor(getResources().getColor(R.color.black));
+                    lock = false;
+                }
+                if(whiteSel[0]){
+                    white.setBackgroundResource(R.color.colorPrimary);
+                    white.setTextColor(getResources().getColor(R.color.black));
+                    lock = false;
+                }
+                if(!redSel[0] && !pinkSel[0] && !yellowSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
+                    red.setBackgroundResource(R.color.TLyellow);
+                    red.setTextColor(getResources().getColor(R.color.black));
+                    yellow.setBackgroundResource(R.color.TLyellow);
+                    yellow.setTextColor(getResources().getColor(R.color.black));
+                    pink.setBackgroundResource(R.color.TLyellow);
+                    pink.setTextColor(getResources().getColor(R.color.black));
+                    white.setBackgroundResource(R.color.TLyellow);
+                    white.setTextColor(getResources().getColor(R.color.black));
+                    lock = true;
+                }
+                if(edgeSpin.isEnabled()){
+                    edgeSpin.setBackgroundResource(R.color.colorPrimary);
+                }
+                if(healSpin.isEnabled()){
+                    healSpin.setBackgroundResource(R.color.colorPrimary);
+                }
+                vesSpin.setEnabled(false);
+                fibSpin.setEnabled(false);
+                red.setEnabled(false);
+                yellow.setEnabled(false);
+                pink.setEnabled(false);
+                white.setEnabled(false);
+                edgeSpin.setEnabled(false);
+                healSpin.setEnabled(false);
+            }else{
+                vesSpin.setBackgroundResource(R.color.white);
+                fibSpin.setBackgroundResource(R.color.white);
+                red.setBackgroundResource(R.color.white);
+                red.setTextColor(getResources().getColor(R.color.grey));
+                yellow.setBackgroundResource(R.color.white);
+                yellow.setTextColor(getResources().getColor(R.color.grey));
+                pink.setBackgroundResource(R.color.white);
+                pink.setTextColor(getResources().getColor(R.color.grey));
+                white.setBackgroundResource(R.color.white);
+                white.setTextColor(getResources().getColor(R.color.grey));
+                edgeSpin.setBackgroundResource(R.color.white);
+                healSpin.setBackgroundResource(R.color.white);
+                vesSpin.setEnabled(true);
+                fibSpin.setEnabled(true);
+                red.setEnabled(true);
+                pink.setEnabled(true);
+                yellow.setEnabled(true);
+                white.setEnabled(true);
+                edgeSpin.setEnabled(true);
+                healSpin.setEnabled(true);
+                redSel[0] = false;
+                pinkSel[0] = false;
+                yellowSel[0] = false;
+                whiteSel[0] = false;
             }
         });
 
         Bundle g = new Bundle();
 
-        vesGalleryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.putString("img","ves");
-                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
-                intent.putExtras(g);
-                startActivity(intent);
-            }
+        vesGalleryBtn.setOnClickListener(v -> {
+            g.putString("img","ves");
+            Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+            intent.putExtras(g);
+            startActivity(intent);
         });
 
-        fibGalleryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.putString("img","fib");
-                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
-                intent.putExtras(g);
-                startActivity(intent);
-            }
+        fibGalleryBtn.setOnClickListener(v -> {
+            g.putString("img","fib");
+            Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+            intent.putExtras(g);
+            startActivity(intent);
         });
 
-        redGalleryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.putString("img","red");
-                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
-                intent.putExtras(g);
-                startActivity(intent);
-            }
+        redGalleryBtn.setOnClickListener(v -> {
+            g.putString("img","red");
+            Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+            intent.putExtras(g);
+            startActivity(intent);
         });
 
-        pinkGalleryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.putString("img","pink");
-                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
-                intent.putExtras(g);
-                startActivity(intent);
-            }
+        pinkGalleryBtn.setOnClickListener(v -> {
+            g.putString("img","pink");
+            Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+            intent.putExtras(g);
+            startActivity(intent);
         });
 
-        whiteGalleryBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                g.putString("img","white");
-                Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
-                intent.putExtras(g);
-                startActivity(intent);
-            }
+        whiteGalleryBtn.setOnClickListener(v -> {
+            g.putString("img","white");
+            Intent intent = new Intent(LesionAgeing.this, VesiclesGallery.class);
+            intent.putExtras(g);
+            startActivity(intent);
         });
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
 
         ImageView next = findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        next.setOnClickListener(v -> {
 
-                if(!locker.isChecked()){
-                    Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
-                    return;
-                }
-                if(locker.isChecked() && lock){
-                    Toast.makeText(getBaseContext(), "There is an error in the item selections", Toast.LENGTH_LONG).show();
-                    return;
-                }
-
-                newBundle.putInt("id",animal);
-                Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
-                intent.putExtras(newBundle);
-                startActivity(intent);
+            if(!locker.isChecked()){
+                Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
+                return;
             }
+            if(locker.isChecked() && lock){
+                Toast.makeText(getBaseContext(), "There is an error in the item selections", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            newBundle.putInt("id",animal);
+            Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
+            intent.putExtras(newBundle);
+            startActivity(intent);
         });
 
         ImageView camera = findViewById(R.id.camera);
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                File f = null;
-                try {
-                    f = createImageFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Uri photoURI = FileProvider.getUriForFile(LesionAgeing.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
-                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+        camera.setOnClickListener(v -> {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            File f = null;
+            try {
+                f = createImageFile();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            Uri photoURI = FileProvider.getUriForFile(LesionAgeing.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
         });
 
     }

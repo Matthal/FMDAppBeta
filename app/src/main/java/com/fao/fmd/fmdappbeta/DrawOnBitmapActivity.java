@@ -2,15 +2,12 @@ package com.fao.fmd.fmdappbeta;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,18 +18,16 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import ja.burhanrashid52.photoeditor.PhotoEditor;
 import ja.burhanrashid52.photoeditor.PhotoEditorView;
@@ -131,7 +126,6 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
                 Uri tempUri = getImageUri(getApplicationContext(), mImageBitmap);
                 // CALL THIS METHOD TO GET THE ACTUAL PATH
                 File f = new File(getRealPathFromURI(tempUri));
-                System.out.println(getRealPathFromURI(tempUri));
                 if(f.exists()){
                     if (f.delete()) {
                         System.out.println("file Deleted ");
@@ -178,7 +172,7 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.UK).format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = new File(Environment.getExternalStorageDirectory(),"Pictures/FMD-DOI");
         File image = File.createTempFile(
@@ -231,7 +225,6 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
             }
         }
     }
-
 
     @Override
     public void onColorChanged(int colorCode) {
@@ -293,7 +286,9 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        return cursor.getString(idx);
+        String path = cursor.getString(idx);
+        cursor.close();
+        return path;
     }
 
     private void galleryAddPic(File file) {

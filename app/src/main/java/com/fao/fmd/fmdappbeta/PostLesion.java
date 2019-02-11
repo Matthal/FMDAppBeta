@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -48,52 +47,35 @@ public class PostLesion extends Activity {
         ImageView next = findViewById(R.id.next);
         ImageView back = findViewById(R.id.back);
 
-        addAnimal.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PostLesion.this, AnimalCreation.class);
+        addAnimal.setOnClickListener(v -> {
+            Intent intent = new Intent(PostLesion.this, AnimalCreation.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        });
+        addTracing.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putInt("id", farm);
+            Intent intent = new Intent(PostLesion.this, Tracing.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
+        timeline.setOnClickListener(v -> {
+            Intent intent = new Intent(PostLesion.this, Timeline.class);
+            if(bundle.isEmpty()){
+                Toast.makeText(getBaseContext(), "Problem showing timeline", Toast.LENGTH_LONG).show();
+                return;
+            }else{
                 intent.putExtras(bundle);
-                startActivity(intent);
             }
-        });
-        addTracing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putInt("id", farm);
-                Intent intent = new Intent(PostLesion.this, Tracing.class);
-                intent.putExtras(b);
-                startActivity(intent);
-            }
-        });
-        timeline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PostLesion.this, Timeline.class);
-                if(bundle.isEmpty()){
-                    Toast.makeText(getBaseContext(), "Problem showing timeline", Toast.LENGTH_LONG).show();
-                    return;
-                }else{
-                    intent.putExtras(bundle);
-                }
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
 
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(PostLesion.this, MainActivity.class);
-                startActivity(intent);
-            }
+        next.setOnClickListener(v -> {
+            Intent intent = new Intent(PostLesion.this, MainActivity.class);
+            startActivity(intent);
         });
 
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
     }
 
     public int getFarm(int animal){

@@ -118,68 +118,438 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
         final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
 
-        animalTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        animalTrack.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_animal_track, findViewById(R.id.animal_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_animal_track, findViewById(R.id.animal_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
 
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
+
+            date = customView.findViewById(R.id.date);
+            date.setOnClickListener(v12 -> {
+                DatePicker datePicker = picker.build();
+                datePicker.show();
+            });
+
+            String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
+            spinner = customView.findViewById(R.id.species);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(Tracing.this);
+
+            other = customView.findViewById(R.id.other);
+            close = customView.findViewById(R.id.close);
+            close.setOnClickListener(v1 -> {
+                spinner.setSelection(0);
+                spinner.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            });
+
+            final EditText notes = customView.findViewById(R.id.note);
+
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            Button add = customView.findViewById(R.id.done);
+            add.setOnClickListener(v13 -> {
+                if(date.getText().toString().length() > 9) {
+                    int num = date.getText().toString().length() / 9;
+                    int end = 8;
+                    int start = 0;
+                    for (int i = 0; i < num; i++) {
+                        animalsDate.add(date.getText().toString().substring(start,end));
+                        start = end + 1;
+                        end = end + 9;
+                        if (spinner.getVisibility() == View.VISIBLE) {
+                            animalsSub.add(spinner.getSelectedItem().toString());
+                        } else {
+                            animalsSub.add(other.getText().toString());
+                        }
+                        animalsNote.add(notes.getText().toString());
+                        animalCount[0]++;
+                        String count = Integer.toString(animalCount[0]);
+                        animalNum.setText(count);
+                    }
+                }else{
+                    animalsDate.add(date.getText().toString().substring(0,8));
+                    if (spinner.getVisibility() == View.VISIBLE) {
+                        animalsSub.add(spinner.getSelectedItem().toString());
+                    } else {
+                        animalsSub.add(other.getText().toString());
+                    }
+                    animalsNote.add(notes.getText().toString());
+                    animalCount[0]++;
+                    String count = Integer.toString(animalCount[0]);
+                    animalNum.setText(count);
                 }
+                Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                mPopupWindow.dismiss();
+            });
 
-                date = customView.findViewById(R.id.date);
-                date.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            Button esc = customView.findViewById(R.id.esc);
+            esc.setOnClickListener(v14 -> mPopupWindow.dismiss());
+        });
+
+        productTrack.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_product_track, findViewById(R.id.product_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
+
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
+
+            date = customView.findViewById(R.id.date);
+            date.setOnClickListener(v15 -> {
+                DatePicker datePicker = picker.build();
+                datePicker.show();
+            });
+
+            String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
+            spinner = customView.findViewById(R.id.category);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(Tracing.this);
+
+            other = customView.findViewById(R.id.other);
+            close = customView.findViewById(R.id.close);
+            close.setOnClickListener(v16 -> {
+                spinner.setSelection(0);
+                spinner.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            });
+
+            final EditText notes = customView.findViewById(R.id.note);
+
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            Button add = customView.findViewById(R.id.done);
+            add.setOnClickListener(v17 -> {
+                if(date.getText().toString().length() > 9) {
+                    int num = date.getText().toString().length() / 9;
+                    int end = 8;
+                    int start = 0;
+                    for (int i = 0; i < num; i++) {
+                        productsDate.add(date.getText().toString().substring(start,end));
+                        start = end + 1;
+                        end = end + 9;
+                        if(spinner.getVisibility() == View.VISIBLE){
+                            productsSub.add(spinner.getSelectedItem().toString());
+                        }else{
+                            productsSub.add(other.getText().toString());
+                        }
+                        productsNote.add(notes.getText().toString());
+                        productCount[0]++;
+                        String count = Integer.toString(productCount[0]);
+                        productNum.setText(count);
+                    }
+                }else{
+                    productsDate.add(date.getText().toString().substring(0,8));
+                    if(spinner.getVisibility() == View.VISIBLE){
+                        productsSub.add(spinner.getSelectedItem().toString());
+                    }else{
+                        productsSub.add(other.getText().toString());
+                    }
+                    productsNote.add(notes.getText().toString());
+                    productCount[0]++;
+                    String count = Integer.toString(productCount[0]);
+                    productNum.setText(count);
+                }
+                Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                mPopupWindow.dismiss();
+            });
+
+            Button esc = customView.findViewById(R.id.esc);
+            esc.setOnClickListener(v18 -> mPopupWindow.dismiss());
+        });
+
+        peopleTrack.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_people_track, findViewById(R.id.people_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
+
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
+
+            date = customView.findViewById(R.id.date);
+            date.setOnClickListener(v19 -> {
+                DatePicker datePicker = picker.build();
+                datePicker.show();
+            });
+
+            String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
+            spinner = customView.findViewById(R.id.category);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(Tracing.this);
+
+            String[] cont = new String[]{"Direct contact", "Indirect contact"};
+            final Spinner contact = customView.findViewById(R.id.contact);
+            ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
+            contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            contact.setAdapter(contAdapter);
+
+            other = customView.findViewById(R.id.other);
+            close = customView.findViewById(R.id.close);
+            close.setOnClickListener(v110 -> {
+                spinner.setSelection(0);
+                spinner.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            });
+
+            final EditText notes = customView.findViewById(R.id.note);
+
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            Button add = customView.findViewById(R.id.done);
+            add.setOnClickListener(v111 -> {
+                if(date.getText().toString().length() > 9) {
+                    int num = date.getText().toString().length() / 9;
+                    int end = 8;
+                    int start = 0;
+                    for (int i = 0; i < num; i++) {
+                        peoplesDate.add(date.getText().toString().substring(start,end));
+                        start = end + 1;
+                        end = end + 9;
+                        if(spinner.getVisibility() == View.VISIBLE){
+                            peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                        }else{
+                            peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                        }
+                        peoplesNote.add(notes.getText().toString());
+                        peopleCount[0]++;
+                        String count = Integer.toString(peopleCount[0]);
+                        peopleNum.setText(count);
+                    }
+                }else{
+                    peoplesDate.add(date.getText().toString().substring(0,8));
+                    if(spinner.getVisibility() == View.VISIBLE){
+                        peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                    }else{
+                        peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                    }
+                    peoplesNote.add(notes.getText().toString());
+                    peopleCount[0]++;
+                    String count = Integer.toString(peopleCount[0]);
+                    peopleNum.setText(count);
+                }
+                Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                mPopupWindow.dismiss();
+            });
+
+            Button esc = customView.findViewById(R.id.esc);
+            esc.setOnClickListener(v112 -> mPopupWindow.dismiss());
+        });
+
+        veichleTrack.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
+
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
+
+            date = customView.findViewById(R.id.date);
+            date.setOnClickListener(v113 -> {
+                DatePicker datePicker = picker.build();
+                datePicker.show();
+            });
+
+            final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
+            spinner = customView.findViewById(R.id.category);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setOnItemSelectedListener(Tracing.this);
+
+            String[] cont = new String[]{"Direct contact", "Indirect contact"};
+            final Spinner contact = customView.findViewById(R.id.contact);
+            ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
+            contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            contact.setAdapter(contAdapter);
+
+            other = customView.findViewById(R.id.other);
+            close = customView.findViewById(R.id.close);
+            close.setOnClickListener(v114 -> {
+                spinner.setSelection(0);
+                spinner.setVisibility(View.VISIBLE);
+                other.setVisibility(View.INVISIBLE);
+                close.setVisibility(View.INVISIBLE);
+            });
+
+            final EditText notes = customView.findViewById(R.id.note);
+
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            Button add = customView.findViewById(R.id.done);
+            add.setOnClickListener(v115 -> {
+                if(date.getText().toString().length() > 9) {
+                    int num = date.getText().toString().length() / 9;
+                    System.out.println(num);
+                    int end = 8;
+                    int start = 0;
+                    for (int i = 0; i < num; i++) {
+                        vehiclesDate.add(date.getText().toString().substring(start,end));
+                        start = end + 1;
+                        end = end + 9;
+                        if(spinner.getVisibility() == View.VISIBLE){
+                            vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                        }else{
+                            vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                        }
+                        vehiclesNote.add(notes.getText().toString());
+                        vehicleCount[0]++;
+                        String count = Integer.toString(vehicleCount[0]);
+                        vehicleNum.setText(count);
+                    }
+                }else{
+                    vehiclesDate.add(date.getText().toString().substring(0,8));
+                    if(spinner.getVisibility() == View.VISIBLE){
+                        vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                    }else{
+                        vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
+                    }
+                    vehiclesNote.add(notes.getText().toString());
+                    vehicleCount[0]++;
+                    String count = Integer.toString(vehicleCount[0]);
+                    vehicleNum.setText(count);
+                }
+                Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                mPopupWindow.dismiss();
+            });
+
+            Button esc = customView.findViewById(R.id.esc);
+            esc.setOnClickListener(v116 -> mPopupWindow.dismiss());
+        });
+
+        animalNum.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
+
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
+
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(true);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+            RecyclerView.Adapter mAdapter = new RecyclerAdapter(animalsSub);
+            ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(View view, int position, String myData) {
+                    View customView = inflater.inflate(R.layout.fragment_animal_track, findViewById(R.id.animal_popup));
+                    mPopupWindow = new PopupWindow(
+                            customView,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            true
+                    );
+
+                    // Set an elevation value for popup window
+                    // Call requires API level 21
+                    if(Build.VERSION.SDK_INT>=21){
+                        mPopupWindow.setElevation(5.0f);
+                    }
+
+                    mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                    date = customView.findViewById(R.id.date);
+                    date.setText(animalsDate.get(position));
+                    date.setOnClickListener(v117 -> {
                         DatePicker datePicker = picker.build();
                         datePicker.show();
-                    }
-                });
+                    });
 
-                String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
-                spinner = customView.findViewById(R.id.species);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                spinner.setAdapter(adapter);
-                spinner.setOnItemSelectedListener(Tracing.this);
+                    String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
+                    spinner = customView.findViewById(R.id.species);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                    spinner.setAdapter(adapter);
+                    spinner.setOnItemSelectedListener(Tracing.this);
 
-                other = customView.findViewById(R.id.other);
-                close = customView.findViewById(R.id.close);
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    other = customView.findViewById(R.id.other);
+                    close = customView.findViewById(R.id.close);
+                    close.setOnClickListener(v118 -> {
                         spinner.setSelection(0);
                         spinner.setVisibility(View.VISIBLE);
                         other.setVisibility(View.INVISIBLE);
                         close.setVisibility(View.INVISIBLE);
-                    }
-                });
+                    });
 
-                final EditText notes = customView.findViewById(R.id.note);
+                    final EditText notes = customView.findViewById(R.id.note);
+                    notes.setText(animalsNote.get(position));
 
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                Button add = customView.findViewById(R.id.done);
-                add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    Button add = customView.findViewById(R.id.done);
+                    add.setOnClickListener(v119 -> {
+                        animalsDate.remove(position);
+                        animalsSub.remove(position);
+                        animalsNote.remove(position);
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
                             int end = 8;
-                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                animalsDate.add(date.getText().toString().substring(start,end));
-                                start = end + 1;
+                                animalsDate.add(date.getText().toString().substring(0,end));
                                 end = end + 9;
                                 if (spinner.getVisibility() == View.VISIBLE) {
                                     animalsSub.add(spinner.getSelectedItem().toString());
@@ -187,9 +557,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     animalsSub.add(other.getText().toString());
                                 }
                                 animalsNote.add(notes.getText().toString());
-                                animalCount[0]++;
-                                String count = Integer.toString(animalCount[0]);
-                                animalNum.setText(count);
                             }
                         }else{
                             animalsDate.add(date.getText().toString().substring(0,8));
@@ -199,88 +566,105 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 animalsSub.add(other.getText().toString());
                             }
                             animalsNote.add(notes.getText().toString());
-                            animalCount[0]++;
-                            String count = Integer.toString(animalCount[0]);
-                            animalNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                         mPopupWindow.dismiss();
-                    }
-                });
+                    });
+                    Button esc = customView.findViewById(R.id.esc);
+                    esc.setOnClickListener(v120 -> mPopupWindow.dismiss());
+                }
+            });
+            mRecyclerView.setAdapter(mAdapter);
 
-                Button esc = customView.findViewById(R.id.esc);
-                esc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPopupWindow.dismiss();
-                    }
-                });
-            }
         });
 
-        productTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        productNum.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_product_track, findViewById(R.id.product_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
 
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
 
-                date = customView.findViewById(R.id.date);
-                date.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(true);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+            RecyclerView.Adapter mAdapter = new RecyclerAdapter(productsSub);
+
+            ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(View view, int position, String myData) {
+                    View customView = inflater.inflate(R.layout.fragment_product_track, findViewById(R.id.product_popup));
+                    mPopupWindow = new PopupWindow(
+                            customView,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            true
+                    );
+
+                    // Set an elevation value for popup window
+                    // Call requires API level 21
+                    if(Build.VERSION.SDK_INT>=21){
+                        mPopupWindow.setElevation(5.0f);
+                    }
+
+                    mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                    date = customView.findViewById(R.id.date);
+                    date.setText(productsDate.get(position));
+                    date.setOnClickListener(v121 -> {
                         DatePicker datePicker = picker.build();
                         datePicker.show();
-                    }
-                });
+                    });
 
-                String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
-                spinner = customView.findViewById(R.id.category);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-                spinner.setOnItemSelectedListener(Tracing.this);
+                    String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
+                    spinner = customView.findViewById(R.id.category);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    spinner.setOnItemSelectedListener(Tracing.this);
 
-                other = customView.findViewById(R.id.other);
-                close = customView.findViewById(R.id.close);
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    other = customView.findViewById(R.id.other);
+                    close = customView.findViewById(R.id.close);
+                    close.setOnClickListener(v122 -> {
                         spinner.setSelection(0);
                         spinner.setVisibility(View.VISIBLE);
                         other.setVisibility(View.INVISIBLE);
                         close.setVisibility(View.INVISIBLE);
-                    }
-                });
+                    });
 
-                final EditText notes = customView.findViewById(R.id.note);
+                    final EditText notes = customView.findViewById(R.id.note);
+                    notes.setText(productsNote.get(position));
 
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                Button add = customView.findViewById(R.id.done);
-                add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    Button add = customView.findViewById(R.id.done);
+                    add.setOnClickListener(v123 -> {
+                        productsDate.remove(position);
+                        productsSub.remove(position);
+                        productsNote.remove(position);
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
                             int end = 8;
-                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                productsDate.add(date.getText().toString().substring(start,end));
-                                start = end + 1;
+                                productsDate.add(date.getText().toString().substring(0,end));
                                 end = end + 9;
                                 if(spinner.getVisibility() == View.VISIBLE){
                                     productsSub.add(spinner.getSelectedItem().toString());
@@ -288,9 +672,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     productsSub.add(other.getText().toString());
                                 }
                                 productsNote.add(notes.getText().toString());
-                                productCount[0]++;
-                                String count = Integer.toString(productCount[0]);
-                                productNum.setText(count);
                             }
                         }else{
                             productsDate.add(date.getText().toString().substring(0,8));
@@ -300,94 +681,111 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 productsSub.add(other.getText().toString());
                             }
                             productsNote.add(notes.getText().toString());
-                            productCount[0]++;
-                            String count = Integer.toString(productCount[0]);
-                            productNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                         mPopupWindow.dismiss();
-                    }
-                });
+                    });
+                    Button esc = customView.findViewById(R.id.esc);
+                    esc.setOnClickListener(v124 -> mPopupWindow.dismiss());
+                }
+            });
 
-                Button esc = customView.findViewById(R.id.esc);
-                esc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPopupWindow.dismiss();
-                    }
-                });
-            }
+            mRecyclerView.setAdapter(mAdapter);
+
         });
 
-        peopleTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        peopleNum.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_people_track, findViewById(R.id.people_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
 
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
 
-                date = customView.findViewById(R.id.date);
-                date.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(true);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+            RecyclerView.Adapter mAdapter = new RecyclerAdapter(peoplesSub);
+
+            ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(View view, int position, String myData) {
+                    View customView = inflater.inflate(R.layout.fragment_people_track, findViewById(R.id.people_popup));
+                    mPopupWindow = new PopupWindow(
+                            customView,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    mPopupWindow.setFocusable(true);
+
+                    // Set an elevation value for popup window
+                    // Call requires API level 21
+                    if(Build.VERSION.SDK_INT>=21){
+                        mPopupWindow.setElevation(5.0f);
+                    }
+
+                    mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                    date = customView.findViewById(R.id.date);
+                    date.setText(peoplesDate.get(position));
+                    date.setOnClickListener(v125 -> {
                         DatePicker datePicker = picker.build();
                         datePicker.show();
-                    }
-                });
+                    });
 
-                String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
-                spinner = customView.findViewById(R.id.category);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-                spinner.setOnItemSelectedListener(Tracing.this);
+                    String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
+                    spinner = customView.findViewById(R.id.category);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    spinner.setOnItemSelectedListener(Tracing.this);
 
-                String[] cont = new String[]{"Direct contact", "Indirect contact"};
-                final Spinner contact = customView.findViewById(R.id.contact);
-                ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
-                contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                contact.setAdapter(contAdapter);
+                    String[] cont = new String[]{"Direct contact", "Indirect contact"};
+                    final Spinner contact = customView.findViewById(R.id.contact);
+                    ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
+                    contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    contact.setAdapter(contAdapter);
 
-                other = customView.findViewById(R.id.other);
-                close = customView.findViewById(R.id.close);
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    other = customView.findViewById(R.id.other);
+                    close = customView.findViewById(R.id.close);
+                    close.setOnClickListener(v126 -> {
                         spinner.setSelection(0);
                         spinner.setVisibility(View.VISIBLE);
                         other.setVisibility(View.INVISIBLE);
                         close.setVisibility(View.INVISIBLE);
-                    }
-                });
+                    });
 
-                final EditText notes = customView.findViewById(R.id.note);
+                    final EditText notes = customView.findViewById(R.id.note);
+                    notes.setText(peoplesNote.get(position));
 
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                Button add = customView.findViewById(R.id.done);
-                add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    Button add = customView.findViewById(R.id.done);
+                    add.setOnClickListener(v127 -> {
+                        peoplesDate.remove(position);
+                        peoplesSub.remove(position);
+                        peoplesNote.remove(position);
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
                             int end = 8;
-                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                peoplesDate.add(date.getText().toString().substring(start,end));
-                                start = end + 1;
+                                peoplesDate.add(date.getText().toString().substring(0,end));
                                 end = end + 9;
                                 if(spinner.getVisibility() == View.VISIBLE){
                                     peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
@@ -395,9 +793,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
                                 }
                                 peoplesNote.add(notes.getText().toString());
-                                peopleCount[0]++;
-                                String count = Integer.toString(peopleCount[0]);
-                                peopleNum.setText(count);
                             }
                         }else{
                             peoplesDate.add(date.getText().toString().substring(0,8));
@@ -407,95 +802,107 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
                             }
                             peoplesNote.add(notes.getText().toString());
-                            peopleCount[0]++;
-                            String count = Integer.toString(peopleCount[0]);
-                            peopleNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                         mPopupWindow.dismiss();
-                    }
-                });
+                    });
 
-                Button esc = customView.findViewById(R.id.esc);
-                esc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPopupWindow.dismiss();
-                    }
-                });
-            }
+                    Button esc = customView.findViewById(R.id.esc);
+                    esc.setOnClickListener(v128 -> mPopupWindow.dismiss());
+                }
+            });
+            mRecyclerView.setAdapter(mAdapter);
         });
 
-        veichleTrack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+        vehicleNum.setOnClickListener(v -> {
+            LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
+            // Inflate the custom layout/view
+            View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
+            mPopupWindow = new PopupWindow(
+                    customView,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            mPopupWindow.setFocusable(true);
 
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
+            // Set an elevation value for popup window
+            // Call requires API level 21
+            if(Build.VERSION.SDK_INT>=21){
+                mPopupWindow.setElevation(5.0f);
+            }
 
-                date = customView.findViewById(R.id.date);
-                date.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+            mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+            RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
+            mRecyclerView.setHasFixedSize(true);
+
+            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
+            mRecyclerView.addItemDecoration(dividerItemDecoration);
+
+            RecyclerView.Adapter mAdapter = new RecyclerAdapter(vehiclesSub);
+            ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClickListener(View view, int position, String myData) {
+                    View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
+                    mPopupWindow = new PopupWindow(
+                            customView,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT,
+                            RelativeLayout.LayoutParams.WRAP_CONTENT
+                    );
+
+                    // Set an elevation value for popup window
+                    // Call requires API level 21
+                    if(Build.VERSION.SDK_INT>=21){
+                        mPopupWindow.setElevation(5.0f);
+                    }
+
+                    mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
+                    date = customView.findViewById(R.id.date);
+                    date.setText(vehiclesDate.get(position));
+                    date.setOnClickListener(v129 -> {
                         DatePicker datePicker = picker.build();
                         datePicker.show();
-                    }
-                });
+                    });
 
-                final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
-                spinner = customView.findViewById(R.id.category);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spinner.setAdapter(adapter);
-                spinner.setOnItemSelectedListener(Tracing.this);
+                    final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
+                    spinner = customView.findViewById(R.id.category);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(adapter);
+                    spinner.setOnItemSelectedListener(Tracing.this);
 
-                String[] cont = new String[]{"Direct contact", "Indirect contact"};
-                final Spinner contact = customView.findViewById(R.id.contact);
-                ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
-                contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                contact.setAdapter(contAdapter);
+                    String[] cont = new String[]{"Direct contact", "Indirect contact"};
+                    final Spinner contact = customView.findViewById(R.id.contact);
+                    ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
+                    contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    contact.setAdapter(contAdapter);
 
-                other = customView.findViewById(R.id.other);
-                close = customView.findViewById(R.id.close);
-                close.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    other = customView.findViewById(R.id.other);
+                    close = customView.findViewById(R.id.close);
+                    close.setOnClickListener(v130 -> {
                         spinner.setSelection(0);
                         spinner.setVisibility(View.VISIBLE);
                         other.setVisibility(View.INVISIBLE);
                         close.setVisibility(View.INVISIBLE);
-                    }
-                });
+                    });
 
-                final EditText notes = customView.findViewById(R.id.note);
-
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                Button add = customView.findViewById(R.id.done);
-                add.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                    final EditText notes = customView.findViewById(R.id.note);
+                    notes.setText(vehiclesNote.get(position));
+                    Button add = customView.findViewById(R.id.done);
+                    add.setOnClickListener(v131 -> {
+                        vehiclesDate.remove(position);
+                        vehiclesSub.remove(position);
+                        vehiclesNote.remove(position);
                         if(date.getText().toString().length() > 9) {
                             int num = date.getText().toString().length() / 9;
-                            System.out.println(num);
                             int end = 8;
-                            int start = 0;
                             for (int i = 0; i < num; i++) {
-                                vehiclesDate.add(date.getText().toString().substring(start,end));
-                                start = end + 1;
+                                vehiclesDate.add(date.getText().toString().substring(0,end));
                                 end = end + 9;
                                 if(spinner.getVisibility() == View.VISIBLE){
                                     vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
@@ -503,9 +910,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                     vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
                                 }
                                 vehiclesNote.add(notes.getText().toString());
-                                vehicleCount[0]++;
-                                String count = Integer.toString(vehicleCount[0]);
-                                vehicleNum.setText(count);
                             }
                         }else{
                             vehiclesDate.add(date.getText().toString().substring(0,8));
@@ -515,574 +919,26 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                                 vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
                             }
                             vehiclesNote.add(notes.getText().toString());
-                            vehicleCount[0]++;
-                            String count = Integer.toString(vehicleCount[0]);
-                            vehicleNum.setText(count);
                         }
-                        Toast.makeText(getBaseContext(), "Tracing saved", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
                         mPopupWindow.dismiss();
-                    }
-                });
+                    });
 
-                Button esc = customView.findViewById(R.id.esc);
-                esc.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mPopupWindow.dismiss();
-                    }
-                });
-            }
-        });
-
-        animalNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
-
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
+                    Button esc = customView.findViewById(R.id.esc);
+                    esc.setOnClickListener(v132 -> mPopupWindow.dismiss());
                 }
+            });
 
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+            mRecyclerView.setAdapter(mAdapter);
 
-                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
-                mRecyclerView.setHasFixedSize(true);
 
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-                RecyclerView.Adapter mAdapter = new RecyclerAdapter(animalsSub);
-                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_animal_track, findViewById(R.id.animal_popup));
-                        mPopupWindow = new PopupWindow(
-                                customView,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                true
-                        );
-
-                        // Set an elevation value for popup window
-                        // Call requires API level 21
-                        if(Build.VERSION.SDK_INT>=21){
-                            mPopupWindow.setElevation(5.0f);
-                        }
-
-                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                        date = customView.findViewById(R.id.date);
-                        date.setText(animalsDate.get(position));
-                        date.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DatePicker datePicker = picker.build();
-                                datePicker.show();
-                            }
-                        });
-
-                        String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
-                        spinner = customView.findViewById(R.id.species);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                        spinner.setAdapter(adapter);
-                        spinner.setOnItemSelectedListener(Tracing.this);
-
-                        other = customView.findViewById(R.id.other);
-                        close = customView.findViewById(R.id.close);
-                        close.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                spinner.setSelection(0);
-                                spinner.setVisibility(View.VISIBLE);
-                                other.setVisibility(View.INVISIBLE);
-                                close.setVisibility(View.INVISIBLE);
-                            }
-                        });
-
-                        final EditText notes = customView.findViewById(R.id.note);
-                        notes.setText(animalsNote.get(position));
-
-                        Button add = customView.findViewById(R.id.done);
-                        add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                animalsDate.remove(position);
-                                animalsSub.remove(position);
-                                animalsNote.remove(position);
-                                if(date.getText().toString().length() > 9) {
-                                    int num = date.getText().toString().length() / 9;
-                                    int end = 8;
-                                    for (int i = 0; i < num; i++) {
-                                        animalsDate.add(date.getText().toString().substring(0,end));
-                                        end = end + 9;
-                                        if (spinner.getVisibility() == View.VISIBLE) {
-                                            animalsSub.add(spinner.getSelectedItem().toString());
-                                        } else {
-                                            animalsSub.add(other.getText().toString());
-                                        }
-                                        animalsNote.add(notes.getText().toString());
-                                    }
-                                }else{
-                                    animalsDate.add(date.getText().toString().substring(0,8));
-                                    if (spinner.getVisibility() == View.VISIBLE) {
-                                        animalsSub.add(spinner.getSelectedItem().toString());
-                                    } else {
-                                        animalsSub.add(other.getText().toString());
-                                    }
-                                    animalsNote.add(notes.getText().toString());
-                                }
-                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                        Button esc = customView.findViewById(R.id.esc);
-                        esc.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                    }
-                });
-                mRecyclerView.setAdapter(mAdapter);
-
-            }
-        });
-
-        productNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
-
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
-
-
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-                RecyclerView.Adapter mAdapter = new RecyclerAdapter(productsSub);
-
-                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_product_track, findViewById(R.id.product_popup));
-                        mPopupWindow = new PopupWindow(
-                                customView,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                true
-                        );
-
-                        // Set an elevation value for popup window
-                        // Call requires API level 21
-                        if(Build.VERSION.SDK_INT>=21){
-                            mPopupWindow.setElevation(5.0f);
-                        }
-
-                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                        date = customView.findViewById(R.id.date);
-                        date.setText(productsDate.get(position));
-                        date.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DatePicker datePicker = picker.build();
-                                datePicker.show();
-                            }
-                        });
-
-                        String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
-                        spinner = customView.findViewById(R.id.category);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner.setAdapter(adapter);
-                        spinner.setOnItemSelectedListener(Tracing.this);
-
-                        other = customView.findViewById(R.id.other);
-                        close = customView.findViewById(R.id.close);
-                        close.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                spinner.setSelection(0);
-                                spinner.setVisibility(View.VISIBLE);
-                                other.setVisibility(View.INVISIBLE);
-                                close.setVisibility(View.INVISIBLE);
-                            }
-                        });
-
-                        final EditText notes = customView.findViewById(R.id.note);
-                        notes.setText(productsNote.get(position));
-
-                        Button add = customView.findViewById(R.id.done);
-                        add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                productsDate.remove(position);
-                                productsSub.remove(position);
-                                productsNote.remove(position);
-                                if(date.getText().toString().length() > 9) {
-                                    int num = date.getText().toString().length() / 9;
-                                    int end = 8;
-                                    for (int i = 0; i < num; i++) {
-                                        productsDate.add(date.getText().toString().substring(0,end));
-                                        end = end + 9;
-                                        if(spinner.getVisibility() == View.VISIBLE){
-                                            productsSub.add(spinner.getSelectedItem().toString());
-                                        }else{
-                                            productsSub.add(other.getText().toString());
-                                        }
-                                        productsNote.add(notes.getText().toString());
-                                    }
-                                }else{
-                                    productsDate.add(date.getText().toString().substring(0,8));
-                                    if(spinner.getVisibility() == View.VISIBLE){
-                                        productsSub.add(spinner.getSelectedItem().toString());
-                                    }else{
-                                        productsSub.add(other.getText().toString());
-                                    }
-                                    productsNote.add(notes.getText().toString());
-                                }
-                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                        Button esc = customView.findViewById(R.id.esc);
-                        esc.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                    }
-                });
-
-                mRecyclerView.setAdapter(mAdapter);
-
-            }
-        });
-
-        peopleNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
-
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
-
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-                RecyclerView.Adapter mAdapter = new RecyclerAdapter(peoplesSub);
-
-                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_people_track, findViewById(R.id.people_popup));
-                        mPopupWindow = new PopupWindow(
-                                customView,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT
-                        );
-                        mPopupWindow.setFocusable(true);
-
-                        // Set an elevation value for popup window
-                        // Call requires API level 21
-                        if(Build.VERSION.SDK_INT>=21){
-                            mPopupWindow.setElevation(5.0f);
-                        }
-
-                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                        date = customView.findViewById(R.id.date);
-                        date.setText(peoplesDate.get(position));
-                        date.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DatePicker datePicker = picker.build();
-                                datePicker.show();
-                            }
-                        });
-
-                        String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
-                        spinner = customView.findViewById(R.id.category);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner.setAdapter(adapter);
-                        spinner.setOnItemSelectedListener(Tracing.this);
-
-                        String[] cont = new String[]{"Direct contact", "Indirect contact"};
-                        final Spinner contact = customView.findViewById(R.id.contact);
-                        ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
-                        contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        contact.setAdapter(contAdapter);
-
-                        other = customView.findViewById(R.id.other);
-                        close = customView.findViewById(R.id.close);
-                        close.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                spinner.setSelection(0);
-                                spinner.setVisibility(View.VISIBLE);
-                                other.setVisibility(View.INVISIBLE);
-                                close.setVisibility(View.INVISIBLE);
-                            }
-                        });
-
-                        final EditText notes = customView.findViewById(R.id.note);
-                        notes.setText(peoplesNote.get(position));
-
-                        Button add = customView.findViewById(R.id.done);
-                        add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                peoplesDate.remove(position);
-                                peoplesSub.remove(position);
-                                peoplesNote.remove(position);
-                                if(date.getText().toString().length() > 9) {
-                                    int num = date.getText().toString().length() / 9;
-                                    int end = 8;
-                                    for (int i = 0; i < num; i++) {
-                                        peoplesDate.add(date.getText().toString().substring(0,end));
-                                        end = end + 9;
-                                        if(spinner.getVisibility() == View.VISIBLE){
-                                            peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                        }else{
-                                            peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                        }
-                                        peoplesNote.add(notes.getText().toString());
-                                    }
-                                }else{
-                                    peoplesDate.add(date.getText().toString().substring(0,8));
-                                    if(spinner.getVisibility() == View.VISIBLE){
-                                        peoplesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                    }else{
-                                        peoplesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                    }
-                                    peoplesNote.add(notes.getText().toString());
-                                }
-                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                        Button esc = customView.findViewById(R.id.esc);
-                        esc.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                    }
-                });
-                mRecyclerView.setAdapter(mAdapter);
-            }
-        });
-
-        vehicleNum.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-
-                // Inflate the custom layout/view
-                View customView = inflater.inflate(R.layout.fragment_lesions_list, findViewById(R.id.lesion_popup));
-                mPopupWindow = new PopupWindow(
-                        customView,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT
-                );
-                mPopupWindow.setFocusable(true);
-
-                // Set an elevation value for popup window
-                // Call requires API level 21
-                if(Build.VERSION.SDK_INT>=21){
-                    mPopupWindow.setElevation(5.0f);
-                }
-
-                mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                RecyclerView mRecyclerView = customView.findViewById(R.id.my_recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(Tracing.this);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-
-                DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(mRecyclerView.getContext(), DividerItemDecoration.VERTICAL);
-                mRecyclerView.addItemDecoration(dividerItemDecoration);
-
-                RecyclerView.Adapter mAdapter = new RecyclerAdapter(vehiclesSub);
-                ((RecyclerAdapter)mAdapter).setOnItemClickListener(new RecyclerAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClickListener(View view, int position, String myData) {
-                        View customView = inflater.inflate(R.layout.fragment_vehicle_track, findViewById(R.id.vehicle_popup));
-                        mPopupWindow = new PopupWindow(
-                                customView,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT,
-                                RelativeLayout.LayoutParams.WRAP_CONTENT
-                        );
-
-                        // Set an elevation value for popup window
-                        // Call requires API level 21
-                        if(Build.VERSION.SDK_INT>=21){
-                            mPopupWindow.setElevation(5.0f);
-                        }
-
-                        mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
-
-                        date = customView.findViewById(R.id.date);
-                        date.setText(vehiclesDate.get(position));
-                        date.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                DatePicker datePicker = picker.build();
-                                datePicker.show();
-                            }
-                        });
-
-                        final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
-                        spinner = customView.findViewById(R.id.category);
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, items);
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        spinner.setAdapter(adapter);
-                        spinner.setOnItemSelectedListener(Tracing.this);
-
-                        String[] cont = new String[]{"Direct contact", "Indirect contact"};
-                        final Spinner contact = customView.findViewById(R.id.contact);
-                        ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
-                        contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        contact.setAdapter(contAdapter);
-
-                        other = customView.findViewById(R.id.other);
-                        close = customView.findViewById(R.id.close);
-                        close.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                spinner.setSelection(0);
-                                spinner.setVisibility(View.VISIBLE);
-                                other.setVisibility(View.INVISIBLE);
-                                close.setVisibility(View.INVISIBLE);
-                            }
-                        });
-
-                        final EditText notes = customView.findViewById(R.id.note);
-                        notes.setText(vehiclesNote.get(position));
-                        Button add = customView.findViewById(R.id.done);
-                        add.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                vehiclesDate.remove(position);
-                                vehiclesSub.remove(position);
-                                vehiclesNote.remove(position);
-                                if(date.getText().toString().length() > 9) {
-                                    int num = date.getText().toString().length() / 9;
-                                    int end = 8;
-                                    for (int i = 0; i < num; i++) {
-                                        vehiclesDate.add(date.getText().toString().substring(0,end));
-                                        end = end + 9;
-                                        if(spinner.getVisibility() == View.VISIBLE){
-                                            vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                        }else{
-                                            vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                        }
-                                        vehiclesNote.add(notes.getText().toString());
-                                    }
-                                }else{
-                                    vehiclesDate.add(date.getText().toString().substring(0,8));
-                                    if(spinner.getVisibility() == View.VISIBLE){
-                                        vehiclesSub.add(spinner.getSelectedItem().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                    }else{
-                                        vehiclesSub.add(other.getText().toString() + "(" + contact.getSelectedItem().toString() + ")");
-                                    }
-                                    vehiclesNote.add(notes.getText().toString());
-                                }
-                                Toast.makeText(getBaseContext(), "Tracing modified", Toast.LENGTH_SHORT).show();
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                        Button esc = customView.findViewById(R.id.esc);
-                        esc.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mPopupWindow.dismiss();
-                            }
-                        });
-                    }
-                });
-
-                mRecyclerView.setAdapter(mAdapter);
-
-
-            }
         });
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        back.setOnClickListener(v -> onBackPressed());
 
         ImageView next = findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UploadToDB();
-            }
-        });
+        next.setOnClickListener(v -> UploadToDB());
 
     }
 
