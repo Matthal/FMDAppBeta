@@ -151,8 +151,8 @@
                 tools:layout_editor_absoluteY="31dp" />
 
             <View
-                android:id="@+id/view"
-                android:layout_width="fill_parent"
+                android:id="@+id/view2"
+                android:layout_width="match_parent"
                 android:layout_height="2dip"
                 android:layout_alignBottom="@+id/textView7"
                 android:layout_alignParentStart="true"
@@ -166,9 +166,9 @@
                 android:id="@+id/structural"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textView8"
+                android:layout_marginTop="15dp"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="80dp"
                 android:text="@string/btn_structural"
                 style="@style/Widget.AppCompat.Button.Colored"/>
 
@@ -176,9 +176,9 @@
                 android:id="@+id/non_structural"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/textView8"
                 android:layout_centerHorizontal="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="25dp"
+                android:layout_marginTop="75dp"
                 android:text="@string/btn_non_structural"
                 style="@style/Widget.AppCompat.Button.Colored"/>
 

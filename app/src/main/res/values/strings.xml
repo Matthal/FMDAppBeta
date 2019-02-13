@@ -58,7 +58,7 @@
     <string name="yellow">Yellow</string>
     <string name="white">Grey/White</string>
     <string name="edges">EDGES</string>
-    <string name="heal">HEALING/RE-EPITHELIALISATION</string>
+    <string name="heal">HEALING/\nRE-EPITHELIALISATION</string>
 
     //POST LESION
     <string name="text_post_lesion">ANIMAL DATA COLLECTION</string>
@@ -124,8 +124,5 @@
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
     <string name="back4app_app_id">UKd48bFQpCmN9ovQ5TuiBvhv3UQUgGfnije37tB4</string>
     <string name="back4app_client_key">ey69cIIu4F0MPwbmomhma3JIJKIDWtE7ONsPjrYM</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
