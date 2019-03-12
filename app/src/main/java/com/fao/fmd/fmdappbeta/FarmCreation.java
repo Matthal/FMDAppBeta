@@ -254,7 +254,6 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         public void onLocationChanged(Location location) {
             longitude = location.getLongitude();
             latitude = location.getLatitude();
-            //System.out.println(longitude);
         }
 
         @Override

@@ -115,19 +115,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.700" />
 
-    <Button
-        android:id="@+id/sync"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="1dp"
-        android:text="Sync"
-        android:layout_alignParentRight="true"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/progbar"
-        app:layout_constraintRight_toRightOf="parent"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="65sp"
@@ -145,6 +132,25 @@
         android:src="@drawable/qmark_icon"
         app:layout_constraintBottom_toTopOf="@id/progbar"
         app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/syncDate"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/progbar"
+        app:layout_constraintRight_toLeftOf="@id/sync"/>
+
+    <ImageView
+        android:id="@+id/sync"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/sync_icon"
+        app:layout_constraintBottom_toTopOf="@id/progbar"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <include android:id="@+id/progbar"
         android:layout_width="match_parent"

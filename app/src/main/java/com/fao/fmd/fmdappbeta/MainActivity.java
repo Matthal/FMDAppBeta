@@ -3,12 +3,17 @@ package com.fao.fmd.fmdappbeta;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -16,10 +21,13 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.Parse;
@@ -28,11 +36,26 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
+
+import javax.net.ssl.HttpsURLConnection;
 
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
@@ -40,10 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
     private String mCurrentPhotoPath;
 
+    String response;
+
+    String syncDateKey = "com.fao.fmd.fmdappbeta.syncdate";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences prefs = this.getSharedPreferences("com.fao.fmd.fmdappbeta", Context.MODE_PRIVATE);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -57,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         Button lFarm = findViewById(R.id.listFarm);
         Button dBtn = findViewById(R.id.diagn);
         Button bio = findViewById(R.id.bio);
+
+        TextView syncDate = findViewById(R.id.syncDate);
+        syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
 
         //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
 
@@ -93,179 +125,397 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button sync = findViewById(R.id.sync);
+        ImageView sync = findViewById(R.id.sync);
         sync.setOnClickListener(v -> {
-            UploadFarms();
-            UploadAnimals();
-            UploadLesions();
-            UploadTracings();
+            //new UploadLesions().execute();
+            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.UK);
+            prefs.edit().putString(syncDateKey, "Last update:\n" + df.format(currentTime)).apply();
+            syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
         });
     }
 
-    public void UploadFarms(){
-        DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        Cursor cursor  = db.rawQuery("SELECT * FROM farms", null);
-        if (cursor.moveToFirst() ){
-            do {
-                final int id = cursor.getInt(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
-                String vet = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_INVESTIGATOR));
-                String owner = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_INTERVIEWEE));
-                String date = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_DATE));
-                Long lon = cursor.getLong(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
-                Long lat = cursor.getLong(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
-                String country = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_COUNTRY));
-                String name = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_NAME));
+    public class UploadFarms extends AsyncTask<String, Void, String> {
 
-                ParseObject entity = new ParseObject("Farms");
+        protected void onPreExecute(){}
 
-                entity.put("ID", id);
-                entity.put("Vet_name", vet);
-                entity.put("Owner_name", owner);
-                entity.put("Date", date);
-                entity.put("Longitude", lon);
-                entity.put("Latitude", lat);
-                entity.put("Country", country);
-                entity.put("Farm_name", name);
+        protected String doInBackground(String... arg0) {
 
-                // Saves the new object.
-                // Notice that the SaveCallback is totally optional!
-                entity.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        // Here you can handle errors, if thrown. Otherwise, "e" should be null
-                    }
-                });
+            try {
 
-            } while (cursor.moveToNext());
+                URL url = new URL("http://fmddoi.altervista.org/database/add_farm.php");
+
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor cursor  = db.rawQuery("SELECT * FROM farms", null);
+                if (cursor.moveToFirst() ) {
+                    do {
+                        final int id = cursor.getInt(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+                        String investigator = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_INVESTIGATOR));
+                        String interviewee = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_INTERVIEWEE));
+                        String position = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_POSITION));
+                        String date = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_DATE));
+                        Long lon = cursor.getLong(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
+                        Long lat = cursor.getLong(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
+                        String country = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_COUNTRY));
+                        String name = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_NAME));
+                        String address = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ADDRESS));
+
+                        JSONObject postDataParams = new JSONObject();
+                        postDataParams.put("user","1418104");
+                        postDataParams.put("id", id);
+                        postDataParams.put("investigator_name", investigator);
+                        postDataParams.put("interviewee_name", interviewee);
+                        postDataParams.put("interviewee_position", position);
+                        postDataParams.put("date", date);
+                        postDataParams.put("longitude", lon);
+                        postDataParams.put("latitude", lat);
+                        postDataParams.put("country", country);
+                        postDataParams.put("farm_name", name);
+                        postDataParams.put("farm_address", address);
+
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setReadTimeout(15000);
+                        conn.setConnectTimeout(15000);
+                        conn.setRequestMethod("POST");
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+
+                        OutputStream os = conn.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                        writer.write(getPostDataString(postDataParams));
+
+                        writer.flush();
+                        writer.close();
+                        os.close();
+
+                        int responseCode=conn.getResponseCode();
+
+                        if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                            BufferedReader in=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                            StringBuffer sb = new StringBuffer("");
+                            String line="";
+
+                            while((line = in.readLine()) != null) {
+                                sb.append(line);
+                            }
+
+                            in.close();
+                            response = sb.toString();
+
+                        }
+                        else {
+                            response = "false : "+responseCode;
+                        }
+
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                db.close();
+
+            }catch(Exception e){
+                response = "Exception: " + e.getMessage();
+            }
+            return response;
         }
-        cursor.close();
-        db.close();
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+        }
     }
 
-    public void UploadAnimals(){
-        DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        Cursor cursor  = db.rawQuery("SELECT * FROM animals", null);
-        if (cursor.moveToFirst() ){
-            do {
-                final int id = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID));
-                String name = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME));
-                int farm = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_FARM));
-                String group = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP));
-                String age = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE));
-                String breed = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_SPECIES));
-                String report = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_REPORT));
-                String vaccinated = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION));
+    public class UploadAnimals extends AsyncTask<String, Void, String> {
 
-                ParseObject entity = new ParseObject("Animals");
+        protected void onPreExecute(){}
 
-                entity.put("ID", id);
-                entity.put("Name", name);
-                entity.put("Farm", farm);
-                entity.put("Group", group);
-                entity.put("Age", age);
-                entity.put("Breed", breed);
-                entity.put("Report", report);
-                entity.put("Vaccinated", vaccinated);
+        protected String doInBackground(String... arg0) {
 
-                // Saves the new object.
-                // Notice that the SaveCallback is totally optional!
-                entity.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        // Here you can handle errors, if thrown. Otherwise, "e" should be null
-                    }
-                });
+            try {
 
-            } while (cursor.moveToNext());
+                URL url = new URL("http://fmddoi.altervista.org/database/add_animal.php");
+
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor cursor  = db.rawQuery("SELECT * FROM animals", null);
+                if (cursor.moveToFirst() ) {
+                    do {
+                        final int id = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_ID));
+                        String name = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME));
+                        int farm = cursor.getInt(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_FARM));
+                        String group = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP));
+                        String age = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE));
+                        String species = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_SPECIES));
+                        String report = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_REPORT));
+                        String vaccination = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION));
+
+                        JSONObject postDataParams = new JSONObject();
+                        postDataParams.put("user","1418104");
+                        postDataParams.put("id", id);
+                        postDataParams.put("name",name);
+                        postDataParams.put("farm", farm);
+                        postDataParams.put("animal_group", group);
+                        postDataParams.put("age", age);
+                        postDataParams.put("species", species);
+                        postDataParams.put("report", report);
+                        postDataParams.put("vaccination_status", vaccination);
+
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setReadTimeout(15000);
+                        conn.setConnectTimeout(15000);
+                        conn.setRequestMethod("POST");
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+
+                        OutputStream os = conn.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                        writer.write(getPostDataString(postDataParams));
+
+                        writer.flush();
+                        writer.close();
+                        os.close();
+
+                        int responseCode=conn.getResponseCode();
+
+                        if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                            BufferedReader in=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                            StringBuffer sb = new StringBuffer("");
+                            String line="";
+
+                            while((line = in.readLine()) != null) {
+                                sb.append(line);
+                            }
+
+                            in.close();
+                            response = sb.toString();
+
+                        }
+                        else {
+                            response = "false : "+responseCode;
+                        }
+
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                db.close();
+
+            }catch(Exception e){
+                response = "Exception: " + e.getMessage();
+            }
+            return response;
         }
-        cursor.close();
-        db.close();
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+        }
     }
 
-    public void UploadLesions(){
-        DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        Cursor cursor  = db.rawQuery("SELECT * FROM lesions", null);
-        if (cursor.moveToFirst() ){
-            do {
-                final int id = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ID));
-                int animal = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ANIMAL));
-                String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
-                String like_inf_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MIN));
-                String like_inf_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MAX));
-                String poss_inf_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_INF_MIN));
-                String poss_inf_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_INF_MAX));
-                String like_spr_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
-                String like_spr_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX));
-                String poss_spr_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MIN));
-                String poss_spr_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
+    public class UploadLesions extends AsyncTask<String, Void, String> {
 
-                ParseObject entity = new ParseObject("Lesions");
+        protected void onPreExecute(){}
 
-                entity.put("ID", id);
-                entity.put("Animal", animal);
-                entity.put("Age", age);
-                entity.put("Likely_Infection_min", like_inf_min);
-                entity.put("Likely_Infection_max", like_inf_max);
-                entity.put("Possible_Infection_min", poss_inf_min);
-                entity.put("Possible_Infection_max", poss_inf_max);
-                entity.put("Likely_Spread_min", like_spr_min);
-                entity.put("Likely_Spread_max", like_spr_max);
-                entity.put("Possible_Spread_min", poss_spr_min);
-                entity.put("Possible_Spread_max", poss_spr_max);
+        protected String doInBackground(String... arg0) {
 
-                // Saves the new object.
-                // Notice that the SaveCallback is totally optional!
-                entity.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        // Here you can handle errors, if thrown. Otherwise, "e" should be null
-                    }
-                });
+            try {
 
-            } while (cursor.moveToNext());
+                URL url = new URL("http://fmddoi.altervista.org/database/add_lesion.php");
+
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor cursor  = db.rawQuery("SELECT * FROM lesions", null);
+                if (cursor.moveToFirst() ) {
+                    do {
+                        final int id = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ID));
+                        int animal = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ANIMAL));
+                        String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
+                        String like_inf_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MIN));
+                        String like_inf_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MAX));
+                        String poss_inf_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_INF_MIN));
+                        String poss_inf_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_INF_MAX));
+                        String like_spr_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
+                        String like_spr_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX));
+                        String poss_spr_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MIN));
+                        String poss_spr_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
+
+                        JSONObject postDataParams = new JSONObject();
+                        postDataParams.put("user","1418104");
+                        postDataParams.put("id", id);
+                        postDataParams.put("animal",animal);
+                        postDataParams.put("age_of_lesion", age);
+                        postDataParams.put("likely_infection_min", like_inf_min);
+                        postDataParams.put("likely_infection_max", like_inf_max);
+                        postDataParams.put("possible_infection_min", poss_inf_min);
+                        postDataParams.put("possible_infection_max", poss_inf_max);
+                        postDataParams.put("likely_spread_min", like_spr_min);
+                        postDataParams.put("likely_spread_max", like_spr_max);
+                        postDataParams.put("possible_spread_min", poss_spr_min);
+                        postDataParams.put("possible_spread_max", poss_spr_max);
+
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setReadTimeout(15000);
+                        conn.setConnectTimeout(15000);
+                        conn.setRequestMethod("POST");
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+
+                        OutputStream os = conn.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                        writer.write(getPostDataString(postDataParams));
+
+                        writer.flush();
+                        writer.close();
+                        os.close();
+
+                        int responseCode=conn.getResponseCode();
+
+                        if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                            BufferedReader in=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                            StringBuffer sb = new StringBuffer("");
+                            String line="";
+
+                            while((line = in.readLine()) != null) {
+                                sb.append(line);
+                            }
+
+                            in.close();
+                            response = sb.toString();
+
+                        }
+                        else {
+                            response = "false : "+responseCode;
+                        }
+
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                db.close();
+
+            }catch(Exception e){
+                response = "Exception: " + e.getMessage();
+            }
+            return response;
         }
-        cursor.close();
-        db.close();
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+        }
     }
 
-    public void UploadTracings(){
-        DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        Cursor cursor  = db.rawQuery("SELECT * FROM tracings", null);
-        if (cursor.moveToFirst() ){
-            do {
-                final int id = cursor.getInt(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_ID));
-                int farm = cursor.getInt(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_FARM));
-                String category = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
-                String sub = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
-                String date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
-                String notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
+    public class UploadTracings extends AsyncTask<String, Void, String> {
 
-                ParseObject entity = new ParseObject("Tracings");
+        protected void onPreExecute(){}
 
-                entity.put("ID", id);
-                entity.put("Farm", farm);
-                entity.put("Category", category);
-                entity.put("Sub_Category", sub);
-                entity.put("Date", date);
-                entity.put("Notes", notes);
+        protected String doInBackground(String... arg0) {
 
-                // Saves the new object.
-                // Notice that the SaveCallback is totally optional!
-                entity.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        // Here you can handle errors, if thrown. Otherwise, "e" should be null
-                    }
-                });
+            try {
 
-            } while (cursor.moveToNext());
+                URL url = new URL("http://fmddoi.altervista.org/database/add_tracing.php");
+
+                DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor cursor  = db.rawQuery("SELECT * FROM tracings", null);
+                if (cursor.moveToFirst() ) {
+                    do {
+                        final int id = cursor.getInt(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_ID));
+                        int farm = cursor.getInt(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_FARM));
+                        String category = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_CATEGORY));
+                        String sub = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_SUB_CATEGORY));
+                        String date = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_DATE));
+                        String notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
+
+                        JSONObject postDataParams = new JSONObject();
+                        postDataParams.put("user","1418104");
+                        postDataParams.put("id", id);
+                        postDataParams.put("category", category);
+                        postDataParams.put("sub_category", sub);
+                        postDataParams.put("date", date);
+                        postDataParams.put("notes", notes);
+                        postDataParams.put("farm", farm);
+
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setReadTimeout(15000);
+                        conn.setConnectTimeout(15000);
+                        conn.setRequestMethod("POST");
+                        conn.setDoInput(true);
+                        conn.setDoOutput(true);
+
+                        OutputStream os = conn.getOutputStream();
+                        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+                        writer.write(getPostDataString(postDataParams));
+
+                        writer.flush();
+                        writer.close();
+                        os.close();
+
+                        int responseCode=conn.getResponseCode();
+
+                        if (responseCode == HttpsURLConnection.HTTP_OK) {
+
+                            BufferedReader in=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                            StringBuffer sb = new StringBuffer("");
+                            String line="";
+
+                            while((line = in.readLine()) != null) {
+                                sb.append(line);
+                            }
+
+                            in.close();
+                            response = sb.toString();
+
+                        }
+                        else {
+                            response = "false : "+responseCode;
+                        }
+
+                    }while (cursor.moveToNext());
+                }
+                cursor.close();
+                db.close();
+
+            }catch(Exception e){
+                response = "Exception: " + e.getMessage();
+            }
+            return response;
         }
-        cursor.close();
-        db.close();
+
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public String getPostDataString(JSONObject params) throws Exception {
+
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+
+        Iterator<String> itr = params.keys();
+
+        while(itr.hasNext()){
+
+            String key= itr.next();
+            Object value = params.get(key);
+
+            if (first)
+                first = false;
+            else
+                result.append("&");
+
+            result.append(URLEncoder.encode(key, "UTF-8"));
+            result.append("=");
+            result.append(URLEncoder.encode(value.toString(), "UTF-8"));
+
+        }
+        return result.toString();
     }
 
     @Override

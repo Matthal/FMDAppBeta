@@ -1,5 +1,6 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,6 +16,7 @@ import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,8 +32,13 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +67,8 @@ public class Timeline extends AppCompatActivity {
     boolean firstRedInf = true;
     boolean firstYellowSpr = true;
     boolean firstRedSpr = true;
+
+    ProgressDialog dialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -254,6 +263,19 @@ public class Timeline extends AppCompatActivity {
                 sendEmail();
                 return true;
             case R.id.upload:
+                File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
+                if(!pdfDir.exists()){
+                    Toast.makeText(this, "You must create a pdf file first", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                File[] dirFiles = pdfDir.listFiles();
+                String imagepath = dirFiles[0].getAbsolutePath();
+                dialog = ProgressDialog.show(Timeline.this, "", "Uploading file...", true);
+                new Thread(new Runnable() {
+                    public void run() {
+                        uploadFile(imagepath);
+                    }
+                }).start();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -278,7 +300,7 @@ public class Timeline extends AppCompatActivity {
         //Now create the name of your PDF file that you will generate
         SimpleDateFormat mdyFormat = new SimpleDateFormat("dd_MMM_yyyy",Locale.UK);
         String currentDate = mdyFormat.format(new Date());
-        File pdfFile = new File(pdfDir, "FMD_DOI_timeline_ " + id + "_" + currentDate + ".pdf");
+        File pdfFile = new File(pdfDir, "FMD_DOI_timeline_" + id + "_" + currentDate + ".pdf");
         if(!pdfFile.exists()){
             try {
                 Document document = new Document();
@@ -724,6 +746,110 @@ public class Timeline extends AppCompatActivity {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void uploadFile(String imagePath) {
+
+        HttpURLConnection conn = null;
+        DataOutputStream dos = null;
+        String lineEnd = "\r\n";
+        String twoHyphens = "--";
+        String boundary = "*****";
+        int bytesRead, bytesAvailable, bufferSize;
+        byte[] buffer;
+        int maxBufferSize = 1024 * 1024;
+        File sourceFile = new File(imagePath);
+
+        if (!sourceFile.exists()) {
+
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+            }
+
+            Log.e("uploadFile", "Source File not exist: " + imagePath);
+
+        }else{
+
+            try {
+                // open a URL connection to the Servlet
+                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                URL url = new URL("http://fmddoi.altervista.org/savePDF.php");
+
+                // Open a HTTP  connection to  the URL
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setDoInput(true); // Allow Inputs
+                conn.setDoOutput(true); // Allow Outputs
+                conn.setUseCaches(false); // Don't use a Cached Copy
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Connection", "Keep-Alive");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                conn.setRequestProperty("uploaded_file", imagePath);
+
+                dos = new DataOutputStream(conn.getOutputStream());
+
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
+                        + imagePath + "\"" + lineEnd);
+
+                dos.writeBytes(lineEnd);
+
+                // create a buffer of  maximum size
+                bytesAvailable = fileInputStream.available();
+
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                // read file and write it into form...
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                while (bytesRead > 0) {
+
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                }
+
+                // send multipart form data necesssary after file data...
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+                int serverResponseCode = conn.getResponseCode();
+                String serverResponseMessage = conn.getResponseMessage();
+
+                Log.i("uploadFile", "HTTP Response is : "
+                        + serverResponseMessage + ": " + serverResponseCode);
+
+                //close the streams //
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+
+            }catch (MalformedURLException ex){
+
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                ex.printStackTrace();
+
+                Log.e("Upload file to server", "error: " + ex.getMessage(), ex);
+            }catch (Exception e){
+
+                if (dialog != null && dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                e.printStackTrace();
+
+            }
+
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
+
+            }
         }
     }
 }

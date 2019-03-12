@@ -17,7 +17,7 @@
 
     //MAIN
     <string name="text_main">FMD-DOI | DISEASE OUTBREAK INVESTIGATION</string>
-    <string name="header">EuFMD-DOI</string>
+    <string name="header">FMD-DOI</string>
     <string name="welcome">WELCOME BACK</string>
     <string name="add_farm">Add\na farm</string>
     <string name="pre_farm">My\nfarms</string>
