@@ -40,10 +40,12 @@
                         android:text="@string/date"
                         android:padding="3dip"
                         android:gravity="center"/>
+                    <!--
                     <TextView
                         android:text="@string/lesion"
                         android:padding="3dip"
                         android:gravity="center"/>
+                    -->
                     <TextView
                         android:text="@string/source"
                         android:padding="3dip"
@@ -60,10 +62,12 @@
                         android:text="@string/sub_category"
                         android:padding="3dip"
                         android:gravity="center"/>
+                    <!--
                     <TextView
                         android:text="@string/notes"
                         android:padding="3dip"
                         android:gravity="center"/>
+                    -->
                 </TableRow>
 
             </TableLayout>

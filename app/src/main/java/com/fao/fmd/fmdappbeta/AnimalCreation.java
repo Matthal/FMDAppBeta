@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -58,6 +59,22 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final EditText group = findViewById(R.id.groupID);
         other = findViewById(R.id.other);
 
+        animal.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        group.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        other.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         close = findViewById(R.id.close);
         close.setOnClickListener(v -> {
             spinner.setSelection(0);
@@ -69,7 +86,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
         final String[] sex = new String[]{"M", "F"};
         final String[] years = new String[]{"0 year","1 year","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10 years","11 years","12 years","13 years","14 years","15 years"};
-        final String[] months = new String[]{"1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months","12 months"};
+        final String[] months = new String[]{"0 months","1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months"};
         final String[] vaccination = new String[]{"No", "≤6 months", ">6 months"};
 
         final Spinner yearsSpin = findViewById(R.id.animalYears);
@@ -259,6 +276,11 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
 
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

@@ -6,6 +6,9 @@
     android:layout_height="match_parent"
     android:screenOrientation="portrait"
     android:background="#f2f2f2"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".AnimalCreation">
 
     <android.support.v7.widget.Toolbar
@@ -62,6 +65,7 @@
         android:layout_height="44dp"
         android:background="#ffffff"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:hint="@string/hint_ID"
         android:inputType="text"
         android:paddingTop="10dp"
@@ -80,6 +84,7 @@
         android:layout_height="44dp"
         android:background="#ffffff"
         android:ems="10"
+        android:imeOptions="actionDone"
         android:hint="@string/hint_Group_ID"
         android:inputType="text"
         android:paddingTop="10dp"
@@ -157,6 +162,7 @@
         android:background="#ffffff"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:imeOptions="actionDone"
         android:hint="@string/hint_other"
         android:inputType="text"
         android:visibility="invisible"

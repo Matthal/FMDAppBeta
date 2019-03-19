@@ -48,8 +48,10 @@ public class PostLesion extends Activity {
         ImageView back = findViewById(R.id.back);
 
         addAnimal.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putInt("id", farm);
             Intent intent = new Intent(PostLesion.this, AnimalCreation.class);
-            intent.putExtras(bundle);
+            intent.putExtras(b);
             startActivity(intent);
         });
         addTracing.setOnClickListener(v -> {

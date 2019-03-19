@@ -230,12 +230,12 @@ public class Timeline extends AppCompatActivity {
             }
 
             row.addView(date);
-            row.addView(lesion);
+            //row.addView(lesion);
             row.addView(infection);
             row.addView(spread);
             row.addView(category);
             row.addView(subCat);
-            row.addView(notes);
+            //row.addView(notes);
             timeline.addView(row,i+1);
         }
 

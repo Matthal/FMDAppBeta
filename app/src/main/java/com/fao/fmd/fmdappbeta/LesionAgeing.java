@@ -53,14 +53,14 @@ public class LesionAgeing extends Activity {
 
         //Get animal ID from previous page
         Bundle oldBundle = getIntent().getExtras();
-        final int animal = oldBundle.getInt("id");
+        //final int animal = oldBundle.getInt("id");
 
         final Bundle newBundle = new Bundle();
 
         final String[] vesItems = new String[]{"YES", "NO"};
         final String[] fibItems = new String[]{"YES", "NO"};
         final String[] edgeItems = new String[]{"SMOOTH/ROUNDED", "SHARP"};
-        final String[] healItems = new String[]{"HEALING(SMALL)", "HEALING(A LOT)", "NO"};
+        final String[] healItems = new String[]{"FULL DEPTH", "PART DEPTH"};
 
         final Spinner vesSpin = findViewById(R.id.ves);
         ArrayAdapter<String> vesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vesItems);
@@ -75,8 +75,6 @@ public class LesionAgeing extends Activity {
         final Button red = findViewById(R.id.colRed);
         final boolean[] redClicked = {false};
         final boolean[] redSel = {false};
-        final Button yellow = findViewById(R.id.colYellow);
-        final boolean[] yellowSel = {false};
         final Button pink = findViewById(R.id.colPink);
         final boolean[] pinkSel = {false};
         final Button white = findViewById(R.id.colWhite);
@@ -107,12 +105,9 @@ public class LesionAgeing extends Activity {
         red.setOnClickListener(v -> {
             redSel[0] = !redSel[0];
             pinkSel[0] = false;
-            yellowSel[0] = false;
             whiteSel[0] = false;
             red.setBackgroundResource(R.color.green);
             red.setTextColor(getResources().getColor(R.color.black));
-            yellow.setBackgroundResource(R.color.white);
-            yellow.setTextColor(getResources().getColor(R.color.grey));
             pink.setBackgroundResource(R.color.white);
             pink.setTextColor(getResources().getColor(R.color.grey));
             white.setBackgroundResource(R.color.white);
@@ -120,32 +115,6 @@ public class LesionAgeing extends Activity {
             newBundle.putString("Q3","a");
             textEdges.setVisibility(View.VISIBLE);
             edgeSpin.setVisibility(View.VISIBLE);
-            if(fibSpin.getSelectedItem().toString().equals("YES") && edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                textHeal.setVisibility(View.INVISIBLE);
-                healSpin.setVisibility(View.INVISIBLE);
-            }else{
-                redClicked[0] = true;
-                textHeal.setVisibility(View.VISIBLE);
-                healSpin.setVisibility(View.VISIBLE);
-            }
-        });
-        yellow.setOnClickListener(v -> {
-            yellowSel[0] = !yellowSel[0];
-            redClicked[0] = false;
-            pinkSel[0] = false;
-            redSel[0] = false;
-            whiteSel[0] = false;
-            red.setBackgroundResource(R.color.white);
-            red.setTextColor(getResources().getColor(R.color.grey));
-            yellow.setBackgroundResource(R.color.green);
-            yellow.setTextColor(getResources().getColor(R.color.black));
-            pink.setBackgroundResource(R.color.white);
-            pink.setTextColor(getResources().getColor(R.color.grey));
-            white.setBackgroundResource(R.color.white);
-            white.setTextColor(getResources().getColor(R.color.grey));
-            newBundle.putString("Q3","c");
-            textEdges.setVisibility(View.INVISIBLE);
-            edgeSpin.setVisibility(View.INVISIBLE);
             textHeal.setVisibility(View.INVISIBLE);
             healSpin.setVisibility(View.INVISIBLE);
         });
@@ -153,12 +122,9 @@ public class LesionAgeing extends Activity {
             pinkSel[0] = !pinkSel[0];
             redClicked[0] = false;
             redSel[0] = false;
-            yellowSel[0] = false;
             whiteSel[0] = false;
             red.setBackgroundResource(R.color.white);
             red.setTextColor(getResources().getColor(R.color.grey));
-            yellow.setBackgroundResource(R.color.white);
-            yellow.setTextColor(getResources().getColor(R.color.grey));
             pink.setBackgroundResource(R.color.green);
             pink.setTextColor(getResources().getColor(R.color.black));
             white.setBackgroundResource(R.color.white);
@@ -178,17 +144,14 @@ public class LesionAgeing extends Activity {
             whiteSel[0] = !whiteSel[0];
             redClicked[0] = false;
             pinkSel[0] = false;
-            yellowSel[0] = false;
             redSel[0] = false;
             red.setBackgroundResource(R.color.white);
             red.setTextColor(getResources().getColor(R.color.grey));
-            yellow.setBackgroundResource(R.color.white);
-            yellow.setTextColor(getResources().getColor(R.color.grey));
             pink.setBackgroundResource(R.color.white);
             pink.setTextColor(getResources().getColor(R.color.grey));
             white.setBackgroundResource(R.color.green);
             white.setTextColor(getResources().getColor(R.color.black));
-            newBundle.putString("Q3","d");
+            newBundle.putString("Q3","c");
             textEdges.setVisibility(View.VISIBLE);
             edgeSpin.setVisibility(View.VISIBLE);
             if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
@@ -211,7 +174,6 @@ public class LesionAgeing extends Activity {
                     textColour.setVisibility(View.INVISIBLE);
                     red.setVisibility(View.INVISIBLE);
                     redGalleryBtn.setVisibility(View.INVISIBLE);
-                    yellow.setVisibility(View.INVISIBLE);
                     pink.setVisibility(View.INVISIBLE);
                     pinkGalleryBtn.setVisibility(View.INVISIBLE);
                     white.setVisibility(View.INVISIBLE);
@@ -222,19 +184,15 @@ public class LesionAgeing extends Activity {
                     healSpin.setVisibility(View.INVISIBLE);
                     red.setBackgroundResource(R.color.white);
                     red.setTextColor(getResources().getColor(R.color.grey));
-                    yellow.setBackgroundResource(R.color.white);
-                    yellow.setTextColor(getResources().getColor(R.color.grey));
                     pink.setBackgroundResource(R.color.white);
                     pink.setTextColor(getResources().getColor(R.color.grey));
                     white.setBackgroundResource(R.color.white);
                     white.setTextColor(getResources().getColor(R.color.grey));
                 }else{
                     if(fibSpin.getSelectedItem().toString().equals("YES")){
-                        yellow.setVisibility(View.INVISIBLE);
                         white.setVisibility(View.INVISIBLE);
                         whiteGalleryBtn.setVisibility(View.INVISIBLE);
                     }else{
-                        yellow.setVisibility(View.VISIBLE);
                         white.setVisibility(View.VISIBLE);
                         whiteGalleryBtn.setVisibility(View.VISIBLE);
                     }
@@ -265,34 +223,32 @@ public class LesionAgeing extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(fibSpin.getSelectedItem().toString().equals("YES")){
                     newBundle.putString("Q2", "a");
-                    yellow.setVisibility(View.INVISIBLE);
                     white.setVisibility(View.INVISIBLE);
                     whiteGalleryBtn.setVisibility(View.INVISIBLE);
-                    yellow.setBackgroundResource(R.color.white);
-                    yellow.setTextColor(getResources().getColor(R.color.grey));
                     white.setBackgroundResource(R.color.white);
                     white.setTextColor(getResources().getColor(R.color.grey));
                     if(vesSpin.getSelectedItem().toString().equals("YES")){
                         textEdges.setVisibility(View.INVISIBLE);
                         edgeSpin.setVisibility(View.INVISIBLE);
-                        textHeal.setVisibility(View.INVISIBLE);
-                        healSpin.setVisibility(View.INVISIBLE);
                     }else{
-                        if(edgeSpin.getSelectedItem().toString().equals("SHARP")){
-                            textHeal.setVisibility(View.INVISIBLE);
-                            healSpin.setVisibility(View.INVISIBLE);
-                        }else{
+                        if(edgeSpin.getSelectedItem().toString().equals("SMOOTH/ROUNDED") && !redSel[0]){
                             textHeal.setVisibility(View.VISIBLE);
                             healSpin.setVisibility(View.VISIBLE);
+                        }else{
+                            textHeal.setVisibility(View.INVISIBLE);
+                            healSpin.setVisibility(View.INVISIBLE);
                         }
                         textEdges.setVisibility(View.VISIBLE);
                         edgeSpin.setVisibility(View.VISIBLE);
                     }
                 }else{
                     newBundle.putString("Q2", "b");
-                    yellow.setVisibility(View.VISIBLE);
                     white.setVisibility(View.VISIBLE);
                     whiteGalleryBtn.setVisibility(View.VISIBLE);
+                    if(redSel[0]){
+                        textHeal.setVisibility(View.INVISIBLE);
+                        healSpin.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
 
@@ -306,7 +262,7 @@ public class LesionAgeing extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 if(edgeSpin.getSelectedItem().toString().equals("SMOOTH/ROUNDED")){
                     newBundle.putString("Q4", "a");
-                    if(vesSpin.getSelectedItem().toString().equals("YES")){
+                    if(vesSpin.getSelectedItem().toString().equals("YES") || (vesSpin.getSelectedItem().toString().equals("NO") && redSel[0])){
                         textHeal.setVisibility(View.INVISIBLE);
                         healSpin.setVisibility(View.INVISIBLE);
                     }else{
@@ -333,14 +289,10 @@ public class LesionAgeing extends Activity {
         healSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(healSpin.getSelectedItem().toString().equals("HEALING(SMALL)")){
+                if(healSpin.getSelectedItem().toString().equals("FULL DEPTH")){
                     newBundle.putString("Q5", "a");
                 }else{
-                    if(healSpin.getSelectedItem().toString().equals("HEALING(A LOT)")){
-                        newBundle.putString("Q5", "b");
-                    }else{
-                        newBundle.putString("Q5", "c");
-                    }
+                    newBundle.putString("Q5", "b");
                 }
             }
 
@@ -363,11 +315,6 @@ public class LesionAgeing extends Activity {
                     red.setTextColor(getResources().getColor(R.color.black));
                     lock = false;
                 }
-                if(yellowSel[0]){
-                    yellow.setBackgroundResource(R.color.colorPrimary);
-                    yellow.setTextColor(getResources().getColor(R.color.black));
-                    lock = false;
-                }
                 if(pinkSel[0]){
                     pink.setBackgroundResource(R.color.colorPrimary);
                     pink.setTextColor(getResources().getColor(R.color.black));
@@ -378,11 +325,9 @@ public class LesionAgeing extends Activity {
                     white.setTextColor(getResources().getColor(R.color.black));
                     lock = false;
                 }
-                if(!redSel[0] && !pinkSel[0] && !yellowSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
+                if(!redSel[0] && !pinkSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
                     red.setBackgroundResource(R.color.TLyellow);
                     red.setTextColor(getResources().getColor(R.color.black));
-                    yellow.setBackgroundResource(R.color.TLyellow);
-                    yellow.setTextColor(getResources().getColor(R.color.black));
                     pink.setBackgroundResource(R.color.TLyellow);
                     pink.setTextColor(getResources().getColor(R.color.black));
                     white.setBackgroundResource(R.color.TLyellow);
@@ -398,7 +343,6 @@ public class LesionAgeing extends Activity {
                 vesSpin.setEnabled(false);
                 fibSpin.setEnabled(false);
                 red.setEnabled(false);
-                yellow.setEnabled(false);
                 pink.setEnabled(false);
                 white.setEnabled(false);
                 edgeSpin.setEnabled(false);
@@ -408,8 +352,6 @@ public class LesionAgeing extends Activity {
                 fibSpin.setBackgroundResource(R.color.white);
                 red.setBackgroundResource(R.color.white);
                 red.setTextColor(getResources().getColor(R.color.grey));
-                yellow.setBackgroundResource(R.color.white);
-                yellow.setTextColor(getResources().getColor(R.color.grey));
                 pink.setBackgroundResource(R.color.white);
                 pink.setTextColor(getResources().getColor(R.color.grey));
                 white.setBackgroundResource(R.color.white);
@@ -420,13 +362,11 @@ public class LesionAgeing extends Activity {
                 fibSpin.setEnabled(true);
                 red.setEnabled(true);
                 pink.setEnabled(true);
-                yellow.setEnabled(true);
                 white.setEnabled(true);
                 edgeSpin.setEnabled(true);
                 healSpin.setEnabled(true);
                 redSel[0] = false;
                 pinkSel[0] = false;
-                yellowSel[0] = false;
                 whiteSel[0] = false;
             }
         });
@@ -483,7 +423,7 @@ public class LesionAgeing extends Activity {
                 return;
             }
 
-            newBundle.putInt("id",animal);
+            //newBundle.putInt("id",animal);
             Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
             intent.putExtras(newBundle);
             startActivity(intent);

@@ -16,6 +16,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -63,10 +64,38 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         final EditText farm = findViewById(R.id.farmName);
         final EditText address = findViewById(R.id.address);
 
+        name.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        owner.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        farm.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+        address.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         position = findViewById(R.id.position);
         final Spinner spinner = findViewById(R.id.country);
 
         other = findViewById(R.id.other);
+
+        other.setOnFocusChangeListener((v, hasFocus) -> {
+            if (!hasFocus) {
+                hideKeyboard(v);
+            }
+        });
+
         close = findViewById(R.id.close);
         close.setOnClickListener(v -> {
             position.setSelection(0);
@@ -316,6 +345,11 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
             }
         }
         return bestLocation;
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
 }

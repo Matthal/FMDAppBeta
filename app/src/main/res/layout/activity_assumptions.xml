@@ -48,7 +48,7 @@
             android:background="#D9D9D9"
             android:fontFamily="@font/roboto"
             android:gravity="center"
-            android:text="@string/text_asssumpt"
+            android:text="@string/text_assumpt"
             android:textSize="14sp" />
 
         <ScrollView

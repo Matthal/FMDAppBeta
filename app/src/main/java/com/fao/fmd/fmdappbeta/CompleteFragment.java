@@ -125,11 +125,7 @@ public class CompleteFragment extends Fragment {
                     old = Integer.parseInt(age.substring(2,4));
                 }
             }else{
-                if(age.charAt(2) == '-'){
-                    old = Integer.parseInt(age.substring(3,5));
-                }else{
-                    old = Integer.parseInt(age.substring(0,2));
-                }
+                old = Integer.parseInt(age.substring(0,2));
             }
         }
 
@@ -139,7 +135,7 @@ public class CompleteFragment extends Fragment {
         int pos_inf_max = old + 1;
         int like_spr_min = old;
         int like_spr_max = old - 2;
-        int pos_spr_min = old + 2;
+        int pos_spr_min = old + 3;
         int pos_spr_max = old - 14;
 
         ContentValues values = new ContentValues();

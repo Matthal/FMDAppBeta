@@ -50,6 +50,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="120dp"
         android:background="#ffffff"
+        android:imeOptions="actionDone"
         android:hint="@string/hint_other"
         android:visibility="invisible"
         android:inputType="text"
@@ -73,9 +74,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="210dp"
         android:background="#ffffff"
+        android:imeOptions="actionDone"
         android:hint="@string/insert_notes"
         android:inputType="text"
-        android:maxLength="10"
         android:textSize="14sp" />
 
     <Button
