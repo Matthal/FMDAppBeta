@@ -78,6 +78,15 @@ public class PostLesion extends Activity {
         });
 
         back.setOnClickListener(v -> onBackPressed());
+
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","data");
+            Intent intent = new Intent(PostLesion.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
     }
 
     public int getFarm(int animal){

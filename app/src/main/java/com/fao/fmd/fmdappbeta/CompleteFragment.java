@@ -104,6 +104,15 @@ public class CompleteFragment extends Fragment {
 
         back.setOnClickListener(v -> getActivity().onBackPressed());
 
+        ImageView info = view.findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","complete");
+            Intent intent = new Intent(getActivity(), InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
+
         return view;
     }
 
@@ -134,8 +143,8 @@ public class CompleteFragment extends Fragment {
         int pos_inf_min = old + 14;
         int pos_inf_max = old + 1;
         int like_spr_min = old;
-        int like_spr_max = old - 2;
-        int pos_spr_min = old + 3;
+        int like_spr_max = old - 3;
+        int pos_spr_min = old + 2;
         int pos_spr_max = old - 14;
 
         ContentValues values = new ContentValues();

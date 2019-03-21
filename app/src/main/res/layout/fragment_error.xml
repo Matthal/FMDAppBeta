@@ -84,15 +84,6 @@
             android:rotation="180"
             android:src="@drawable/next_icon" />
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_above="@id/progbar"
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/qmark_icon" />
-
         <include
             android:id="@+id/progbar"
             layout="@layout/progression_bar"

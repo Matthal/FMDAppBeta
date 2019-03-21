@@ -940,6 +940,15 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         ImageView next = findViewById(R.id.next);
         next.setOnClickListener(v -> UploadToDB());
 
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","tracing");
+            Intent intent = new Intent(Tracing.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
+
     }
 
     public void UploadToDB(){

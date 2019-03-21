@@ -55,38 +55,30 @@
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/animal"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="120dp"
-            android:layout_height="90dp"
-            android:layout_alignTop="@+id/tracing"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="-1dp"
-            android:text="@string/add_an_animal"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="50dp" />
-
-        <Button
             android:id="@+id/tracing"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="120dp"
-            android:layout_height="90dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="155dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="50dp"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="110dp"
             android:text="@string/add_tracing" />
+
+        <Button
+            android:id="@+id/animal"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="220dp"
+            android:text="@string/add_an_animal" />
 
         <Button
             android:id="@+id/timeline"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="120dp"
-            android:layout_height="90dp"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="330dp"
             android:text="@string/timeline" />
 
         <TextView
@@ -128,6 +120,7 @@
             android:src="@drawable/next_icon" />
 
         <ImageView
+            android:id="@+id/qmark"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_above="@id/progbar"

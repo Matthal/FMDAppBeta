@@ -152,7 +152,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
         String lat = String.format(Locale.UK,"%.2f", latitude);
         String lon = String.format(Locale.UK,"%.2f", longitude);
         gps.setOnClickListener(v -> {
-            text_gps.setText("Lat: " + lat + "\nLong: " + lon);
+            text_gps.setText(getString(R.string.lat_long, lat, lon));
             text_gps.setVisibility(View.VISIBLE);
         });
 
@@ -221,6 +221,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
         cFarm.setOnClickListener(v -> {
 
+            /*
             if (!locker.isChecked()) {
                 Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                 return;
@@ -228,6 +229,23 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
             if (locker.isChecked() && lock) {
                 Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
+                return;
+            }*/
+
+            if(name.getText().toString().trim().isEmpty()){
+                name.setBackgroundResource(R.color.TLyellow);
+                lock = true;
+            }
+            if(owner.getText().toString().trim().isEmpty()){
+                owner.setBackgroundResource(R.color.TLyellow);
+                lock = true;
+            }
+            if(farm.getText().toString().trim().isEmpty()){
+                farm.setBackgroundResource(R.color.TLyellow);
+                lock = true;
+            }
+            if(lock){
+                Toast.makeText(getBaseContext(), "You forgot one or more information", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -276,6 +294,15 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(v -> onBackPressed());
+
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","farm");
+            Intent intent = new Intent(FarmCreation.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
 
     }
 

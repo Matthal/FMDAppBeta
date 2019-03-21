@@ -277,6 +277,12 @@ public class Timeline extends AppCompatActivity {
                     }
                 }).start();
                 return true;
+            case R.id.qmark:
+                Bundle b = new Bundle();
+                b.putString("tag","timeline");
+                Intent intent = new Intent(Timeline.this, InfoPage.class);
+                intent.putExtras(b);
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

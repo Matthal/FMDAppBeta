@@ -53,7 +53,7 @@ public class LesionAgeing extends Activity {
 
         //Get animal ID from previous page
         Bundle oldBundle = getIntent().getExtras();
-        //final int animal = oldBundle.getInt("id");
+        final int animal = oldBundle.getInt("id");
 
         final Bundle newBundle = new Bundle();
 
@@ -117,6 +117,7 @@ public class LesionAgeing extends Activity {
             edgeSpin.setVisibility(View.VISIBLE);
             textHeal.setVisibility(View.INVISIBLE);
             healSpin.setVisibility(View.INVISIBLE);
+            healSpin.setAdapter(healAdapter);
         });
         pink.setOnClickListener(v -> {
             pinkSel[0] = !pinkSel[0];
@@ -139,6 +140,7 @@ public class LesionAgeing extends Activity {
                 textHeal.setVisibility(View.VISIBLE);
                 healSpin.setVisibility(View.VISIBLE);
             }
+            healSpin.setAdapter(healAdapter);
         });
         white.setOnClickListener(v -> {
             whiteSel[0] = !whiteSel[0];
@@ -161,6 +163,10 @@ public class LesionAgeing extends Activity {
                 textHeal.setVisibility(View.VISIBLE);
                 healSpin.setVisibility(View.VISIBLE);
             }
+            final String[] newHealItems = new String[]{"PART DEPTH", "VERY SHALLOW"};
+            ArrayAdapter<String> newHealAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, newHealItems);
+            newHealAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            healSpin.setAdapter(newHealAdapter);
         });
 
         vesSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -241,6 +247,7 @@ public class LesionAgeing extends Activity {
                         textEdges.setVisibility(View.VISIBLE);
                         edgeSpin.setVisibility(View.VISIBLE);
                     }
+                    healSpin.setAdapter(healAdapter);
                 }else{
                     newBundle.putString("Q2", "b");
                     white.setVisibility(View.VISIBLE);
@@ -414,6 +421,7 @@ public class LesionAgeing extends Activity {
         ImageView next = findViewById(R.id.next);
         next.setOnClickListener(v -> {
 
+            /*
             if(!locker.isChecked()){
                 Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                 return;
@@ -421,9 +429,23 @@ public class LesionAgeing extends Activity {
             if(locker.isChecked() && lock){
                 Toast.makeText(getBaseContext(), "There is an error in the item selections", Toast.LENGTH_LONG).show();
                 return;
+            }*/
+
+            if(!redSel[0] && !pinkSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
+                red.setBackgroundResource(R.color.TLyellow);
+                red.setTextColor(getResources().getColor(R.color.black));
+                pink.setBackgroundResource(R.color.TLyellow);
+                pink.setTextColor(getResources().getColor(R.color.black));
+                white.setBackgroundResource(R.color.TLyellow);
+                white.setTextColor(getResources().getColor(R.color.black));
+                lock = true;
+            }
+            if(lock){
+                Toast.makeText(getBaseContext(), "There is an error in color selection", Toast.LENGTH_LONG).show();
+                return;
             }
 
-            //newBundle.putInt("id",animal);
+            newBundle.putInt("id",animal);
             Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
             intent.putExtras(newBundle);
             startActivity(intent);
@@ -441,6 +463,15 @@ public class LesionAgeing extends Activity {
             Uri photoURI = FileProvider.getUriForFile(LesionAgeing.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
+        });
+
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","lesion");
+            Intent intent = new Intent(LesionAgeing.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
         });
 
     }

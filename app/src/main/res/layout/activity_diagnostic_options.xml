@@ -103,6 +103,7 @@
         app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
+        android:id="@+id/qmark"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="5dp"

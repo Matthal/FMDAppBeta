@@ -37,6 +37,7 @@
     <string name="address">ADDRESS</string>
     <string name="country">SELECT A COUNTRY</string>
     <string name="gps">GPS</string>
+    <string name="lat_long">Lat: %1$s \nLong: %2$s</string>
     <string name="text_gps">TAP TO SET LOCATION</string>
 
     //ANIMAL CREATION
@@ -113,10 +114,5 @@
     //GALLERIES
     <string name="text_gallery">LESION LIBRARY</string>
     <string name="lesion_age_gallery">LESION AGEING GALLERY</string>
-
-    //PARSE KEY
-    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
-    <string name="back4app_app_id">UKd48bFQpCmN9ovQ5TuiBvhv3UQUgGfnije37tB4</string>
-    <string name="back4app_client_key">ey69cIIu4F0MPwbmomhma3JIJKIDWtE7ONsPjrYM</string>
 
 </resources>

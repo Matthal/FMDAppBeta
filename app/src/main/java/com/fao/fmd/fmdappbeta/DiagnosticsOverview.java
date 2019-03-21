@@ -1,5 +1,6 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -142,6 +143,15 @@ public class DiagnosticsOverview extends FragmentActivity {
 
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(v -> onBackPressed());
+
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle bu = new Bundle();
+            bu.putString("tag","overview");
+            Intent intent = new Intent(DiagnosticsOverview.this, InfoPage.class);
+            intent.putExtras(bu);
+            startActivity(intent);
+        });
     }
 
     @Override

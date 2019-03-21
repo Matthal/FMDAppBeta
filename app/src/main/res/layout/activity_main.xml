@@ -123,6 +123,7 @@
         app:layout_constraintBottom_toTopOf="@id/progbar"/>
 
     <ImageView
+        android:id="@+id/qmark"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignBottom="@+id/sync"

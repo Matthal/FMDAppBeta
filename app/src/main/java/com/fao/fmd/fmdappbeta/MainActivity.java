@@ -30,12 +30,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseInstallation;
-import com.parse.ParseObject;
-import com.parse.SaveCallback;
-
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -78,10 +72,6 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
-        //Parse Initialization
-        Parse.initialize(this);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
-
         Button cFarm = findViewById(R.id.newFarm);
         Button lFarm = findViewById(R.id.listFarm);
         Button dBtn = findViewById(R.id.diagn);
@@ -121,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, LesionAgeing.class);
+            Intent intent = new Intent(MainActivity.this, DiagnosticsOverview.class);
             startActivity(intent);
         });
 
@@ -132,6 +122,15 @@ public class MainActivity extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.UK);
             prefs.edit().putString(syncDateKey, "Last update:\n" + df.format(currentTime)).apply();
             syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
+        });
+
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","main");
+            Intent intent = new Intent(MainActivity.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
         });
     }
 

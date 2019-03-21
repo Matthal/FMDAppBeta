@@ -19,4 +19,10 @@
         app:showAsAction="always"
         android:title="Upload">
     </item>
+    <item
+        android:id="@+id/qmark"
+        android:icon="@drawable/qmark_icon"
+        app:showAsAction="always"
+        android:title="Info">
+    </item>
 </menu>

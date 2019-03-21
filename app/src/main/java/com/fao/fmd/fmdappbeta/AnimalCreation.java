@@ -208,6 +208,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
         addAnimal.setOnClickListener(v -> {
 
+            /*
             if(!locker.isChecked()){
                 Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
                 return;
@@ -215,6 +216,15 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
             if(locker.isChecked() && lock){
                 Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
+                return;
+            }*/
+
+            if(animal.getText().toString().trim().isEmpty()){
+                animal.setBackgroundResource(R.color.TLyellow);
+                lock = true;
+            }
+            if(lock){
+                Toast.makeText(getBaseContext(), "You forgot one or more information", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -261,6 +271,14 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(v -> onBackPressed());
 
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","animal");
+            Intent intent = new Intent(AnimalCreation.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
 
     }
 

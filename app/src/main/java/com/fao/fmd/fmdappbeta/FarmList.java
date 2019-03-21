@@ -126,6 +126,15 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(v -> onBackPressed());
 
+        ImageView info = findViewById(R.id.qmark);
+        info.setOnClickListener(v -> {
+            Bundle b = new Bundle();
+            b.putString("tag","list");
+            Intent intent = new Intent(FarmList.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
+
     }
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
