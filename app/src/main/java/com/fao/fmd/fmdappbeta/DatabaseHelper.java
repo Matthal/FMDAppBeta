@@ -22,13 +22,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        // create notes table
+        // create db tables
         db.execSQL(Farm.CREATE_FARM_TABLE);
         db.execSQL(Animal.CREATE_ANIMAL_TABLE);
         db.execSQL(Lesion.CREATE_LESION_TABLE);
         db.execSQL(Tracings.CREATE_TRACINGS_TABLE);
         db.execSQL(Photo.CREATE_PHOTO_TABLE);
 
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
 
     // Upgrading database

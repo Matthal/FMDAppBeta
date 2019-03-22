@@ -58,6 +58,17 @@
         app:layout_constraintTop_toBottomOf="@id/info"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <Button
+        android:id="@+id/del"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-5dp"
+        android:text="@string/X"
+        app:layout_constraintTop_toTopOf="@id/farmSpinner"
+        app:layout_constraintBottom_toBottomOf="@id/farmSpinner"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <ImageView
         android:id="@+id/map"
         android:layout_width="45dp"

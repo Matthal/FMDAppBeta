@@ -31,6 +31,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     Button addAnimal;
     Button addTrace;
     Button farmTL;
+    Button del;
     ImageView map;
 
     boolean lock;
@@ -62,6 +63,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         addTrace = findViewById(R.id.newTrace);
         farmTL = findViewById(R.id.farmTL);
         map = findViewById(R.id.map);
+        del = findViewById(R.id.del);
 
         addAnimal.setOnClickListener(v -> {
             int farm = spinner.getSelectedItemPosition();
@@ -123,6 +125,15 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
+        del = findViewById(R.id.del);
+        del.setOnClickListener(v -> {
+            int id = spinner.getSelectedItemPosition();
+            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_ID + "='" + id + "'",null);
+            Toast.makeText(FarmList.this, "Farm deleted, refresh page", Toast.LENGTH_SHORT).show();
+        });
+
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(v -> onBackPressed());
 
@@ -147,12 +158,14 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             addAnimal.setVisibility(View.INVISIBLE);
             addTrace.setVisibility(View.INVISIBLE);
             farmTL.setVisibility(View.INVISIBLE);
+            del.setVisibility(View.INVISIBLE);
             map.setVisibility(View.INVISIBLE);
         }else{
             animalList.setVisibility(View.VISIBLE);
             addAnimal.setVisibility(View.VISIBLE);
             addTrace.setVisibility(View.VISIBLE);
             farmTL.setVisibility(View.VISIBLE);
+            del.setVisibility(View.VISIBLE);
             //map.setVisibility(View.VISIBLE);
 
             // preparing list data
