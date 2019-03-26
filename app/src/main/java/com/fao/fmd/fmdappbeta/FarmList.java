@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -32,6 +33,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     Button addTrace;
     Button farmTL;
     Button del;
+    ImageButton edit;
     ImageView map;
 
     boolean lock;
@@ -125,12 +127,32 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-        del = findViewById(R.id.del);
-        del.setOnClickListener(v -> {
-            int id = spinner.getSelectedItemPosition();
+        edit = findViewById(R.id.edit);
+        edit.setOnClickListener(v -> {
+            String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
+            String selectID = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE farm_name='" + farmName + "'";
+
             DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_ID + "='" + id + "'",null);
+
+            Cursor cursorID = db.rawQuery(selectID, null);
+            cursorID.moveToFirst();
+            int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+            cursorID.close();
+
+            Bundle b = new Bundle();
+            b.putInt("id", id);
+            Intent intent = new Intent(FarmList.this, EditFarm.class);
+            intent.putExtras(b);
+            startActivity(intent);
+        });
+
+        del = findViewById(R.id.del);
+        del.setOnClickListener(v -> {
+            String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
+            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_NAME + "='" + farmName + "'",null);
             Toast.makeText(FarmList.this, "Farm deleted, refresh page", Toast.LENGTH_SHORT).show();
         });
 
@@ -158,6 +180,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             addAnimal.setVisibility(View.INVISIBLE);
             addTrace.setVisibility(View.INVISIBLE);
             farmTL.setVisibility(View.INVISIBLE);
+            edit.setVisibility(View.INVISIBLE);
             del.setVisibility(View.INVISIBLE);
             map.setVisibility(View.INVISIBLE);
         }else{
@@ -165,11 +188,12 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             addAnimal.setVisibility(View.VISIBLE);
             addTrace.setVisibility(View.VISIBLE);
             farmTL.setVisibility(View.VISIBLE);
+            edit.setVisibility(View.VISIBLE);
             del.setVisibility(View.VISIBLE);
             //map.setVisibility(View.VISIBLE);
 
             // preparing list data
-            prepareListData(pos);
+            prepareListData(farmName);
 
             listAdapter = new AnimalListAdapter(this, listDataHeader, listDataChild);
 
@@ -184,13 +208,21 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         // do nothing
     }
 
-    private void prepareListData(int pos) {
+    private void prepareListData(String farmName) {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
-        String selectQuery = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE farm=" + pos;
+        String selectID = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE farm_name='" + farmName + "'";
+
         DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        Cursor cursorID = db.rawQuery(selectID, null);
+        cursorID.moveToFirst();
+        int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+        cursorID.close();
+
+        String selectQuery = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE id=" + id;
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
 

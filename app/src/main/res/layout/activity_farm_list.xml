@@ -51,12 +51,24 @@
     <Spinner
         android:id="@+id/farmSpinner"
         style="@style/Widget.AppCompat.DropDownItem.Spinner"
-        android:layout_width="300dp"
+        android:layout_width="260dp"
         android:layout_height="40dp"
         android:background="#ffffff"
         android:spinnerMode="dropdown"
         app:layout_constraintTop_toBottomOf="@id/info"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/edit"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="-5dp"
+        android:src="@drawable/edit_icon"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toTopOf="@id/farmSpinner"
+        app:layout_constraintBottom_toBottomOf="@id/farmSpinner"
+        app:layout_constraintEnd_toStartOf="@id/del" />
 
     <Button
         android:id="@+id/del"

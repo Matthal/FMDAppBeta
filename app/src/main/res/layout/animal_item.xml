@@ -15,11 +15,23 @@
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingStart="?android:attr/expandableListPreferredChildPaddingLeft" />
 
+    <ImageButton
+        android:id="@+id/edit"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="45dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="-5dp"
+        android:src="@drawable/edit_icon"
+        android:scaleType="fitCenter"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
     <Button
         android:id="@+id/del"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="50dp"
+        android:layout_width="45dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:layout_alignParentRight="true"
         android:text="@string/X"
         android:layout_alignParentEnd="true" />

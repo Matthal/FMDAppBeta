@@ -4,13 +4,17 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,6 +52,26 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = convertView.findViewById(R.id.lblListItem);
         txtListChild.setText(childText);
+
+        ImageButton edit = convertView.findViewById(R.id.edit);
+        edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                String name = childText.substring(childText.indexOf(' ')+1, childText.indexOf('\n'));
+                String selectID = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE name='" + name + "'";
+                DatabaseHelper mDbHelper = new DatabaseHelper(_context);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                Cursor cursorID = db.rawQuery(selectID, null);
+                cursorID.moveToFirst();
+                int id = cursorID.getInt(cursorID.getColumnIndex(Animal.AnimalEntry.COLUMN_ID));
+                cursorID.close();
+                Bundle b = new Bundle();
+                b.putInt("id", id);
+                Intent intent = new Intent(_context, EditAnimal.class);
+                intent.putExtras(b);
+                _context.startActivity(intent);
+            }
+        });
 
         Button del = convertView.findViewById(R.id.del);
         del.setOnClickListener(new View.OnClickListener() {
