@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         bio.setOnClickListener(v -> {
             DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            System.out.println(DatabaseHelper.getTableAsString(db, "farms"));
+            System.out.println(DatabaseHelper.getTableAsString(db, "animals"));
             /*Intent intent = new Intent(MainActivity.this, DiagnosticOptions.class);
             startActivity(intent);*/
             /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);

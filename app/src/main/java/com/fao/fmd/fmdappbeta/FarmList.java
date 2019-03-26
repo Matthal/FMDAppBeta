@@ -68,10 +68,19 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         del = findViewById(R.id.del);
 
         addAnimal.setOnClickListener(v -> {
-            int farm = spinner.getSelectedItemPosition();
+            String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
+            String selectID = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE farm_name='" + farmName + "'";
+
+            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+            Cursor cursorID = db.rawQuery(selectID, null);
+            cursorID.moveToFirst();
+            int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+            cursorID.close();
             Intent intent = new Intent(FarmList.this, AnimalCreation.class);
             Bundle mBundle = new Bundle();
-            mBundle.putInt("id",farm);
+            mBundle.putInt("id",id);
             intent.putExtras(mBundle);
             startActivity(intent);
         });
@@ -79,10 +88,19 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             if(lock){
                 Toast.makeText(FarmList.this, "You must add an animal in the farm before adding tracings", Toast.LENGTH_LONG).show();
             }else{
-                int farm = spinner.getSelectedItemPosition();
+                String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
+                String selectID = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE farm_name='" + farmName + "'";
+
+                DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+                Cursor cursorID = db.rawQuery(selectID, null);
+                cursorID.moveToFirst();
+                int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+                cursorID.close();
                 Intent intent = new Intent(FarmList.this, Tracing.class);
                 Bundle bundle = new Bundle();
-                bundle.putInt("id",farm);
+                bundle.putInt("id",id);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
@@ -91,13 +109,22 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             if(lock){
                 Toast.makeText(FarmList.this, "You must add an animal in the farm before view timeline", Toast.LENGTH_LONG).show();
             }else{
-                List<Integer> animals = getAnimals(spinner.getSelectedItemPosition());
+                String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
+                String selectID = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE farm_name='" + farmName + "'";
+
+                DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+                Cursor cursorID = db.rawQuery(selectID, null);
+                cursorID.moveToFirst();
+                int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
+                cursorID.close();
+                List<Integer> animals = getAnimals(id);
                 List<Integer> lesions = getLesions(animals);
                 if(lesions.isEmpty()){
                     Toast.makeText(FarmList.this, "There is no lesion related to the animals in the farms", Toast.LENGTH_LONG).show();
                     return;
                 }
-                int id = spinner.getSelectedItemPosition();
                 Intent intent = new Intent(FarmList.this, Timeline.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("farm",id);
@@ -222,7 +249,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
         cursorID.close();
 
-        String selectQuery = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE id=" + id;
+        String selectQuery = "SELECT * FROM " + Animal.AnimalEntry.TABLE_NAME + " WHERE farm=" + id;
         Cursor cursor = db.rawQuery(selectQuery, null);
         cursor.moveToFirst();
 
