@@ -3,6 +3,7 @@ package com.fao.fmd.fmdappbeta;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -182,7 +183,8 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
                 Toast.makeText(getBaseContext(), "DB updated", Toast.LENGTH_SHORT).show();
                 cursor.close();
                 db.close();
-                onBackPressed();
+                Intent intent = new Intent(EditAnimal.this, FarmList.class);
+                startActivity(intent);
             }
 
         });

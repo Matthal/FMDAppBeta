@@ -169,9 +169,10 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
 
             Bundle b = new Bundle();
             b.putInt("id", id);
-            Intent intent = new Intent(FarmList.this, EditFarm.class);
-            intent.putExtras(b);
-            startActivity(intent);
+            Intent editIntent = new Intent(FarmList.this, EditFarm.class);
+            editIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            editIntent.putExtras(b);
+            startActivity(editIntent);
         });
 
         del = findViewById(R.id.del);
@@ -180,11 +181,15 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_NAME + "='" + farmName + "'",null);
-            Toast.makeText(FarmList.this, "Farm deleted, refresh page", Toast.LENGTH_SHORT).show();
+            Toast.makeText(FarmList.this, "Farm deleted", Toast.LENGTH_SHORT).show();
+            adapter.remove(farmName);
         });
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(v -> onBackPressed());
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(FarmList.this, MainActivity.class);
+            startActivity(intent);
+        });
 
         ImageView info = findViewById(R.id.qmark);
         info.setOnClickListener(v -> {

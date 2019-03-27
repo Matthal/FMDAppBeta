@@ -201,7 +201,8 @@ public class EditFarm extends Activity implements AdapterView.OnItemSelectedList
                 Toast.makeText(getBaseContext(), "DB updated", Toast.LENGTH_SHORT).show();
                 cursor.close();
                 db.close();
-                onBackPressed();
+                Intent intent = new Intent(EditFarm.this, FarmList.class);
+                startActivity(intent);
             }
 
         });

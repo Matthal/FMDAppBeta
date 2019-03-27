@@ -68,6 +68,7 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
                 Bundle b = new Bundle();
                 b.putInt("id", id);
                 Intent intent = new Intent(_context, EditAnimal.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 intent.putExtras(b);
                 _context.startActivity(intent);
             }
@@ -81,7 +82,9 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
                 DatabaseHelper mDbHelper = new DatabaseHelper(_context);
                 SQLiteDatabase db = mDbHelper.getWritableDatabase();
                 db.delete(Animal.AnimalEntry.TABLE_NAME,Animal.AnimalEntry.COLUMN_NAME + "='" + name + "'",null);
-                Toast.makeText(_context, "Animal deleted, refresh page", Toast.LENGTH_SHORT).show();
+                Toast.makeText(_context, "Animal deleted", Toast.LENGTH_SHORT).show();
+                _listDataHeader.remove(childPosition);
+                notifyDataSetChanged();
             }
         });
 
