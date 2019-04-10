@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,13 +80,29 @@ public class AnimalListAdapter extends BaseExpandableListAdapter {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                String name = childText.substring(childText.indexOf(' ')+1, childText.indexOf('\n'));
-                DatabaseHelper mDbHelper = new DatabaseHelper(_context);
-                SQLiteDatabase db = mDbHelper.getWritableDatabase();
-                db.delete(Animal.AnimalEntry.TABLE_NAME,Animal.AnimalEntry.COLUMN_NAME + "='" + name + "'",null);
-                Toast.makeText(_context, "Animal deleted", Toast.LENGTH_SHORT).show();
-                _listDataHeader.remove(childPosition);
-                notifyDataSetChanged();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                String name = childText.substring(childText.indexOf(' ')+1, childText.indexOf('\n'));
+                                DatabaseHelper mDbHelper = new DatabaseHelper(_context);
+                                SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                                db.delete(Animal.AnimalEntry.TABLE_NAME,Animal.AnimalEntry.COLUMN_NAME + "='" + name + "'",null);
+                                Toast.makeText(_context, "Animal deleted", Toast.LENGTH_SHORT).show();
+                                _listDataHeader.remove(childPosition);
+                                notifyDataSetChanged();
+                                break;
+
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
+                        }
+                    }
+                };
+                AlertDialog.Builder builder = new AlertDialog.Builder(_context);
+                builder.setMessage("Are you sure to delete this animal?").setPositiveButton("Yes", dialogClickListener)
+                        .setNegativeButton("No", dialogClickListener).show();
             }
         });
 

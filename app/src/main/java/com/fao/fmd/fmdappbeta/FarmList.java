@@ -1,11 +1,13 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -177,12 +179,28 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
 
         del = findViewById(R.id.del);
         del.setOnClickListener(v -> {
-            String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
-            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_NAME + "='" + farmName + "'",null);
-            Toast.makeText(FarmList.this, "Farm deleted", Toast.LENGTH_SHORT).show();
-            adapter.remove(farmName);
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            String farmName = (String) spinner.getItemAtPosition(spinner.getSelectedItemPosition());
+                            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
+                            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+                            db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_NAME + "='" + farmName + "'",null);
+                            Toast.makeText(FarmList.this, "Farm deleted", Toast.LENGTH_SHORT).show();
+                            adapter.remove(farmName);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(FarmList.this);
+            builder.setMessage("Are you sure to delete this farm?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
         });
 
         ImageView back = findViewById(R.id.back);

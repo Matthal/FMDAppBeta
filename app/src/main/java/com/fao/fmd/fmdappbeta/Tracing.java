@@ -136,9 +136,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow.setElevation(5.0f);
             }
 
+            final DatePickerBuilder aniPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v12 -> {
-                DatePicker datePicker = picker.build();
+                DatePicker datePicker = aniPicker.build();
                 datePicker.show();
             });
 
@@ -219,9 +220,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow.setElevation(5.0f);
             }
 
+            final DatePickerBuilder productPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v15 -> {
-                DatePicker datePicker = picker.build();
+                DatePicker datePicker = productPicker.build();
                 datePicker.show();
             });
 
@@ -303,9 +305,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow.setElevation(5.0f);
             }
 
+            final DatePickerBuilder peoPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v19 -> {
-                DatePicker datePicker = picker.build();
+                DatePicker datePicker = peoPicker.build();
                 datePicker.show();
             });
 
@@ -393,9 +396,10 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                 mPopupWindow.setElevation(5.0f);
             }
 
+            final DatePickerBuilder veiPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v113 -> {
-                DatePicker datePicker = picker.build();
+                DatePicker datePicker = veiPicker.build();
                 datePicker.show();
             });
 
@@ -514,6 +518,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     }
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
+
 
                     date = customView.findViewById(R.id.date);
                     date.setText(animalsDate.get(position));

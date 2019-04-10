@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,10 +26,13 @@ import java.util.Locale;
 
 public class EditAnimal extends Activity implements AdapterView.OnItemSelectedListener{
 
+    Spinner yearsSpin;
+    Spinner monthsSpin;
     Spinner spinner;
     Spinner sexSpin;
     EditText other;
     Button close;
+    Spinner vaccSpin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,12 +90,12 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
         final String[] months = new String[]{"0 months","1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months"};
         final String[] vaccination = new String[]{"No", "≤6 months", ">6 months"};
 
-        final Spinner yearsSpin = findViewById(R.id.animalYears);
+        yearsSpin = findViewById(R.id.animalYears);
         ArrayAdapter<String> yearsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
         yearsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearsSpin.setAdapter(yearsAdapter);
 
-        final Spinner monthsSpin = findViewById(R.id.animalMonths);
+        monthsSpin = findViewById(R.id.animalMonths);
         ArrayAdapter<String> monthsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
         monthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monthsSpin.setAdapter(monthsAdapter);
@@ -122,10 +126,13 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show());
 
-        final Spinner vaccSpin = findViewById(R.id.vaccinated);
+        vaccSpin = findViewById(R.id.vaccinated);
         ArrayAdapter<String> vaccAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vaccination);
         vaccAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vaccSpin.setAdapter(vaccAdapter);
+
+        CheckBox ageCheck = findViewById(R.id.checkbox_age);
+        CheckBox vaccCheck = findViewById(R.id.checkbox_vacc);
 
         Bundle bundle = getIntent().getExtras();
         final int id;
@@ -146,13 +153,26 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
         animal.setText(cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_NAME)));
         group.setText(cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_GROUP)));
         String age = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_AGE));
-        yearsSpin.setSelection(yearsAdapter.getPosition(age.substring(0, age.indexOf('s')+1)));
-        monthsSpin.setSelection(monthsAdapter.getPosition(age.substring(age.indexOf('&')+2)));
+        if(!age.equals("")){
+            yearsSpin.setSelection(yearsAdapter.getPosition(age.substring(0, age.indexOf('s')+1)));
+            monthsSpin.setSelection(monthsAdapter.getPosition(age.substring(age.indexOf('&')+2)));
+        }else{
+            ageCheck.setChecked(true);
+            yearsSpin.setEnabled(false);
+            monthsSpin.setEnabled(false);
+        }
         String species = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_SPECIES));
         spinner.setSelection(adapter.getPosition(species.substring(0, species.indexOf(' '))));
         sexSpin.setSelection(sexAdapter.getPosition(species.substring(species.indexOf('(')+1,species.indexOf(')'))));
         sign.setText(cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_REPORT)));
-        vaccSpin.setSelection(vaccAdapter.getPosition(cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION))));
+        String vacc = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION));
+        if(!vacc.equals("")){
+            vaccSpin.setSelection(vaccAdapter.getPosition(cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION))));
+        }else{
+            vaccCheck.setChecked(true);
+            vaccSpin.setEnabled(false);
+        }
+
 
         cursor.close();
 
@@ -169,10 +189,18 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
             ContentValues values = new ContentValues();
             values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
             values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
-            values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
+            if(!ageCheck.isChecked()){
+                values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
+            }else{
+                values.put(Animal.AnimalEntry.COLUMN_AGE,"");
+            }
             values.put(Animal.AnimalEntry.COLUMN_SPECIES, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
             values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
-            values.put(Animal.AnimalEntry.COLUMN_VACCINATION, vaccSpin.getSelectedItem().toString());
+            if(!vaccCheck.isChecked()){
+                values.put(Animal.AnimalEntry.COLUMN_VACCINATION, vaccSpin.getSelectedItem().toString());
+            }else{
+                values.put(Animal.AnimalEntry.COLUMN_VACCINATION, "");
+            }
 
             long newRowId = db.update(Animal.AnimalEntry.TABLE_NAME, values, "id= ?",new String[]{Integer.toString(id)});
 
@@ -180,11 +208,9 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
                 Toast.makeText(getBaseContext(), "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
             } else {
-                Toast.makeText(getBaseContext(), "DB updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "Animal information succesfully updated", Toast.LENGTH_SHORT).show();
                 cursor.close();
                 db.close();
-                Intent intent = new Intent(EditAnimal.this, FarmList.class);
-                startActivity(intent);
             }
 
         });
@@ -210,5 +236,30 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
     public void hideKeyboard(View view) {
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_age:
+                if (checked) {
+                    yearsSpin.setEnabled(false);
+                    monthsSpin.setEnabled(false);
+                }else{
+                    yearsSpin.setEnabled(true);
+                    monthsSpin.setEnabled(true);
+                }
+                break;
+            case R.id.checkbox_vacc:
+                if (checked) {
+                    vaccSpin.setEnabled(false);
+                }else{
+                    vaccSpin.setEnabled(true);
+                }
+                break;
+        }
     }
 }

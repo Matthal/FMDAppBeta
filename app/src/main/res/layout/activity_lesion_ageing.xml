@@ -130,95 +130,95 @@
         android:text="@string/color"
         android:textSize="14sp"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/colRed"
-        app:layout_constraintBottom_toTopOf="@id/colRed"/>
+        app:layout_constraintBottom_toTopOf="@id/colRed"
+        app:layout_constraintStart_toStartOf="@id/colRed" />
 
     <Button
         android:id="@+id/colRed"
         android:layout_width="75dp"
-        android:layout_height="40dp"
+        android:layout_height="42dp"
         android:background="@color/white"
-        android:textColor="@color/grey"
         android:text="@string/red"
-        android:visibility="invisible"
+        android:textColor="@color/grey"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.090"
+        app:layout_constraintHorizontal_bias="0.050"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490"/>
+        app:layout_constraintVertical_bias="0.490" />
 
     <Button
         android:id="@+id/redGallery"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="88dp"
-        android:layout_height="50dp"
+        android:layout_width="96dp"
+        android:layout_height="52dp"
         android:text="@string/g_samples"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.370"
+        app:layout_constraintHorizontal_bias="0.350"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490"/>
+        app:layout_constraintVertical_bias="0.490" />
 
     <Button
         android:id="@+id/colPink"
         android:layout_width="75dp"
-        android:layout_height="40dp"
+        android:layout_height="42dp"
         android:background="@color/white"
-        android:textColor="@color/grey"
         android:text="@string/pink"
-        android:visibility="invisible"
+        android:textColor="@color/grey"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.660"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490"/>
+        app:layout_constraintVertical_bias="0.490" />
 
     <Button
         android:id="@+id/pinkGallery"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="88dp"
-        android:layout_height="50dp"
+        android:layout_width="96dp"
+        android:layout_height="52dp"
         android:text="@string/g_samples"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.960"
+        app:layout_constraintHorizontal_bias="1.000"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490"/>
+        app:layout_constraintVertical_bias="0.490" />
 
     <Button
         android:id="@+id/colWhite"
         android:layout_width="75dp"
-        android:layout_height="40dp"
+        android:layout_height="42dp"
         android:background="@color/white"
-        android:textColor="@color/grey"
         android:text="@string/white"
-        android:visibility="invisible"
+        android:textColor="@color/grey"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.370"
+        app:layout_constraintHorizontal_bias="0.350"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.570"/>
+        app:layout_constraintVertical_bias="0.570" />
 
     <Button
         android:id="@+id/whiteGallery"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="88dp"
-        android:layout_height="50dp"
+        android:layout_width="96dp"
+        android:layout_height="52dp"
         android:text="@string/g_samples"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.660"
+        app:layout_constraintHorizontal_bias="0.670"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.570"/>
+        app:layout_constraintVertical_bias="0.570" />
 
     <TextView
         android:id="@+id/text_edges"
@@ -269,20 +269,6 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.700"/>
-
-    <Switch
-        android:id="@+id/locker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:thumb="@drawable/customswitchselector"
-        android:track="@drawable/custom_track"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.500"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.810" />
 
     <TextView
         android:id="@+id/grey"

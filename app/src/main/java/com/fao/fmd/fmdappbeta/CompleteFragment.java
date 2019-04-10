@@ -94,7 +94,7 @@ public class CompleteFragment extends Fragment {
 
         next.setOnClickListener(v -> {
             if(!added){
-                Toast.makeText(getActivity(), "You must add the lesion to the farm timeline before continue", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(), "You must add the lesion to the farm timeline before continuing", Toast.LENGTH_LONG).show();
                 return;
             }
             Intent intent = new Intent(getActivity(), PostLesion.class);

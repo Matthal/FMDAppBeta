@@ -1,12 +1,14 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +33,8 @@ public class LesionAgeing extends Activity {
 
     boolean lock = false;
 
+    Bundle newBundle = new Bundle();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +58,6 @@ public class LesionAgeing extends Activity {
         //Get animal ID from previous page
         Bundle oldBundle = getIntent().getExtras();
         final int animal = oldBundle.getInt("id");
-
-        final Bundle newBundle = new Bundle();
 
         final String[] vesItems = new String[]{"YES", "NO"};
         final String[] fibItems = new String[]{"YES", "NO"};
@@ -308,76 +310,6 @@ public class LesionAgeing extends Activity {
             }
         });
 
-        Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
-                if(vesSpin.isEnabled()){
-                    vesSpin.setBackgroundResource(R.color.colorPrimary);
-                }
-                if(fibSpin.isEnabled()){
-                    fibSpin.setBackgroundResource(R.color.colorPrimary);
-                }
-                if(redSel[0]){
-                    red.setBackgroundResource(R.color.colorPrimary);
-                    red.setTextColor(getResources().getColor(R.color.black));
-                    lock = false;
-                }
-                if(pinkSel[0]){
-                    pink.setBackgroundResource(R.color.colorPrimary);
-                    pink.setTextColor(getResources().getColor(R.color.black));
-                    lock = false;
-                }
-                if(whiteSel[0]){
-                    white.setBackgroundResource(R.color.colorPrimary);
-                    white.setTextColor(getResources().getColor(R.color.black));
-                    lock = false;
-                }
-                if(!redSel[0] && !pinkSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
-                    red.setBackgroundResource(R.color.TLyellow);
-                    red.setTextColor(getResources().getColor(R.color.black));
-                    pink.setBackgroundResource(R.color.TLyellow);
-                    pink.setTextColor(getResources().getColor(R.color.black));
-                    white.setBackgroundResource(R.color.TLyellow);
-                    white.setTextColor(getResources().getColor(R.color.black));
-                    lock = true;
-                }
-                if(edgeSpin.isEnabled()){
-                    edgeSpin.setBackgroundResource(R.color.colorPrimary);
-                }
-                if(healSpin.isEnabled()){
-                    healSpin.setBackgroundResource(R.color.colorPrimary);
-                }
-                vesSpin.setEnabled(false);
-                fibSpin.setEnabled(false);
-                red.setEnabled(false);
-                pink.setEnabled(false);
-                white.setEnabled(false);
-                edgeSpin.setEnabled(false);
-                healSpin.setEnabled(false);
-            }else{
-                vesSpin.setBackgroundResource(R.color.white);
-                fibSpin.setBackgroundResource(R.color.white);
-                red.setBackgroundResource(R.color.white);
-                red.setTextColor(getResources().getColor(R.color.grey));
-                pink.setBackgroundResource(R.color.white);
-                pink.setTextColor(getResources().getColor(R.color.grey));
-                white.setBackgroundResource(R.color.white);
-                white.setTextColor(getResources().getColor(R.color.grey));
-                edgeSpin.setBackgroundResource(R.color.white);
-                healSpin.setBackgroundResource(R.color.white);
-                vesSpin.setEnabled(true);
-                fibSpin.setEnabled(true);
-                red.setEnabled(true);
-                pink.setEnabled(true);
-                white.setEnabled(true);
-                edgeSpin.setEnabled(true);
-                healSpin.setEnabled(true);
-                redSel[0] = false;
-                pinkSel[0] = false;
-                whiteSel[0] = false;
-            }
-        });
-
         Bundle g = new Bundle();
 
         vesGalleryBtn.setOnClickListener(v -> {
@@ -421,16 +353,6 @@ public class LesionAgeing extends Activity {
         ImageView next = findViewById(R.id.next);
         next.setOnClickListener(v -> {
 
-            /*
-            if(!locker.isChecked()){
-                Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
-                return;
-            }
-            if(locker.isChecked() && lock){
-                Toast.makeText(getBaseContext(), "There is an error in the item selections", Toast.LENGTH_LONG).show();
-                return;
-            }*/
-
             if(!redSel[0] && !pinkSel[0] && !whiteSel[0] && (red.getVisibility() == View.VISIBLE)){
                 red.setBackgroundResource(R.color.TLyellow);
                 red.setTextColor(getResources().getColor(R.color.black));
@@ -445,10 +367,38 @@ public class LesionAgeing extends Activity {
                 return;
             }
 
-            newBundle.putInt("id",animal);
-            Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
-            intent.putExtras(newBundle);
-            startActivity(intent);
+            if(checkError().equals("E1")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Lesions with a pink base indicates healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                               dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
+            if(checkError().equals("E2")){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Lesions with a white or grey base indicates advanced healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
+            if(checkError().equals("NO")){
+                newBundle.putInt("id",animal);
+                Intent intent = new Intent(LesionAgeing.this, Suggestion.class);
+                intent.putExtras(newBundle);
+                startActivity(intent);
+            }
         });
 
         ImageView camera = findViewById(R.id.camera);
@@ -531,6 +481,26 @@ public class LesionAgeing extends Activity {
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         this.sendBroadcast(mediaScanIntent);
+    }
+
+    public String checkError(){
+        String val1 = newBundle.getString("Q1");
+        String val3 = newBundle.getString("Q3");
+        String val4 = newBundle.getString("Q4");
+
+        if(val1.equals("b")){
+            if(val3.equals("b") && val4.equals("b")){
+                return "E1";
+            }else{
+                if(val3.equals("c")&& val4.equals("b")){
+                    return "E2";
+                }else{
+                    return "NO";
+                }
+            }
+        }else{
+            return "NO";
+        }
     }
 
 }

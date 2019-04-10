@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FMD-DOI</string>
+    <string name="app_name">FMD-OI</string>
 
     //COMMON
     <string name="yes">Yes</string>
@@ -19,8 +19,8 @@
     <string name="text_assumpt">ASSUMPTIONS</string>
 
     //MAIN
-    <string name="text_main">FMD-DOI | DISEASE OUTBREAK INVESTIGATION</string>
-    <string name="header">FMD-DOI</string>
+    <string name="text_main">FMD-OI | OUTBREAK INVESTIGATION</string>
+    <string name="header">FMD-OI</string>
     <string name="welcome">WELCOME BACK</string>
     <string name="add_farm">Add\na farm</string>
     <string name="pre_farm">My\nfarms</string>
@@ -46,6 +46,7 @@
     <string name="hint_ID">ID NUMBER/NAME</string>
     <string name="hint_Group_ID">GROUP ID/NAME</string>
     <string name="age">AGE</string>
+    <string name="know">DON\'T \nKNOW</string>
     <string name="hint_other">OTHER</string>
     <string name="sex">SEX</string>
     <string name="sign">REPORTED DATE OF ONSET OF CLINICAL SIGNS</string>
@@ -53,7 +54,7 @@
 
     //LESION AGEING
     <string name="text_lesion_ageing">LESION DESCRIPTION</string>
-    <string name="vesicles">VESICLES</string>
+    <string name="vesicles">INTACT VESICLES</string>
     <string name="fibrin">FIBRIN</string>
     <string name="color">COLOR OF THE BASE OF THE EROSION</string>
     <string name="red">Bright Red</string>
@@ -105,7 +106,7 @@
     <string name="btn_probang">Probang</string>
     <string name="par_two">TESTS FOR ANTIBODY</string>
     <string name="btn_structural">Structural protein antibodies</string>
-    <string name="btn_non_structural">Non-structural protein antibodies</string>
+    <string name="btn_non_structural">Non-\nstructural protein antibodies</string>
 
     //DIAGNOSTIC OPTIONS
     <string name="btn_samples">Samples and tests for virus</string>

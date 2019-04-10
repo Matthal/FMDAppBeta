@@ -107,13 +107,13 @@
 
     <Spinner
         android:id="@+id/animalYears"
-        android:layout_width="140dp"
+        android:layout_width="100dp"
         android:layout_height="44dp"
         android:background="#ffffff"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.130"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -121,13 +121,27 @@
 
     <Spinner
         android:id="@+id/animalMonths"
-        android:layout_width="140dp"
+        android:layout_width="110dp"
         android:layout_height="44dp"
         android:background="#ffffff"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.850"
+        app:layout_constraintHorizontal_bias="0.600"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.365" />
+
+    <CheckBox
+        android:id="@+id/checkbox_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onCheckboxClicked"
+        android:text="@string/know"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.910"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -275,19 +289,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.750"/>
 
-    <Switch
-        android:id="@+id/locker"
+    <CheckBox
+        android:id="@+id/checkbox_vacc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:thumb="@drawable/customswitchselector"
-        android:track="@drawable/custom_track"
-        android:visibility="invisible"
+        android:onClick="onCheckboxClicked"
+        android:text="@string/know"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.750"
+        app:layout_constraintHorizontal_bias="0.650"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.750"/>
+        app:layout_constraintVertical_bias="0.750" />
 
     <TextView
         android:id="@+id/grey"
@@ -321,7 +335,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/next_icon"
+        android:src="@drawable/save_icon"
         app:layout_constraintBottom_toTopOf="@id/progbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

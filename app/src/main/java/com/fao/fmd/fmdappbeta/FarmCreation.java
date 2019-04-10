@@ -104,7 +104,7 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
             close.setVisibility(View.INVISIBLE);
         });
 
-        final String[] pos = new String[]{"Owner", "Farm Manager", "Farm Worker", "Other"};
+        final String[] pos = new String[]{"Role On Farm", "Owner", "Farm Manager", "Farm Worker", "Other"};
         ArrayAdapter<String> posAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, pos);
         posAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         position.setAdapter(posAdapter);
@@ -156,102 +156,24 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
             text_gps.setVisibility(View.VISIBLE);
         });
 
-        Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (!name.getText().toString().trim().isEmpty()) {
-                    name.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    name.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                if (!owner.getText().toString().trim().isEmpty()) {
-                    owner.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    owner.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                position.setBackgroundResource(R.color.colorPrimary);
-                if (!other.getText().toString().trim().isEmpty()) {
-                    other.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    other.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                if (!farm.getText().toString().trim().isEmpty()) {
-                    farm.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    farm.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                if (!address.getText().toString().trim().isEmpty()) {
-                    address.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    address.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                spinner.setBackgroundResource(R.color.colorPrimary);
-                name.setEnabled(false);
-                owner.setEnabled(false);
-                position.setEnabled(false);
-                farm.setEnabled(false);
-                address.setEnabled(false);
-                spinner.setEnabled(false);
-            } else {
-                name.setBackgroundResource(R.color.white);
-                owner.setBackgroundResource(R.color.white);
-                position.setBackgroundResource(R.color.white);
-                other.setBackgroundResource(R.color.white);
-                farm.setBackgroundResource(R.color.white);
-                address.setBackgroundResource(R.color.white);
-                spinner.setBackgroundResource(R.color.white);
-                name.setEnabled(true);
-                owner.setEnabled(true);
-                position.setEnabled(true);
-                farm.setEnabled(true);
-                address.setEnabled(true);
-                spinner.setEnabled(true);
-            }
-        });
-
         cFarm.setOnClickListener(v -> {
 
-            /*
-            if (!locker.isChecked()) {
-                Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if (locker.isChecked() && lock) {
-                Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
-                return;
-            }*/
-
-            if(name.getText().toString().trim().isEmpty()){
-                name.setBackgroundResource(R.color.TLyellow);
-                lock = true;
-            }
-            if(owner.getText().toString().trim().isEmpty()){
-                owner.setBackgroundResource(R.color.TLyellow);
-                lock = true;
-            }
             if(farm.getText().toString().trim().isEmpty()){
                 farm.setBackgroundResource(R.color.TLyellow);
                 lock = true;
             }
             if(lock){
-                Toast.makeText(getBaseContext(), "You forgot one or more information", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Farm name is a mandatory information", Toast.LENGTH_LONG).show();
                 return;
             }
 
             String role;
             if(position.getVisibility() == View.VISIBLE){
-                role = position.getSelectedItem().toString();
+                if(position.getSelectedItem().toString().equals("Role On Farm")){
+                    role = "";
+                }else{
+                    role = position.getSelectedItem().toString();
+                }
             }else{
                 role = other.getText().toString();
             }

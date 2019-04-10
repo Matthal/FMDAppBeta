@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,10 +27,13 @@ import java.util.Locale;
 
 public class AnimalCreation extends Activity implements AdapterView.OnItemSelectedListener {
 
+    Spinner yearsSpin;
+    Spinner monthsSpin;
     Spinner spinner;
     Spinner sexSpin;
     EditText other;
     Button close;
+    Spinner vaccSpin;
 
     boolean lock = false;
 
@@ -89,12 +93,12 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final String[] months = new String[]{"0 months","1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months"};
         final String[] vaccination = new String[]{"No", "≤6 months", ">6 months"};
 
-        final Spinner yearsSpin = findViewById(R.id.animalYears);
+        yearsSpin = findViewById(R.id.animalYears);
         ArrayAdapter<String> yearsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
         yearsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         yearsSpin.setAdapter(yearsAdapter);
 
-        final Spinner monthsSpin = findViewById(R.id.animalMonths);
+        monthsSpin = findViewById(R.id.animalMonths);
         ArrayAdapter<String> monthsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, months);
         monthsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         monthsSpin.setAdapter(monthsAdapter);
@@ -125,10 +129,13 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show());
 
-        final Spinner vaccSpin = findViewById(R.id.vaccinated);
+        vaccSpin = findViewById(R.id.vaccinated);
         ArrayAdapter<String> vaccAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, vaccination);
         vaccAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vaccSpin.setAdapter(vaccAdapter);
+
+        CheckBox ageCheck = findViewById(R.id.checkbox_age);
+        CheckBox vaccCheck = findViewById(R.id.checkbox_vacc);
 
         Bundle bundle = getIntent().getExtras();
         final int farm;
@@ -139,92 +146,14 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             farm = 0;
         }
 
-        Switch locker = findViewById(R.id.locker);
-        locker.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if(isChecked){
-                if (!animal.getText().toString().trim().isEmpty()) {
-                    animal.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    animal.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                if (!group.getText().toString().trim().isEmpty()) {
-                    group.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    group.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                yearsSpin.setBackgroundResource(R.color.colorPrimary);
-                monthsSpin.setBackgroundResource(R.color.colorPrimary);
-                spinner.setBackgroundResource(R.color.colorPrimary);
-                if (!other.getText().toString().trim().isEmpty()) {
-                    other.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    other.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                sexSpin.setBackgroundResource(R.color.colorPrimary);
-                if (!sign.getText().toString().trim().isEmpty()) {
-                    sign.setBackgroundResource(R.color.colorPrimary);
-                    lock = false;
-                } else {
-                    sign.setBackgroundResource(R.color.TLyellow);
-                    lock = true;
-                }
-                vaccSpin.setBackgroundResource(R.color.colorPrimary);
-                animal.setEnabled(false);
-                group.setEnabled(false);
-                yearsSpin.setEnabled(false);
-                monthsSpin.setEnabled(false);
-                spinner.setEnabled(false);
-                sexSpin.setEnabled(false);
-                sign.setEnabled(false);
-                cal.setEnabled(false);
-                vaccSpin.setEnabled(false);
-            }else{
-                animal.setBackgroundResource(R.color.white);
-                group.setBackgroundResource(R.color.white);
-                yearsSpin.setBackgroundResource(R.color.white);
-                monthsSpin.setBackgroundResource(R.color.white);
-                spinner.setBackgroundResource(R.color.white);
-                other.setBackgroundResource(R.color.white);
-                sexSpin.setBackgroundResource(R.color.white);
-                sign.setBackgroundResource(R.color.white);
-                vaccSpin.setBackgroundResource(R.color.white);
-                animal.setEnabled(true);
-                group.setEnabled(true);
-                yearsSpin.setEnabled(true);
-                monthsSpin.setEnabled(true);
-                spinner.setEnabled(true);
-                sexSpin.setEnabled(true);
-                sign.setEnabled(true);
-                cal.setEnabled(true);
-                vaccSpin.setEnabled(true);
-            }
-        });
-
         addAnimal.setOnClickListener(v -> {
-
-            /*
-            if(!locker.isChecked()){
-                Toast.makeText(getBaseContext(), "Lock information to proceed", Toast.LENGTH_LONG).show();
-                return;
-            }
-
-            if(locker.isChecked() && lock){
-                Toast.makeText(getBaseContext(), "You need to fill all the information", Toast.LENGTH_LONG).show();
-                return;
-            }*/
 
             if(animal.getText().toString().trim().isEmpty()){
                 animal.setBackgroundResource(R.color.TLyellow);
                 lock = true;
             }
             if(lock){
-                Toast.makeText(getBaseContext(), "You forgot one or more information", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Animal name/ID is a mandatory information", Toast.LENGTH_LONG).show();
                 return;
             }
 
@@ -242,10 +171,18 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
             values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
             values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
             values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
-            values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
+            if(!ageCheck.isChecked()){
+                values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
+            }else{
+                values.put(Animal.AnimalEntry.COLUMN_AGE,"");
+            }
             values.put(Animal.AnimalEntry.COLUMN_SPECIES, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
             values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
-            values.put(Animal.AnimalEntry.COLUMN_VACCINATION, vaccSpin.getSelectedItem().toString());
+            if(!vaccCheck.isChecked()){
+                values.put(Animal.AnimalEntry.COLUMN_VACCINATION, vaccSpin.getSelectedItem().toString());
+            }else{
+                values.put(Animal.AnimalEntry.COLUMN_VACCINATION, "");
+            }
 
             long newRowId = db.insert(Animal.AnimalEntry.TABLE_NAME, null, values);
 
@@ -300,5 +237,31 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_age:
+                if (checked) {
+                    yearsSpin.setEnabled(false);
+                    monthsSpin.setEnabled(false);
+                }else{
+                    yearsSpin.setEnabled(true);
+                    monthsSpin.setEnabled(true);
+                }
+                break;
+            case R.id.checkbox_vacc:
+                if (checked) {
+                    vaccSpin.setEnabled(false);
+                }else{
+                    vaccSpin.setEnabled(true);
+                }
+                break;
+        }
+    }
+
 
 }
