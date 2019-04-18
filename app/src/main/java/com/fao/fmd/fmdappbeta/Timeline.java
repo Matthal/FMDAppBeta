@@ -618,32 +618,11 @@ public class Timeline extends AppCompatActivity {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
 
-            int old;
-
             if (cursor.moveToFirst()) {
                 do {
-                    String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
-                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MIN));
-                    if(age.length() < 2){
-                        old = Integer.parseInt(age);
-                    }else{
-                        if(age.charAt(1) == '-'){
-                            if(age.length() == 3){
-                                old = Character.getNumericValue(age.charAt(2));
-                            }else{
-                                old = Integer.parseInt(age.substring(2,3));
-                            }
-                        }else{
-                            if(age.charAt(2) == '-'){
-                                old = Integer.parseInt(age.substring(3,4));
-                            }else{
-                                old = Integer.parseInt(age.substring(0,1));
-                            }
-                        }
-                    }
+                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_VISIT_DATE));
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);
-                    Date diagnDate = addDays(date,old);
-                    dates.add(diagnDate);
+                    dates.add(date);
                 } while (cursor.moveToNext());
             }
             cursor.close();

@@ -11,6 +11,7 @@ public class Lesion {
         public static final String COLUMN_ID = "id";
         public static final String COLUMN_ANIMAL = "animal";
         public static final String COLUMN_AGE = "age_of_lesion";
+        public static final String COLUMN_VISIT_DATE = "date_of_visit";
         public static final String COLUMN_LIKE_INF_MIN = "likely_infection_min";
         public static final String COLUMN_LIKE_INF_MAX = "likely_infection_max";
         public static final String COLUMN_POSS_INF_MIN = "possible_infection_min";
@@ -26,6 +27,7 @@ public class Lesion {
                     LesionEntry.COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     LesionEntry.COLUMN_ANIMAL + " INTEGER," +
                     LesionEntry.COLUMN_AGE + " TEXT," +
+                    LesionEntry.COLUMN_VISIT_DATE + " TEXT," +
                     LesionEntry.COLUMN_LIKE_INF_MIN + " TEXT," +
                     LesionEntry.COLUMN_LIKE_INF_MAX + " TEXT," +
                     LesionEntry.COLUMN_POSS_INF_MIN + " TEXT," +

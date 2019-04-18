@@ -116,8 +116,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         final TextView vehicleNum = findViewById(R.id.vehicleNum);
         final int[] vehicleCount = {0};
 
-        final DatePickerBuilder picker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
-
         animalTrack.setOnClickListener(v -> {
             LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
 
@@ -519,11 +517,11 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
-
+                    final DatePickerBuilder editAniPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(animalsDate.get(position));
                     date.setOnClickListener(v117 -> {
-                        DatePicker datePicker = picker.build();
+                        DatePicker datePicker = editAniPicker.build();
                         datePicker.show();
                     });
 
@@ -634,10 +632,11 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
+                    final DatePickerBuilder editProPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(productsDate.get(position));
                     date.setOnClickListener(v121 -> {
-                        DatePicker datePicker = picker.build();
+                        DatePicker datePicker = editProPicker.build();
                         datePicker.show();
                     });
 
@@ -749,10 +748,11 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
+                    final DatePickerBuilder editPeoPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(peoplesDate.get(position));
                     date.setOnClickListener(v125 -> {
-                        DatePicker datePicker = picker.build();
+                        DatePicker datePicker = editPeoPicker.build();
                         datePicker.show();
                     });
 
@@ -867,10 +867,11 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
+                    final DatePickerBuilder editVeiPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(vehiclesDate.get(position));
                     date.setOnClickListener(v129 -> {
-                        DatePicker datePicker = picker.build();
+                        DatePicker datePicker = editVeiPicker.build();
                         datePicker.show();
                     });
 
@@ -1074,36 +1075,15 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
         for(int i = 0; i < lesions.size(); i++){
             String selectQuery = "SELECT * FROM " + Lesion.LesionEntry.TABLE_NAME + " WHERE id=" + lesions.get(i);
 
-            DatabaseHelper mDbHelper = new DatabaseHelper(this);
+            DatabaseHelper mDbHelper = new DatabaseHelper(Tracing.this);
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
 
-            int old;
-
             if (cursor.moveToFirst()) {
                 do {
-                    String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
-                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_SPR_MAX));
-                    if(age.length() < 2){
-                        old = Integer.parseInt(age);
-                    }else{
-                        if(age.charAt(1) == '-'){
-                            if(age.length() == 3){
-                                old = Character.getNumericValue(age.charAt(2));
-                            }else{
-                                old = Integer.parseInt(age.substring(2,3));
-                            }
-                        }else{
-                            if(age.charAt(2) == '-'){
-                                old = Integer.parseInt(age.substring(3,4));
-                            }else{
-                                old = Integer.parseInt(age.substring(0,1));
-                            }
-                        }
-                    }
+                    String diagnosis = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_VISIT_DATE));
                     Date date = new SimpleDateFormat("dd-MM-yyyy",Locale.UK).parse(diagnosis);
-                    Date diagnDate = subDays(date,old).getTime();
-                    dates.add(diagnDate);
+                    dates.add(date);
                 } while (cursor.moveToNext());
             }
             cursor.close();

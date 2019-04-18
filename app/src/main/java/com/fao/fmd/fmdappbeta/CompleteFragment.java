@@ -27,6 +27,8 @@ public class CompleteFragment extends Fragment {
 
     boolean added = false;
 
+    SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.UK);
+
     public CompleteFragment() {
         // Required empty public constructor
     }
@@ -150,6 +152,7 @@ public class CompleteFragment extends Fragment {
         ContentValues values = new ContentValues();
         values.put(Lesion.LesionEntry.COLUMN_ANIMAL, bundle.getInt("id"));
         values.put(Lesion.LesionEntry.COLUMN_AGE, bundle.getString("res"));
+        values.put(Lesion.LesionEntry.COLUMN_VISIT_DATE, df.format(Calendar.getInstance().getTime()));
         values.put(Lesion.LesionEntry.COLUMN_LIKE_INF_MIN, subDays(like_inf_min));
         values.put(Lesion.LesionEntry.COLUMN_LIKE_INF_MAX, subDays(like_inf_max));
         values.put(Lesion.LesionEntry.COLUMN_POSS_INF_MIN, subDays(pos_inf_min));
@@ -162,10 +165,10 @@ public class CompleteFragment extends Fragment {
         long newRowId = db.insert(Lesion.LesionEntry.TABLE_NAME, null, values);
 
         if(newRowId == -1){
-            Toast.makeText(getActivity(), "Error in the DB", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(), "Error in the DB", Toast.LENGTH_SHORT).show();
             db.close();
         }else {
-            Toast.makeText(getActivity(), "New entry added to the DB", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "New lesion added to the DB", Toast.LENGTH_SHORT).show();
             added = true;
             db.close();
         }
@@ -175,7 +178,6 @@ public class CompleteFragment extends Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -days);
         Date c = calendar.getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy",Locale.UK);
         return df.format(c);
     }
 
