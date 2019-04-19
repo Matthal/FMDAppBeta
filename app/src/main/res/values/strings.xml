@@ -70,6 +70,7 @@
 
     //FARM LIST
     <string name="text_farm_list">FARMS LIST</string>
+    <string name="track">Tracings</string>
 
     //TIMELINE
     <string name="date">DATE</string>
@@ -79,7 +80,14 @@
     <string name="sub_category">SUB-CATEGORY</string>
     <string name="notes">NOTES</string>
 
-    //TRACING
+    //TRACING OPTIONS
+    <string name="text_track_opt">TRACING OPTIONS</string>
+    <string name="view_track">View previously added tracings</string>
+
+    //TRACING LIST
+    <string name="text_track_list">TRACING LIST</string>
+
+    //NEW TRACING
     <string name="text_tracing">TRACING REPORT</string>
     <string name="animal_movements">Animal Movements</string>
     <string name="prosucts">Products</string>

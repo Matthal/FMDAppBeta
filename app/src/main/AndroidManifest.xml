@@ -18,10 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".EditAnimal"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".EditFarm"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".TracingList"></activity>
+        <activity android:name=".TracingOptions" />
+        <activity
+            android:name=".EditAnimal"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".EditFarm"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

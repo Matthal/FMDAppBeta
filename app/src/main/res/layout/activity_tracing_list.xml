@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f2f2"
-    tools:context=".FarmList">
+    tools:context=".TracingList">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/basictoolbar"
@@ -44,63 +44,18 @@
         android:background="#D9D9D9"
         android:fontFamily="@font/roboto"
         android:gravity="center"
-        android:text="@string/text_farm_list"
+        android:text="@string/text_track_list"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/appHeader"/>
 
-    <Spinner
-        android:id="@+id/farmSpinner"
-        style="@style/Widget.AppCompat.DropDownItem.Spinner"
-        android:layout_width="260dp"
-        android:layout_height="40dp"
-        android:background="#ffffff"
-        android:spinnerMode="dropdown"
-        app:layout_constraintTop_toBottomOf="@id/info"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <ImageButton
-        android:id="@+id/edit"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="50dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="-5dp"
-        android:src="@drawable/edit_icon"
-        android:scaleType="fitCenter"
-        app:layout_constraintTop_toTopOf="@id/farmSpinner"
-        app:layout_constraintBottom_toBottomOf="@id/farmSpinner"
-        app:layout_constraintEnd_toStartOf="@id/del" />
-
-    <Button
-        android:id="@+id/del"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="-5dp"
-        android:text="@string/X"
-        app:layout_constraintTop_toTopOf="@id/farmSpinner"
-        app:layout_constraintBottom_toBottomOf="@id/farmSpinner"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageView
-        android:id="@+id/map"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/map_icon"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/farmSpinner"
-        app:layout_constraintStart_toEndOf="@id/farmSpinner"/>
-
     <ExpandableListView
-        android:id="@+id/animalList"
+        android:id="@+id/tracingList"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/grey"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/farmSpinner" />
+        app:layout_constraintTop_toBottomOf="@id/info" />
 
     <TextView
         android:id="@+id/grey"
@@ -120,37 +75,8 @@
         android:rotation="180"
         android:src="@drawable/next_icon"
         app:layout_constraintBottom_toTopOf="@id/progbar"
-        app:layout_constraintLeft_toRightOf="@id/qmark"/>
-
-    <Button
-        android:id="@+id/newAnimal"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="82dp"
-        android:layout_height="70dp"
-        android:text="@string/add_animal"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/progbar"
-        app:layout_constraintEnd_toStartOf="@id/newTrace" />
-
-    <Button
-        android:id="@+id/newTrace"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="92dp"
-        android:layout_height="70dp"
-        android:text="@string/track"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/progbar"
-        app:layout_constraintEnd_toStartOf="@id/farmTL" />
-
-    <Button
-        android:id="@+id/farmTL"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="87dp"
-        android:layout_height="70dp"
-        android:text="@string/timeline"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/progbar"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
     <ImageView
         android:id="@+id/qmark"

@@ -100,7 +100,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                 cursorID.moveToFirst();
                 int id = cursorID.getInt(cursorID.getColumnIndex(Farm.FarmEntry.COLUMN_ID));
                 cursorID.close();
-                Intent intent = new Intent(FarmList.this, Tracing.class);
+                Intent intent = new Intent(FarmList.this, TracingOptions.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("id",id);
                 intent.putExtras(bundle);
