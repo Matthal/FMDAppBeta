@@ -2,11 +2,13 @@ package com.fao.fmd.fmdappbeta;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +32,7 @@ import com.applandeo.materialcalendarview.DatePicker;
 import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
 import com.applandeo.materialcalendarview.listeners.OnSelectDateListener;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -137,8 +140,37 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             final DatePickerBuilder aniPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v12 -> {
-                DatePicker datePicker = aniPicker.build();
-                datePicker.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
+                //builder.setTitle("Choose an animal");
+                String[] types = {"Specific Date", "Daily", "Weekly"};
+                builder.setItems(types, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0: // specific
+                                DatePicker datePicker = aniPicker.build();
+                                datePicker.show();
+                                break;
+                            case 1: // daily
+                                SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yy",Locale.UK);
+                                List<Date> dates = getDates(df1.format(subDays(dayZero,20).getTime()), df1.format(subDays(dayZero,0).getTime()));
+                                String x = "";
+                                for(Date date:dates){
+                                    String selectedDate = df1.format(date.getTime());
+                                    x += selectedDate + " ";
+                                }
+                                date.setText(x);
+                                break;
+                            case 2: // weekly
+                                final DatePickerBuilder singlePick = new DatePickerBuilder(Tracing.this, singleListener).minimumDate(subDays(dayZero,6)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                                DatePicker picker = singlePick.build();
+                                picker.show();
+                                break;
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             });
 
             String[] items = new String[]{"Cattle", "Sheep", "Goat", "Pig", "Other"};
@@ -220,9 +252,38 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
             final DatePickerBuilder productPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
-            date.setOnClickListener(v15 -> {
-                DatePicker datePicker = productPicker.build();
-                datePicker.show();
+            date.setOnClickListener(v12 -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
+                //builder.setTitle("Choose an animal");
+                String[] types = {"Specific Date", "Daily", "Weekly"};
+                builder.setItems(types, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0: // specific
+                                DatePicker datePicker = productPicker.build();
+                                datePicker.show();
+                                break;
+                            case 1: // daily
+                                SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yy",Locale.UK);
+                                List<Date> dates = getDates(df1.format(subDays(dayZero,20).getTime()), df1.format(subDays(dayZero,0).getTime()));
+                                String x = "";
+                                for(Date date:dates){
+                                    String selectedDate = df1.format(date.getTime());
+                                    x += selectedDate + " ";
+                                }
+                                date.setText(x);
+                                break;
+                            case 2: // weekly
+                                final DatePickerBuilder singlePick = new DatePickerBuilder(Tracing.this, singleListener).minimumDate(subDays(dayZero,6)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                                DatePicker picker = singlePick.build();
+                                picker.show();
+                                break;
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             });
 
             String[] items = new String[]{"Milk", "Meat", "Feed", "Other"};
@@ -305,9 +366,38 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
             final DatePickerBuilder peoPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
-            date.setOnClickListener(v19 -> {
-                DatePicker datePicker = peoPicker.build();
-                datePicker.show();
+            date.setOnClickListener(v12 -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
+                //builder.setTitle("Choose an animal");
+                String[] types = {"Specific Date", "Daily", "Weekly"};
+                builder.setItems(types, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0: // specific
+                                DatePicker datePicker = peoPicker.build();
+                                datePicker.show();
+                                break;
+                            case 1: // daily
+                                SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yy",Locale.UK);
+                                List<Date> dates = getDates(df1.format(subDays(dayZero,20).getTime()), df1.format(subDays(dayZero,0).getTime()));
+                                String x = "";
+                                for(Date date:dates){
+                                    String selectedDate = df1.format(date.getTime());
+                                    x += selectedDate + " ";
+                                }
+                                date.setText(x);
+                                break;
+                            case 2: // weekly
+                                final DatePickerBuilder singlePick = new DatePickerBuilder(Tracing.this, singleListener).minimumDate(subDays(dayZero,6)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                                DatePicker picker = singlePick.build();
+                                picker.show();
+                                break;
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             });
 
             String[] items = new String[]{"Family", "Vet", "Nutritionist", "Other"};
@@ -396,9 +486,38 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
             final DatePickerBuilder veiPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
             date = customView.findViewById(R.id.date);
-            date.setOnClickListener(v113 -> {
-                DatePicker datePicker = veiPicker.build();
-                datePicker.show();
+            date.setOnClickListener(v12 -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
+                //builder.setTitle("Choose an animal");
+                String[] types = {"Specific Date", "Daily", "Weekly"};
+                builder.setItems(types, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0: // specific
+                                DatePicker datePicker = veiPicker.build();
+                                datePicker.show();
+                                break;
+                            case 1: // daily
+                                SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yy",Locale.UK);
+                                List<Date> dates = getDates(df1.format(subDays(dayZero,20).getTime()), df1.format(subDays(dayZero,0).getTime()));
+                                String x = "";
+                                for(Date date:dates){
+                                    String selectedDate = df1.format(date.getTime());
+                                    x += selectedDate + " ";
+                                }
+                                date.setText(x);
+                                break;
+                            case 2: // weekly
+                                final DatePickerBuilder singlePick = new DatePickerBuilder(Tracing.this, singleListener).minimumDate(subDays(dayZero,6)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                                DatePicker picker = singlePick.build();
+                                picker.show();
+                                break;
+                        }
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             });
 
             final String[] items = new String[]{"Private car", "Milk tanker", "Feed truck", "Other"};
@@ -517,7 +636,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
-                    final DatePickerBuilder editAniPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                    final DatePickerBuilder editAniPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(animalsDate.get(position));
                     date.setOnClickListener(v117 -> {
@@ -632,7 +751,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
-                    final DatePickerBuilder editProPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                    final DatePickerBuilder editProPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(productsDate.get(position));
                     date.setOnClickListener(v121 -> {
@@ -748,7 +867,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
-                    final DatePickerBuilder editPeoPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                    final DatePickerBuilder editPeoPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(peoplesDate.get(position));
                     date.setOnClickListener(v125 -> {
@@ -867,7 +986,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
 
                     mPopupWindow.showAtLocation(rel, Gravity.CENTER,0,0);
 
-                    final DatePickerBuilder editVeiPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.MANY_DAYS_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
+                    final DatePickerBuilder editVeiPicker = new DatePickerBuilder(Tracing.this, listener).minimumDate(subDays(dayZero,21)).maximumDate(subDays(dayZero,0)).pickerType(CalendarView.ONE_DAY_PICKER).headerColor(R.color.colorPrimary).selectionColor(R.color.colorPrimary).todayLabelColor(R.color.green_color_picker);
                     date = customView.findViewById(R.id.date);
                     date.setText(vehiclesDate.get(position));
                     date.setOnClickListener(v129 -> {
@@ -1127,5 +1246,62 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             date.setText(x);
         }
     };
+
+    private OnSelectDateListener singleListener = new OnSelectDateListener() {
+        @Override
+        public void onSelect(List<Calendar> calendars) {
+            String x = "";
+            String myFormat = "dd/MM/yy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+            Date selDate = calendars.get(0).getTime();
+
+            Calendar cal = GregorianCalendar.getInstance();
+            cal.setTime(selDate);
+            cal.add(Calendar.DAY_OF_YEAR, -7);
+            Date sevenBef = cal.getTime();
+
+            cal.add(Calendar.DAY_OF_YEAR, -7);
+            Date fourteenBef = cal.getTime();
+
+            List<Date> dateList = new ArrayList<>();
+            dateList.add(selDate);
+            dateList.add(sevenBef);
+            dateList.add(fourteenBef);
+
+            for (int i = 0; i < dateList.size(); i++){
+                String selectedDate = sdf.format(dateList.get(i).getTime());
+                x += selectedDate + " ";
+            }
+            date.setText(x);
+        }
+    };
+
+    private static List<Date> getDates(String dateString1, String dateString2) {
+        ArrayList<Date> dates = new ArrayList<Date>();
+        SimpleDateFormat df1 = new SimpleDateFormat("dd/MM/yy",Locale.UK);
+
+        Date date1 = null;
+        Date date2 = null;
+
+        try {
+            date1 = df1 .parse(dateString1);
+            date2 = df1 .parse(dateString2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar cal1 = Calendar.getInstance();
+        cal1.setTime(date1);
+
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(date2);
+
+        while(!cal1.after(cal2)) {
+            dates.add(cal1.getTime());
+            cal1.add(Calendar.DATE, 1);
+        }
+        return dates;
+    }
 
 }
