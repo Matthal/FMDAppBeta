@@ -3,10 +3,12 @@ package com.fao.fmd.fmdappbeta;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -20,12 +22,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.applandeo.materialcalendarview.CalendarView;
+import com.applandeo.materialcalendarview.DatePicker;
+import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class AnimalCreation extends Activity implements AdapterView.OnItemSelectedListener {
 
+    EditText animal;
+    EditText group;
     Spinner yearsSpin;
     Spinner monthsSpin;
     Spinner spinner;
@@ -33,6 +43,12 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     EditText other;
     Button close;
     Spinner vaccSpin;
+    EditText sign;
+
+    CheckBox ageCheck;
+    CheckBox vaccCheck;
+
+    int farm;
 
     boolean lock = false;
 
@@ -58,8 +74,8 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
         ImageView addAnimal = findViewById(R.id.addAnimal);
 
-        final EditText animal = findViewById(R.id.animalID);
-        final EditText group = findViewById(R.id.groupID);
+        animal = findViewById(R.id.animalID);
+        group = findViewById(R.id.groupID);
         other = findViewById(R.id.other);
 
         animal.setOnFocusChangeListener((v, hasFocus) -> {
@@ -114,7 +130,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         sexSpin.setAdapter(sexAdapter);
 
         final Calendar calendar = Calendar.getInstance();
-        final EditText sign = findViewById(R.id.sign);
+        sign = findViewById(R.id.sign);
         ImageView cal = findViewById(R.id.cal);
         final DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             calendar.set(Calendar.YEAR, year);
@@ -133,11 +149,10 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         vaccAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         vaccSpin.setAdapter(vaccAdapter);
 
-        CheckBox ageCheck = findViewById(R.id.checkbox_age);
-        CheckBox vaccCheck = findViewById(R.id.checkbox_vacc);
+        ageCheck = findViewById(R.id.checkbox_age);
+        vaccCheck = findViewById(R.id.checkbox_vacc);
 
         Bundle bundle = getIntent().getExtras();
-        final int farm;
 
         if(bundle != null){
             farm = bundle.getInt("id");
@@ -189,7 +204,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 Toast.makeText(getBaseContext(), "Error in the DB", Toast.LENGTH_LONG).show();
                 db.close();
             }else{
-                Toast.makeText(getBaseContext(), "New entry added to the DB", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(), "New animal added to the DB", Toast.LENGTH_SHORT).show();
                 String selectQuery = "SELECT  * FROM " + Animal.AnimalEntry.TABLE_NAME;
                 Cursor cursor = db.rawQuery(selectQuery, null);
                 cursor.moveToLast();
@@ -202,6 +217,53 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                 intent.putExtras(mBundle);
                 startActivity(intent);
             }
+        });
+
+        Button fast = findViewById(R.id.fast_track);
+        fast.setOnClickListener(v -> {
+
+            if(animal.getText().toString().trim().isEmpty()){
+                animal.setBackgroundResource(R.color.TLyellow);
+                lock = true;
+            }
+            if(lock){
+                Toast.makeText(getBaseContext(), "Animal name/ID is a mandatory information", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(AnimalCreation.this);
+            builder.setTitle("Fast Track");
+            String[] types = {"1 day", "2-3 days", "3-4 days", "4-5 days", "5-7 days", "7-10 days", ">10 days"};
+            builder.setItems(types, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0: // 1
+                            fastTrack("1");
+                            break;
+                        case 1: // 2-3
+                            fastTrack("2-3");
+                            break;
+                        case 2: // 3-4
+                            fastTrack("3-4");
+                            break;
+                        case 3: // 4-5
+                            fastTrack("4-5");
+                            break;
+                        case 4: // 5-7
+                            fastTrack("5-7");
+                            break;
+                        case 5: // 7-10
+                            fastTrack("7-10");
+                            break;
+                        case 6: // 5-7
+                            fastTrack("10+");
+                            break;
+                    }
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
         });
 
         ImageView back = findViewById(R.id.back);
@@ -262,5 +324,55 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         }
     }
 
+    public void fastTrack(String days){
+        DatabaseHelper mDbHelper = new DatabaseHelper(AnimalCreation.this);
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        String breed;
+        if(spinner.getVisibility() == View.VISIBLE){
+            breed = spinner.getSelectedItem().toString();
+        }else{
+            breed = other.getText().toString();
+        }
+
+        ContentValues values = new ContentValues();
+        values.put(Animal.AnimalEntry.COLUMN_NAME, animal.getText().toString());
+        values.put(Animal.AnimalEntry.COLUMN_FARM, farm);
+        values.put(Animal.AnimalEntry.COLUMN_GROUP, group.getText().toString());
+        if(!ageCheck.isChecked()){
+            values.put(Animal.AnimalEntry.COLUMN_AGE, yearsSpin.getSelectedItem().toString() + " & " + monthsSpin.getSelectedItem().toString());
+        }else{
+            values.put(Animal.AnimalEntry.COLUMN_AGE,"");
+        }
+        values.put(Animal.AnimalEntry.COLUMN_SPECIES, breed + " (" + sexSpin.getSelectedItem().toString() + ")");
+        values.put(Animal.AnimalEntry.COLUMN_REPORT, sign.getText().toString());
+        if(!vaccCheck.isChecked()){
+            values.put(Animal.AnimalEntry.COLUMN_VACCINATION, vaccSpin.getSelectedItem().toString());
+        }else{
+            values.put(Animal.AnimalEntry.COLUMN_VACCINATION, "");
+        }
+
+        long newRowId = db.insert(Animal.AnimalEntry.TABLE_NAME, null, values);
+
+        if(newRowId == -1){
+            Toast.makeText(getBaseContext(), "Error in the DB", Toast.LENGTH_LONG).show();
+            db.close();
+        }else{
+            Toast.makeText(getBaseContext(), "New animal added to the DB", Toast.LENGTH_SHORT).show();
+            String selectQuery = "SELECT  * FROM " + Animal.AnimalEntry.TABLE_NAME;
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            cursor.moveToLast();
+            int idAnimal = cursor.getInt(cursor.getColumnIndex("id"));
+            cursor.close();
+            db.close();
+            Intent intent = new Intent(AnimalCreation.this, Suggestion.class);
+            Bundle mBundle = new Bundle();
+            mBundle.putInt("id", idAnimal);
+            mBundle.putString("res", days);
+            mBundle.putString("skip", "yes");
+            intent.putExtras(mBundle);
+            startActivity(intent);
+        }
+    }
 
 }

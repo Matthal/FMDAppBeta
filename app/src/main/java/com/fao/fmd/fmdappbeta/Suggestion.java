@@ -17,6 +17,11 @@ public class Suggestion extends FragmentActivity {
 
         bundle = getIntent().getExtras();
 
+        if(bundle.getString("skip") != null){
+            fragmentSkip(bundle);
+            return;
+        }
+
         animal = bundle.getInt("id");
 
         String val1 = bundle.getString("Q1");
@@ -83,6 +88,14 @@ public class Suggestion extends FragmentActivity {
 
     public void fragmentComplete(Bundle complete){
         complete.putInt("id",animal);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        CompleteFragment fragment = new CompleteFragment();
+        fragment.setArguments(complete);
+        ft.replace(R.id.placeholder, fragment);
+        ft.commit();
+    }
+
+    public void fragmentSkip(Bundle complete){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         CompleteFragment fragment = new CompleteFragment();
         fragment.setArguments(complete);

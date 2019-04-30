@@ -55,6 +55,7 @@
         android:layout_height="wrap_content"
         android:text="@string/text_info"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.280"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -62,7 +63,7 @@
 
     <EditText
         android:id="@+id/vetName"
-        android:layout_width="wrap_content"
+        android:layout_width="295dp"
         android:layout_height="44dp"
         android:background="#ffffff"
         android:ems="10"
@@ -73,6 +74,7 @@
         android:paddingBottom="10dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.470"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -194,12 +196,13 @@
 
     <Spinner
         android:id="@+id/country"
-        android:layout_width="250dp"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
         android:background="#ffffff"
         style="@style/Widget.AppCompat.DropDownItem.Spinner"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.480"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

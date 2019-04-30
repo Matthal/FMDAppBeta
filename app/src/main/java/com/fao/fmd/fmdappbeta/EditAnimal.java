@@ -216,7 +216,10 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
         });
 
         ImageView back = findViewById(R.id.back);
-        back.setOnClickListener(v -> onBackPressed());
+        back.setOnClickListener(v -> {
+            Intent intent = new Intent(EditAnimal.this, FarmList.class);
+            startActivity(intent);
+        });
     }
 
     @Override

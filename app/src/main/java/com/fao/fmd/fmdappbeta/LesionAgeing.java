@@ -368,8 +368,9 @@ public class LesionAgeing extends Activity {
 
             if(checkError().equals("E1")){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Lesions with a pink base indicates healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions.")
+                builder.setMessage("Lesions with a pink base indicates healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions. Use the photos to guide you.")
                         .setCancelable(false)
+                        .setTitle("ERROR")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                dialog.dismiss();
@@ -381,8 +382,9 @@ public class LesionAgeing extends Activity {
 
             if(checkError().equals("E2")){
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Lesions with a white or grey base indicates advanced healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions.")
+                builder.setMessage("Lesions with a white or grey base indicates advanced healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions. Use the photos to guide you.")
                         .setCancelable(false)
+                        .setTitle("ERROR")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.dismiss();

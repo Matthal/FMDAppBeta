@@ -51,6 +51,7 @@
     <string name="sex">SEX</string>
     <string name="sign">REPORTED DATE OF ONSET OF CLINICAL SIGNS</string>
     <string name="vaccinated">VACCINATION STATUS</string>
+    <string name="fast">Fast Track</string>
 
     //LESION AGEING
     <string name="text_lesion_ageing">LESION DESCRIPTION</string>

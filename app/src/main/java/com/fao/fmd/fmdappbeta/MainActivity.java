@@ -108,6 +108,23 @@ public class MainActivity extends AppCompatActivity {
             Uri photoURI = FileProvider.getUriForFile(MainActivity.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(cameraIntent, 1);*/
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
+                            break;
+
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setMessage("Are you sure to delete the DB?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
         });
 
         dBtn.setOnClickListener(v -> {

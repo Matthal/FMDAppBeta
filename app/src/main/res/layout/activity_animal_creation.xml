@@ -325,6 +325,18 @@
         app:layout_constraintBottom_toTopOf="@id/progbar"
         app:layout_constraintLeft_toRightOf="@id/qmark" />
 
+    <Button
+        android:id="@+id/fast_track"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/fast"
+        app:layout_constraintBottom_toTopOf="@id/progbar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.500"/>
+
     <ImageView
         android:id="@+id/addAnimal"
         android:layout_width="50dp"

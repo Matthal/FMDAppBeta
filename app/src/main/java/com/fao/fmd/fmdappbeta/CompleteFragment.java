@@ -40,6 +40,8 @@ public class CompleteFragment extends Fragment {
 
         bundle = this.getArguments();
 
+        System.out.println(bundle);
+
         TextView light = view.findViewById(R.id.light);
         TextView dark = view.findViewById(R.id.dark);
         LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(
