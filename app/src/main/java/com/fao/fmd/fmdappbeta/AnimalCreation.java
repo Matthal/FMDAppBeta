@@ -22,14 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.applandeo.materialcalendarview.CalendarView;
-import com.applandeo.materialcalendarview.DatePicker;
-import com.applandeo.materialcalendarview.builders.DatePickerBuilder;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class AnimalCreation extends Activity implements AdapterView.OnItemSelectedListener {
@@ -49,8 +43,6 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     CheckBox vaccCheck;
 
     int farm;
-
-    boolean lock = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +98,7 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
         final String[] sex = new String[]{"M", "F"};
         final String[] years = new String[]{"0 year","1 year","2 years","3 years","4 years","5 years","6 years","7 years","8 years","9 years","10 years","11 years","12 years","13 years","14 years","15 years"};
         final String[] months = new String[]{"0 months","1 month","2 months","3 months","4 months","5 months","6 months","7 months","8 months","9 months","10 months","11 months"};
-        final String[] vaccination = new String[]{"No", "≤6 months", ">6 months"};
+        final String[] vaccination = new String[]{"Never", "≤6 months", ">6 months"};
 
         yearsSpin = findViewById(R.id.animalYears);
         ArrayAdapter<String> yearsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, years);
@@ -164,9 +156,6 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
             if(animal.getText().toString().trim().isEmpty()){
                 animal.setBackgroundResource(R.color.TLyellow);
-                lock = true;
-            }
-            if(lock){
                 Toast.makeText(getBaseContext(), "Animal name/ID is a mandatory information", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -224,16 +213,13 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
 
             if(animal.getText().toString().trim().isEmpty()){
                 animal.setBackgroundResource(R.color.TLyellow);
-                lock = true;
-            }
-            if(lock){
                 Toast.makeText(getBaseContext(), "Animal name/ID is a mandatory information", Toast.LENGTH_LONG).show();
                 return;
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(AnimalCreation.this);
             builder.setTitle("Fast Track");
-            String[] types = {"1 day", "2-3 days", "3-4 days", "4-5 days", "5-7 days", "7-10 days", ">10 days"};
+            String[] types = {"1 day", "2-3 days", "3-4 days", "3-5 days", "4-5 days", "5-7 days", "7-10 days", ">10 days"};
             builder.setItems(types, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -247,16 +233,19 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
                         case 2: // 3-4
                             fastTrack("3-4");
                             break;
-                        case 3: // 4-5
+                        case 3: // 3-5
+                            fastTrack("3-5");
+                            break;
+                        case 4: // 4-5
                             fastTrack("4-5");
                             break;
-                        case 4: // 5-7
+                        case 5: // 5-7
                             fastTrack("5-7");
                             break;
-                        case 5: // 7-10
+                        case 6: // 7-10
                             fastTrack("7-10");
                             break;
-                        case 6: // 5-7
+                        case 7: // 10+
                             fastTrack("10+");
                             break;
                     }

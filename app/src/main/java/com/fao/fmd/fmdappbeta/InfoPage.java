@@ -28,10 +28,10 @@ public class InfoPage extends Activity {
             title.setText("OPENING SCREEN");
 
             text = "<b>Welcome to the EuFMD Disease Outbreak Investigation App!</b><br>" +
-                    "This app is designed to train the user age lesions from cases of Foot-and-mouth disease and create a farm timeline with tracings to help identify the most likely source of infection on the farm, and the likely locations virus may have spread. The lesion ageing in this app is designed only for oral lesions of cattle.<br>" +
+                    "This app is designed to train the user to age lesions from cases of foot-and-mouth disease (FMD) and automatically create a farm timeline with tracings to help identify the most likely source of infection on the farm, and the likely locations virus may have spread. It will also indicate the optimal samples to take to confirm a diagnosis of FMD. The lesion ageing in this app is designed only for oral lesions of cattle.<br>" +
                     "If there are any queries, please email eufmd@fao.org.<br><br>" +
                     "<b>Add a farm</b>: Select this option to create a new farm and to enter data on the animals affected<br><br>" +
-                    "<b>My Farms</b>: Selection this option to view previous farms that have been entered<br><br>" +
+                    "<b>My Farms</b>: Selection this option to view previous farms that have been entered on your device<br><br>" +
                     "<b>Biosecurity</b>: Select this option to review biosecurity procedures when investigating outbreaks of foot-and-mouth disease<br><br>" +
                     "<b>Diagnostics</b>: Select this option to review diagnostic options when taking samples to confirm the presence of foot-and-mouth disease";
             info.setText(Html.fromHtml(text));
@@ -74,7 +74,8 @@ public class InfoPage extends Activity {
                     "• The name or ID number of the group the animal is in (e.g. Calves 1, dry cows etc)<br>" +
                     "• Age (select the number of years and months)<br>" +
                     "• Date of onset of the clinical signs as indicated by the person being interviewed<br>" +
-                    "• Vaccination status (has the animal received a FMD vaccine in the previous 6 moths)";
+                    "• Vaccination status (has the animal received a FMD vaccine in the previous 6 months)<br><br>" +
+                    "After entering these data, continue to the next screen to use the lesion ageing calculator. If you wish to bypass this and enter the lesion age directly the select FAST TRACK.";
             info.setText(Html.fromHtml(text));
 
             LinearLayout.LayoutParams paramLight = new LinearLayout.LayoutParams(

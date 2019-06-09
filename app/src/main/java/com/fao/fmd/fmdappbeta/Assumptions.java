@@ -30,7 +30,8 @@ public class Assumptions extends Activity {
 
         TextView assumptions = findViewById(R.id.assumptions);
 
-        String text = "1.\tConsidering cattle only\n" +
+        String text = "The following is a list of assumptions used in estimating the age of the lesion based on the information provided in the calculator:\n\n" +
+                "1.\tConsidering cattle only\n" +
                 "2.\tConsidering oral lesions only\n" +
                 "3.\tOnset of clinical signs is day 0\n" +
                 "4.\tOnset of lesions is day 1\n" +

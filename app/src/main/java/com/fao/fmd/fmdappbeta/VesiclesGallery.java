@@ -70,7 +70,7 @@ public class VesiclesGallery extends Activity {
             final Integer[] IMAGES = {R.drawable.twothree_photo_1,R.drawable.twothree_photo_2,R.drawable.twothree_photo_3,R.drawable.twothree_photo_4,R.drawable.twothree_photo_5,R.drawable.twothree_photo_7,R.drawable.twothree_photo_8,R.drawable.twothree_photo_9,R.drawable.twothree_photo_10,R.drawable.twothree_photo_11,R.drawable.onetwo_photo_5,R.drawable.onetwo_photo_6};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
-        if(id.equals("3-4")){
+        if(id.equals("3-4") || id.equals("3-5")){
             final Integer[] IMAGES = {R.drawable.twothree_photo_6,R.drawable.threefour_photo_2,R.drawable.threefour_photo_3,R.drawable.threefour_photo_4,R.drawable.threefour_photo_5,R.drawable.threefour_photo_6,R.drawable.threefour_photo_8};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }

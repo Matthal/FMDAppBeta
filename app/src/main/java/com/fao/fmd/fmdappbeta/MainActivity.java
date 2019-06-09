@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         Button dBtn = findViewById(R.id.diagn);
         Button bio = findViewById(R.id.bio);
 
+        TextView qmarkText = findViewById(R.id.qmarkText);
+
         TextView syncDate = findViewById(R.id.syncDate);
         syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
 

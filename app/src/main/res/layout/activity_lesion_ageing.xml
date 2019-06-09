@@ -63,11 +63,11 @@
         android:background="#ffffff"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.240"/>
+        app:layout_constraintVertical_bias="0.270"/>
 
     <Button
         android:id="@+id/vesGallery"
@@ -77,11 +77,11 @@
         android:layout_marginBottom="7dp"
         android:text="@string/g_samples"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.900"
+        app:layout_constraintHorizontal_bias="0.950"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.240"/>
+        app:layout_constraintVertical_bias="0.270"/>
 
     <TextView
         android:id="@+id/text_fib"
@@ -102,11 +102,11 @@
         android:spinnerMode="dropdown"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.370"/>
+        app:layout_constraintVertical_bias="0.400"/>
 
     <Button
         android:id="@+id/fibGallery"
@@ -117,11 +117,11 @@
         android:text="@string/g_samples"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.900"
+        app:layout_constraintHorizontal_bias="0.950"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.370"/>
+        app:layout_constraintVertical_bias="0.400"/>
 
     <TextView
         android:id="@+id/text_colour"
@@ -146,7 +146,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490" />
+        app:layout_constraintVertical_bias="0.530" />
 
     <Button
         android:id="@+id/redGallery"
@@ -160,7 +160,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490" />
+        app:layout_constraintVertical_bias="0.530" />
 
     <Button
         android:id="@+id/colPink"
@@ -175,7 +175,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490" />
+        app:layout_constraintVertical_bias="0.530" />
 
     <Button
         android:id="@+id/pinkGallery"
@@ -189,7 +189,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.490" />
+        app:layout_constraintVertical_bias="0.530" />
 
     <Button
         android:id="@+id/colWhite"
@@ -200,11 +200,11 @@
         android:textColor="@color/grey"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.350"
+        app:layout_constraintHorizontal_bias="0.300"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.570" />
+        app:layout_constraintVertical_bias="0.650" />
 
     <Button
         android:id="@+id/whiteGallery"
@@ -214,11 +214,11 @@
         android:text="@string/g_samples"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.670"
+        app:layout_constraintHorizontal_bias="0.720"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.570" />
+        app:layout_constraintVertical_bias="0.650" />
 
     <TextView
         android:id="@+id/text_edges"
@@ -239,11 +239,11 @@
         android:spinnerMode="dropdown"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.700"/>
+        app:layout_constraintVertical_bias="0.800"/>
 
     <TextView
         android:id="@+id/text_heal"
@@ -264,11 +264,11 @@
         android:spinnerMode="dropdown"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.900"
+        app:layout_constraintHorizontal_bias="0.950"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.700"/>
+        app:layout_constraintVertical_bias="0.800"/>
 
     <TextView
         android:id="@+id/grey"

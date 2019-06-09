@@ -189,7 +189,9 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                             SQLiteDatabase db = mDbHelper.getWritableDatabase();
                             db.delete(Farm.FarmEntry.TABLE_NAME,Farm.FarmEntry.COLUMN_NAME + "='" + farmName + "'",null);
                             Toast.makeText(FarmList.this, "Farm deleted", Toast.LENGTH_SHORT).show();
-                            adapter.remove(farmName);
+                            //adapter.remove(farmName);
+                            Intent delIntent = new Intent(FarmList.this, MainActivity.class);
+                            startActivity(delIntent);
                             break;
 
                         case DialogInterface.BUTTON_NEGATIVE:
@@ -209,6 +211,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             startActivity(intent);
         });
 
+        /*
         ImageView info = findViewById(R.id.qmark);
         info.setOnClickListener(v -> {
             Bundle b = new Bundle();
@@ -216,7 +219,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             Intent intent = new Intent(FarmList.this, InfoPage.class);
             intent.putExtras(b);
             startActivity(intent);
-        });
+        });*/
 
     }
 

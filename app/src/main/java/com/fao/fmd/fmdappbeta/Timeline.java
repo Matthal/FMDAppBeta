@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
@@ -317,7 +318,9 @@ public class Timeline extends AppCompatActivity {
                 byte[] byteArray = stream.toByteArray();
                 Image image = Image.getInstance(byteArray);
                 image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+                Paragraph p = new Paragraph("FMD virus transmission timeline produced using the EuFMD Outbreak Investigation mobile phone app on " + currentDate + ". Red areas denote a high risk for the source and spread of FMD virus. Yellow area represent a relatively lower risk. For more information on this application, email eufmd@fao.org.");
                 document.add(image);
+                document.add(p);
                 document.close();
             }
             catch (Exception e){

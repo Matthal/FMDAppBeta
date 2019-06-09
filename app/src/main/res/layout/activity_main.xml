@@ -135,6 +135,17 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
+        android:id="@+id/qmarkText"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="@string/qmarkText"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@id/progbar"
+        app:layout_constraintLeft_toRightOf="@id/qmark" />
+
+    <TextView
         android:id="@+id/syncDate"
         android:layout_width="100dp"
         android:layout_height="wrap_content"

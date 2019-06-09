@@ -51,12 +51,22 @@ public class Suggestion extends FragmentActivity {
         String val4 = bundle.getString("Q4");
         String val5 = bundle.getString("Q5");
 
-        if(val3.equals("a") && val4.equals("a")){
+        if(val2.equals("a") && val3.equals("a") && val4.equals("a")){
+            bundle.putString("res","3-5");
+            fragmentComplete(bundle);
+        }
+
+        if(val2.equals("a") && val3.equals("a") && val4.equals("b")){
             bundle.putString("res","3-4");
             fragmentComplete(bundle);
         }
 
-        if(val3.equals("a") && val4.equals("b")){
+        if(val2.equals("b") && val3.equals("a") && val4.equals("a")){
+            bundle.putString("res","3-4");
+            fragmentComplete(bundle);
+        }
+
+        if(val2.equals("b") && val3.equals("a") && val4.equals("b")){
             bundle.putString("res","2-3");
             fragmentComplete(bundle);
         }

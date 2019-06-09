@@ -42,6 +42,7 @@
         app:layout_constraintTop_toBottomOf="@id/basictoolbar"/>
 
     <TextView
+        android:id="@+id/pageInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#D9D9D9"
@@ -57,7 +58,8 @@
         android:text="@string/id"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@id/animalID"
-        app:layout_constraintBottom_toTopOf="@id/animalID"/>
+        app:layout_constraintBottom_toTopOf="@id/animalID"
+        app:layout_constraintTop_toBottomOf="@id/pageInfo"/>
 
     <EditText
         android:id="@+id/animalID"
@@ -72,11 +74,11 @@
         android:paddingBottom="10dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.240"/>
+        app:layout_constraintVertical_bias="0.250"/>
 
     <EditText
         android:id="@+id/groupID"
@@ -91,11 +93,11 @@
         android:paddingBottom="10dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.850"
+        app:layout_constraintHorizontal_bias="0.900"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.240"/>
+        app:layout_constraintVertical_bias="0.250"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -113,11 +115,11 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.130"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintVertical_bias="0.385" />
 
     <Spinner
         android:id="@+id/animalMonths"
@@ -131,7 +133,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintVertical_bias="0.385" />
 
     <CheckBox
         android:id="@+id/checkbox_age"
@@ -141,11 +143,11 @@
         android:text="@string/know"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.910"
+        app:layout_constraintHorizontal_bias="0.950"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365" />
+        app:layout_constraintVertical_bias="0.385" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -163,11 +165,11 @@
         style="@style/Widget.AppCompat.DropDownItem.Spinner"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491" />
+        app:layout_constraintVertical_bias="0.520" />
 
     <EditText
         android:id="@+id/other"
@@ -181,11 +183,11 @@
         android:inputType="text"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491"/>
+        app:layout_constraintVertical_bias="0.520"/>
 
     <Button
         android:id="@+id/close"
@@ -217,11 +219,11 @@
         style="@style/Widget.AppCompat.DropDownItem.Spinner"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.850"
+        app:layout_constraintHorizontal_bias="0.900"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.491"/>
+        app:layout_constraintVertical_bias="0.520"/>
 
     <TextView
         android:id="@+id/text_sign"
@@ -247,11 +249,11 @@
         android:paddingBottom="10dp"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.300"
+        app:layout_constraintHorizontal_bias="0.150"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.620"/>
+        app:layout_constraintVertical_bias="0.660"/>
 
     <ImageView
         android:id="@+id/cal"
@@ -283,11 +285,11 @@
         android:background="#ffffff"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.150"
+        app:layout_constraintHorizontal_bias="0.100"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.750"/>
+        app:layout_constraintVertical_bias="0.800"/>
 
     <CheckBox
         android:id="@+id/checkbox_vacc"
@@ -301,7 +303,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.750" />
+        app:layout_constraintVertical_bias="0.800" />
 
     <TextView
         android:id="@+id/grey"

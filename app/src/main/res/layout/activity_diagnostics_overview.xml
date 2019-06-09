@@ -85,8 +85,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="50dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
                 android:layout_marginTop="60dp"
                 android:text="@string/btn_vesicular"
                 style="@style/Widget.AppCompat.Button.Colored"/>
@@ -98,8 +98,8 @@
                 android:layout_alignTop="@+id/vesicular"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginEnd="40dp"
+                android:layout_marginRight="40dp"
                 android:text="@string/btn_epithelium"
                 style="@style/Widget.AppCompat.Button.Colored"/>
 
@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/vesicular"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="150dp"
+                android:layout_marginTop="130dp"
                 android:text="@string/btn_swabs"
                 android:layout_alignLeft="@+id/vesicular"
                 style="@style/Widget.AppCompat.Button.Colored"/>
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="235dp"
+                android:layout_marginTop="200dp"
                 android:text="@string/par_two"
                 android:textSize="14sp" />
 
