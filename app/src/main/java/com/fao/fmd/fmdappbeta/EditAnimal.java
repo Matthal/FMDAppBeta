@@ -211,6 +211,11 @@ public class EditAnimal extends Activity implements AdapterView.OnItemSelectedLi
                 Toast.makeText(getBaseContext(), "Animal information succesfully updated", Toast.LENGTH_SHORT).show();
                 cursor.close();
                 db.close();
+                Intent intent = new Intent(EditAnimal.this, LesionAgeing.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("id", id);
+                intent.putExtras(mBundle);
+                startActivity(intent);
             }
 
         });

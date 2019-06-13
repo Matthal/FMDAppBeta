@@ -30,8 +30,6 @@ public class LesionAgeing extends Activity {
     private static final int CAMERA_PIC_REQUEST = 1;
     private String mCurrentPhotoPath;
 
-    boolean lock = false;
-
     Bundle newBundle = new Bundle();
 
     @Override
@@ -359,9 +357,6 @@ public class LesionAgeing extends Activity {
                 pink.setTextColor(getResources().getColor(R.color.black));
                 white.setBackgroundResource(R.color.TLyellow);
                 white.setTextColor(getResources().getColor(R.color.black));
-                lock = true;
-            }
-            if(lock){
                 Toast.makeText(getBaseContext(), "There is an error in color selection", Toast.LENGTH_LONG).show();
                 return;
             }

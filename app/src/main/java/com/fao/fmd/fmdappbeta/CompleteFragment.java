@@ -2,6 +2,7 @@ package com.fao.fmd.fmdappbeta;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -164,16 +165,33 @@ public class CompleteFragment extends Fragment {
         values.put(Lesion.LesionEntry.COLUMN_POSS_SPR_MIN, subDays(pos_spr_min));
         values.put(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX, subDays(pos_spr_max));
 
-        long newRowId = db.insert(Lesion.LesionEntry.TABLE_NAME, null, values);
+        String query = "Select * from " + Lesion.LesionEntry.TABLE_NAME + " where " + Lesion.LesionEntry.COLUMN_ANIMAL + " = " + bundle.getInt("id");
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToLast();
 
-        if(newRowId == -1){
-            Toast.makeText(getActivity(), "Error in the DB", Toast.LENGTH_SHORT).show();
-            db.close();
-        }else {
-            Toast.makeText(getActivity(), "New lesion added to the DB", Toast.LENGTH_SHORT).show();
-            added = true;
-            db.close();
+        if(cursor.getCount()>0){
+            long newRowId = db.update(Lesion.LesionEntry.TABLE_NAME, values, "id= ?",new String[]{cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ID))});
+            if(newRowId == -1){
+                Toast.makeText(getActivity(), "Error in the DB", Toast.LENGTH_SHORT).show();
+                db.close();
+            }else {
+                Toast.makeText(getActivity(), "Lesion successfully updated", Toast.LENGTH_SHORT).show();
+                added = true;
+                db.close();
+            }
+        }else{
+            long newRowId = db.insert(Lesion.LesionEntry.TABLE_NAME, null, values);
+            if(newRowId == -1){
+                Toast.makeText(getActivity(), "Error in the DB", Toast.LENGTH_SHORT).show();
+                db.close();
+            }else {
+                Toast.makeText(getActivity(), "New lesion added to the DB", Toast.LENGTH_SHORT).show();
+                added = true;
+                db.close();
+            }
         }
+        cursor.close();
+
     }
 
     public String subDays(int days){

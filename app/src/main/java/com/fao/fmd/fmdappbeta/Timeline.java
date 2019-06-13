@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -206,10 +208,12 @@ public class Timeline extends AppCompatActivity {
                                     category.append("\n"+ values.get(0));
                                     subCat.append("\n"+ values.get(1));
                                     notes.append("\n"+ values.get(2));
+                                    date.setTypeface(null, Typeface.BOLD);
                                 }else{
                                     category.append(values.get(0));
                                     subCat.append(values.get(1));
                                     notes.append(values.get(2));
+                                    date.setTypeface(null, Typeface.BOLD);
                                 }
                             }
                         }else{
@@ -217,6 +221,7 @@ public class Timeline extends AppCompatActivity {
                             subCat.append(values.get(1));
                             notes.append(values.get(2));
                             pastTrack.add(date1);
+                            date.setTypeface(null, Typeface.BOLD);
                         }
                     }
                 } catch (ParseException e) {
@@ -318,7 +323,9 @@ public class Timeline extends AppCompatActivity {
                 byte[] byteArray = stream.toByteArray();
                 Image image = Image.getInstance(byteArray);
                 image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
-                Paragraph p = new Paragraph("FMD virus transmission timeline produced using the EuFMD Outbreak Investigation mobile phone app on " + currentDate + ". Red areas denote a high risk for the source and spread of FMD virus. Yellow area represent a relatively lower risk. For more information on this application, email eufmd@fao.org.");
+                SimpleDateFormat pdfFormat = new SimpleDateFormat("dd MMMM yyyy",Locale.UK);
+                String pdfDate = pdfFormat.format(new Date());
+                Paragraph p = new Paragraph("FMD virus transmission timeline produced using the EuFMD Outbreak Investigation mobile phone app on " + pdfDate + ". Red areas denote a high risk for the source and spread of FMD virus. Yellow area represent a relatively lower risk. For more information on this application, email eufmd@fao.org.", FontFactory.getFont("Roboto", 12));
                 document.add(image);
                 document.add(p);
                 document.close();
@@ -342,10 +349,49 @@ public class Timeline extends AppCompatActivity {
     }
 
     public void sendEmail(){
+
         File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
         if(!pdfDir.exists()){
-            Toast.makeText(this, "You must create a pdf file first", Toast.LENGTH_SHORT).show();
-            return;
+            String state = Environment.getExternalStorageState();
+            if (!Environment.MEDIA_MOUNTED.equals(state)) {
+            }
+            //Create a directory for your PDF
+            //File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
+            if (!pdfDir.exists()){
+                boolean i = pdfDir.mkdirs();
+                if(!i){
+                    Toast.makeText(getBaseContext(), "Permission to write not granted. Please, verify your permissions", Toast.LENGTH_LONG).show();
+                    return;
+                }
+            }
+            Bitmap screen = getBitmapFromView(Timeline.this.getWindow().findViewById(R.id.timeline));
+            //Now create the name of your PDF file that you will generate
+            SimpleDateFormat mdyFormat = new SimpleDateFormat("dd_MMM_yyyy",Locale.UK);
+            String currentDate = mdyFormat.format(new Date());
+            File pdfFile = new File(pdfDir, "FMD_DOI_timeline_" + id + "_" + currentDate + ".pdf");
+            if(!pdfFile.exists()){
+                try {
+                    Document document = new Document();
+                    PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
+                    document.open();
+                    ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                    screen.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                    byte[] byteArray = stream.toByteArray();
+                    Image image = Image.getInstance(byteArray);
+                    image.scaleToFit(PageSize.A4.getWidth(), PageSize.A4.getHeight());
+                    SimpleDateFormat pdfFormat = new SimpleDateFormat("dd MMMM yyyy",Locale.UK);
+                    String pdfDate = pdfFormat.format(new Date());
+                    Paragraph p = new Paragraph("FMD virus transmission timeline produced using the EuFMD Outbreak Investigation mobile phone app on " + pdfDate + ". Red areas denote a high risk for the source and spread of FMD virus. Yellow area represent a relatively lower risk. For more information on this application, email eufmd@fao.org.", FontFactory.getFont("Roboto", 12));
+                    document.add(image);
+                    document.add(p);
+                    document.close();
+                }
+                catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+            //Toast.makeText(this, "You must create a pdf file first", Toast.LENGTH_SHORT).show();
+            //return;
         }
         File[] dirFiles = pdfDir.listFiles();
         Date lastModDate = new Date(dirFiles[0].lastModified());

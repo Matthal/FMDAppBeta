@@ -36,7 +36,7 @@
         <TextView
             android:id="@+id/appHeader"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="42dp"
             android:layout_alignParentTop="true"
             android:background="#498F75"
             android:fontFamily="@font/roboto"

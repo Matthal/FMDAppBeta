@@ -209,6 +209,7 @@ public class DrawOnBitmapActivity extends FragmentActivity implements View.OnCli
                         hideLoading();
                         showSnackbar("Image Saved Successfully");
                         mPhotoEditorView.getSource().setImageURI(Uri.fromFile(new File(imagePath)));
+                        onBackPressed();
                     }
 
                     @Override
