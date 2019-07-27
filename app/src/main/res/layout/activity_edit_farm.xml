@@ -254,7 +254,7 @@
         android:focusable="true"
         android:scaleType="fitCenter"
         android:rotation="180"
-        android:src="@drawable/save_icon"
+        android:src="@drawable/next_icon"
         app:layout_constraintBottom_toTopOf="@id/progbar"
         app:layout_constraintLeft_toRightOf="@id/qmark"/>
 
@@ -268,7 +268,7 @@
         android:clickable="true"
         android:focusable="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/next_icon"
+        android:src="@drawable/save_icon"
         app:layout_constraintBottom_toTopOf="@id/progbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

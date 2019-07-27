@@ -280,6 +280,14 @@ public class InfoPage extends Activity {
             dark.setLayoutParams(paramDark);
         }
 
+        if(tag.equals("bio")){
+            title.setText("BIOSECURITY");
+
+            text = "This page is currently blank. For more information, contact the EuFMD department.";
+            info.setText(Html.fromHtml(text));
+
+        }
+
         ImageView back = findViewById(R.id.back);
         back.setOnClickListener(v -> onBackPressed());
     }

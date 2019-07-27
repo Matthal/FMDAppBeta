@@ -87,7 +87,8 @@
         android:imeOptions="actionDone"
         android:hint="@string/insert_notes"
         android:inputType="text"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:maxLength="20"/>
 
     <Button
         android:id="@+id/done"

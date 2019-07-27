@@ -56,12 +56,7 @@ public class TracingListAdapter extends BaseExpandableListAdapter {
         txtListChild.setText(childText);
 
         ImageButton edit = convertView.findViewById(R.id.edit);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-
-            }
-        });
+        edit.setVisibility(View.INVISIBLE);
 
         Button del = convertView.findViewById(R.id.del);
         del.setOnClickListener(new View.OnClickListener() {

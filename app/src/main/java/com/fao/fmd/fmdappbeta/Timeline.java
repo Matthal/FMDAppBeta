@@ -1,7 +1,9 @@
 package com.fao.fmd.fmdappbeta;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,11 +19,13 @@ import android.os.Environment;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -72,6 +76,8 @@ public class Timeline extends AppCompatActivity {
     boolean firstRedSpr = true;
 
     ProgressDialog dialog = null;
+
+    private String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -241,7 +247,7 @@ public class Timeline extends AppCompatActivity {
             row.addView(spread);
             row.addView(category);
             row.addView(subCat);
-            //row.addView(notes);
+            row.addView(notes);
             timeline.addView(row,i+1);
         }
 
@@ -269,19 +275,40 @@ public class Timeline extends AppCompatActivity {
                 sendEmail();
                 return true;
             case R.id.upload:
-                File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
-                if(!pdfDir.exists()){
-                    Toast.makeText(this, "You must create a pdf file first", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-                File[] dirFiles = pdfDir.listFiles();
-                String imagepath = dirFiles[0].getAbsolutePath();
-                dialog = ProgressDialog.show(Timeline.this, "", "Uploading file...", true);
-                new Thread(new Runnable() {
-                    public void run() {
-                        uploadFile(imagepath);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Enter your Name/ID");
+
+                final EditText input = new EditText(this);
+
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dial, int which) {
+                        username = input.getText().toString();
+                        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-OI/" + id);
+                        if(!pdfDir.exists()){
+                            Toast.makeText(getApplication(), "You must create a pdf file first", Toast.LENGTH_SHORT).show();
+                        }
+                        File[] dirFiles = pdfDir.listFiles();
+                        String imagepath = dirFiles[0].getAbsolutePath();
+                        dialog = ProgressDialog.show(Timeline.this, "", "Uploading file...", true);
+                        new Thread(new Runnable() {
+                            public void run() {
+                                uploadFile(imagepath);
+                            }
+                        }).start();
                     }
-                }).start();
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
                 return true;
             case R.id.qmark:
                 Bundle b = new Bundle();
@@ -300,7 +327,7 @@ public class Timeline extends AppCompatActivity {
         if (!Environment.MEDIA_MOUNTED.equals(state)) {
         }
         //Create a directory for your PDF
-        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
+        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-OI/" + id);
         if (!pdfDir.exists()){
             boolean i = pdfDir.mkdirs();
             if(!i){
@@ -312,7 +339,7 @@ public class Timeline extends AppCompatActivity {
         //Now create the name of your PDF file that you will generate
         SimpleDateFormat mdyFormat = new SimpleDateFormat("dd_MMM_yyyy",Locale.UK);
         String currentDate = mdyFormat.format(new Date());
-        File pdfFile = new File(pdfDir, "FMD_DOI_timeline_" + id + "_" + currentDate + ".pdf");
+        File pdfFile = new File(pdfDir, "FMD_OI_timeline_" + id + "_" + currentDate + ".pdf");
         if(!pdfFile.exists()){
             try {
                 Document document = new Document();
@@ -350,13 +377,13 @@ public class Timeline extends AppCompatActivity {
 
     public void sendEmail(){
 
-        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
+        File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-OI/" + id);
         if(!pdfDir.exists()){
             String state = Environment.getExternalStorageState();
             if (!Environment.MEDIA_MOUNTED.equals(state)) {
             }
             //Create a directory for your PDF
-            //File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-DOI/" + id);
+            //File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-OI/" + id);
             if (!pdfDir.exists()){
                 boolean i = pdfDir.mkdirs();
                 if(!i){
@@ -368,7 +395,7 @@ public class Timeline extends AppCompatActivity {
             //Now create the name of your PDF file that you will generate
             SimpleDateFormat mdyFormat = new SimpleDateFormat("dd_MMM_yyyy",Locale.UK);
             String currentDate = mdyFormat.format(new Date());
-            File pdfFile = new File(pdfDir, "FMD_DOI_timeline_" + id + "_" + currentDate + ".pdf");
+            File pdfFile = new File(pdfDir, "FMD_OI_timeline_" + id + "_" + currentDate + ".pdf");
             if(!pdfFile.exists()){
                 try {
                     Document document = new Document();
@@ -399,7 +426,7 @@ public class Timeline extends AppCompatActivity {
         String timelineGenereted = mdyFormat.format(maxDate);
         String pdfGenerated = mdyFormat.format(lastModDate);
         Intent email = new Intent(Intent.ACTION_SEND);
-        email.putExtra(Intent.EXTRA_SUBJECT, "FMD DOI app timeline");
+        email.putExtra(Intent.EXTRA_SUBJECT, "FMD OI app timeline");
         email.putExtra(Intent.EXTRA_TEXT, "Attached is a PDF file containing a timeline generated using the EuFMD Disease Outbreak Investigation mobile phone application.\n" +
                 "Unique ID: " + id + "\n" +
                 "Farm Name: " + getFarmName(id) + "\n" +
@@ -825,7 +852,7 @@ public class Timeline extends AppCompatActivity {
 
                 dos.writeBytes(twoHyphens + boundary + lineEnd);
                 dos.writeBytes("Content-Disposition: form-data; name=\"uploaded_file\";filename=\""
-                        + imagePath + "\"" + lineEnd);
+                        + username + "_" + imagePath + "\"" + lineEnd);
 
                 dos.writeBytes(lineEnd);
 

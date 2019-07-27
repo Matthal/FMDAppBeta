@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -36,7 +35,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
     Button farmTL;
     Button del;
     ImageButton edit;
-    ImageView map;
 
     boolean lock;
 
@@ -66,7 +64,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
         addAnimal = findViewById(R.id.newAnimal);
         addTrace = findViewById(R.id.newTrace);
         farmTL = findViewById(R.id.farmTL);
-        map = findViewById(R.id.map);
         del = findViewById(R.id.del);
 
         addAnimal.setOnClickListener(v -> {
@@ -133,20 +130,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
-        });
-        map.setOnClickListener(v -> {
-            String selectQuery = "SELECT * FROM " + Farm.FarmEntry.TABLE_NAME + " WHERE id=" + spinner.getSelectedItemPosition();
-            DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            Cursor cursor = db.rawQuery(selectQuery, null);
-            cursor.moveToFirst();
-            double latitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LATITUDE));
-            double longitude = cursor.getDouble(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_LONGITUDE));
-            Uri uri = Uri.parse("https://www.google.com/maps/search/?api=1&query="+ latitude + "," + longitude);
-            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-            startActivity(intent);
-            cursor.close();
-            db.close();
         });
 
         final List<String> farmList = getAllFarms();
@@ -235,7 +218,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             farmTL.setVisibility(View.INVISIBLE);
             edit.setVisibility(View.INVISIBLE);
             del.setVisibility(View.INVISIBLE);
-            map.setVisibility(View.INVISIBLE);
         }else{
             animalList.setVisibility(View.VISIBLE);
             addAnimal.setVisibility(View.VISIBLE);
@@ -243,7 +225,6 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             farmTL.setVisibility(View.VISIBLE);
             edit.setVisibility(View.VISIBLE);
             del.setVisibility(View.VISIBLE);
-            //map.setVisibility(View.VISIBLE);
 
             // preparing list data
             prepareListData(farmName);

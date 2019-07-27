@@ -2,6 +2,8 @@ package com.fao.fmd.fmdappbeta;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -21,11 +23,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,11 +58,11 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String mCurrentPhotoPath;
-
     String response;
 
     String syncDateKey = "com.fao.fmd.fmdappbeta.syncdate";
+
+    private String username = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         Button dBtn = findViewById(R.id.diagn);
         Button bio = findViewById(R.id.bio);
 
-        TextView qmarkText = findViewById(R.id.qmarkText);
-
         TextView syncDate = findViewById(R.id.syncDate);
         syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
 
@@ -95,22 +96,12 @@ public class MainActivity extends AppCompatActivity {
         });
 
         bio.setOnClickListener(v -> {
-            DatabaseHelper mDbHelper = new DatabaseHelper(MainActivity.this);
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            System.out.println(DatabaseHelper.getTableAsString(db, "lesions"));
-            /*Intent intent = new Intent(MainActivity.this, DiagnosticOptions.class);
-            startActivity(intent);*/
-            /*Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-            File f = null;
-            try {
-                f = createImageFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Uri photoURI = FileProvider.getUriForFile(MainActivity.this, getBaseContext().getApplicationContext().getPackageName() + ".provider", f);
-            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-            startActivityForResult(cameraIntent, 1);*/
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            Bundle b = new Bundle();
+            b.putString("tag","bio");
+            Intent intent = new Intent(MainActivity.this, InfoPage.class);
+            intent.putExtras(b);
+            startActivity(intent);
+            /*DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which){
@@ -126,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setMessage("Are you sure to delete the DB?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
+                    .setNegativeButton("No", dialogClickListener).show();*/
         });
 
         dBtn.setOnClickListener(v -> {
@@ -136,11 +127,36 @@ public class MainActivity extends AppCompatActivity {
 
         ImageView sync = findViewById(R.id.sync);
         sync.setOnClickListener(v -> {
-            //new UploadLesions().execute();
-            Date currentTime = Calendar.getInstance().getTime();
-            SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.UK);
-            prefs.edit().putString(syncDateKey, "Last update:\n" + df.format(currentTime)).apply();
-            syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
+            android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Enter your Name/ID");
+
+            final EditText input = new EditText(this);
+
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dial, int which) {
+                    username = input.getText().toString();
+                    new UploadFarms().execute();
+                    new UploadAnimals().execute();
+                    new UploadLesions().execute();
+                    new UploadTracings().execute();
+                    Date currentTime = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss", Locale.UK);
+                    prefs.edit().putString(syncDateKey, "Last update:\n" + df.format(currentTime)).apply();
+                    syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+
         });
 
         ImageView info = findViewById(R.id.qmark);
@@ -180,7 +196,7 @@ public class MainActivity extends AppCompatActivity {
                         String address = cursor.getString(cursor.getColumnIndex(Farm.FarmEntry.COLUMN_ADDRESS));
 
                         JSONObject postDataParams = new JSONObject();
-                        postDataParams.put("user","1418104");
+                        postDataParams.put("user",username);
                         postDataParams.put("id", id);
                         postDataParams.put("investigator_name", investigator);
                         postDataParams.put("interviewee_name", interviewee);
@@ -270,7 +286,7 @@ public class MainActivity extends AppCompatActivity {
                         String vaccination = cursor.getString(cursor.getColumnIndex(Animal.AnimalEntry.COLUMN_VACCINATION));
 
                         JSONObject postDataParams = new JSONObject();
-                        postDataParams.put("user","1418104");
+                        postDataParams.put("user",username);
                         postDataParams.put("id", id);
                         postDataParams.put("name",name);
                         postDataParams.put("farm", farm);
@@ -351,6 +367,7 @@ public class MainActivity extends AppCompatActivity {
                         final int id = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ID));
                         int animal = cursor.getInt(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_ANIMAL));
                         String age = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_AGE));
+                        String date = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_VISIT_DATE));
                         String like_inf_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MIN));
                         String like_inf_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_LIKE_INF_MAX));
                         String poss_inf_min = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_INF_MIN));
@@ -361,10 +378,11 @@ public class MainActivity extends AppCompatActivity {
                         String poss_spr_max = cursor.getString(cursor.getColumnIndex(Lesion.LesionEntry.COLUMN_POSS_SPR_MAX));
 
                         JSONObject postDataParams = new JSONObject();
-                        postDataParams.put("user","1418104");
+                        postDataParams.put("user",username);
                         postDataParams.put("id", id);
                         postDataParams.put("animal",animal);
                         postDataParams.put("age_of_lesion", age);
+                        postDataParams.put("date_of_visit", date);
                         postDataParams.put("likely_infection_min", like_inf_min);
                         postDataParams.put("likely_infection_max", like_inf_max);
                         postDataParams.put("possible_infection_min", poss_inf_min);
@@ -450,7 +468,7 @@ public class MainActivity extends AppCompatActivity {
                         String notes = cursor.getString(cursor.getColumnIndex(Tracings.TracingEntry.COLUMN_NOTES));
 
                         JSONObject postDataParams = new JSONObject();
-                        postDataParams.put("user","1418104");
+                        postDataParams.put("user",username);
                         postDataParams.put("id", id);
                         postDataParams.put("category", category);
                         postDataParams.put("sub_category", sub);
@@ -542,45 +560,6 @@ public class MainActivity extends AppCompatActivity {
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = timeStamp + "_";
-        File storageDir = new File(Environment.getExternalStorageDirectory(),"Pictures/FMD-DOI");
-        storageDir.mkdirs();
-        File image = File.createTempFile(
-                imageFileName,  // prefix
-                ".jpg",         // suffix
-                storageDir      // directory
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        System.out.println(mCurrentPhotoPath);
-        return image;
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1 && resultCode != 0) {
-            galleryAddPic();
-            Intent intent = new Intent(this, DrawOnBitmapActivity.class);
-            String filePath = "file:" + mCurrentPhotoPath;
-            intent.putExtra("image", filePath);
-            startActivity(intent);
-        }else{
-            Toast.makeText(getBaseContext(), "Photo cancelled",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void galleryAddPic() {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        this.sendBroadcast(mediaScanIntent);
     }
 
 }
