@@ -424,24 +424,6 @@ public class LesionAgeing extends Activity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_PIC_REQUEST && resultCode != 0) {
-            /*DatabaseHelper mDbHelper = new DatabaseHelper(PostLesion.this);
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            Bitmap image = (Bitmap) data.getExtras().get("data");
-            ContentValues cv = new ContentValues();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            image.compress(Bitmap.CompressFormat.PNG, 100, out);
-            cv.put(Photo.PhotoEntry.COLUMN_PHOTO, out.toByteArray());
-            cv.put(Photo.PhotoEntry.COLUMN_LESION, getLesion());
-            long newRowId = db.insert(Photo.PhotoEntry.TABLE_NAME, null, cv);
-            if(newRowId == -1){
-                Toast.makeText(getBaseContext(), "Error in the DB",
-                        Toast.LENGTH_LONG).show();
-                db.close();
-            }else {
-                Toast.makeText(getBaseContext(), "Photo added to the DB",
-                        Toast.LENGTH_LONG).show();
-                db.close();
-            }*/
             galleryAddPic();
             Intent intent = new Intent(this, DrawOnBitmapActivity.class);
             String filePath = "file:" + mCurrentPhotoPath;

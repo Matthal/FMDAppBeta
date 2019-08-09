@@ -194,6 +194,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
             startActivity(intent);
         });
 
+        //QMARK ICON REMOVED FOR NO SPACE
         /*
         ImageView info = findViewById(R.id.qmark);
         info.setOnClickListener(v -> {
@@ -282,6 +283,7 @@ public class FarmList extends Activity implements AdapterView.OnItemSelectedList
 
     }
 
+    //SUPPORT METHOD
     public int getFarmCount() {
         String countQuery = "SELECT  * FROM " + Farm.FarmEntry.TABLE_NAME;
         DatabaseHelper mDbHelper = new DatabaseHelper(FarmList.this);

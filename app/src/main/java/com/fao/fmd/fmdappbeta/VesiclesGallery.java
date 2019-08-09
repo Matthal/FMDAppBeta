@@ -63,27 +63,27 @@ public class VesiclesGallery extends Activity {
     private void init(String id) {
 
         if(id.equals("1")){
-            final Integer[] IMAGES = {R.drawable.onetwo_photo_1,R.drawable.onetwo_photo_2,R.drawable.onetwo_photo_3,R.drawable.onetwo_photo_4};
+            final Integer[] IMAGES = {R.drawable.one_photo_1,R.drawable.one_photo_2,R.drawable.one_photo_3,R.drawable.one_photo_4};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
         if(id.equals("2-3")){
-            final Integer[] IMAGES = {R.drawable.twothree_photo_1,R.drawable.twothree_photo_2,R.drawable.twothree_photo_3,R.drawable.twothree_photo_4,R.drawable.twothree_photo_5,R.drawable.twothree_photo_7,R.drawable.twothree_photo_8,R.drawable.twothree_photo_9,R.drawable.twothree_photo_10,R.drawable.twothree_photo_11,R.drawable.onetwo_photo_5,R.drawable.onetwo_photo_6};
+            final Integer[] IMAGES = {R.drawable.twothree_photo_1,R.drawable.twothree_photo_2,R.drawable.twothree_photo_3,R.drawable.twothree_photo_4,R.drawable.twothree_photo_5,R.drawable.twothree_photo_6,R.drawable.twothree_photo_7,R.drawable.twothree_photo_8,R.drawable.twothree_photo_9,R.drawable.twothree_photo_10,R.drawable.twothree_photo_11,R.drawable.twothree_photo_12};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
         if(id.equals("3-4") || id.equals("3-5")){
-            final Integer[] IMAGES = {R.drawable.twothree_photo_6,R.drawable.threefour_photo_2,R.drawable.threefour_photo_3,R.drawable.threefour_photo_4,R.drawable.threefour_photo_5,R.drawable.threefour_photo_6,R.drawable.threefour_photo_8};
+            final Integer[] IMAGES = {R.drawable.threefour_photo_1,R.drawable.threefour_photo_2,R.drawable.threefour_photo_3,R.drawable.threefour_photo_4,R.drawable.threefour_photo_5,R.drawable.threefour_photo_6,R.drawable.threefour_photo_7};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
         if(id.equals("4-5")){
-            final Integer[] IMAGES = {R.drawable.fourfive_photo_1,R.drawable.fourfive_photo_2,R.drawable.fourfive_photo_3,R.drawable.fourfive_photo_4,R.drawable.fourfive_photo_5,R.drawable.fourfive_photo_6,R.drawable.fourfive_photo_7,R.drawable.fourfive_photo_9,R.drawable.fourfive_photo_10,R.drawable.fourfive_photo_11,R.drawable.fourfive_photo_12,R.drawable.fourfive_photo_14,R.drawable.fourfive_photo_15,R.drawable.fourfive_photo_16};
+            final Integer[] IMAGES = {R.drawable.fourfive_photo_1,R.drawable.fourfive_photo_2,R.drawable.fourfive_photo_3,R.drawable.fourfive_photo_4,R.drawable.fourfive_photo_5,R.drawable.fourfive_photo_6,R.drawable.fourfive_photo_7,R.drawable.fourfive_photo_8,R.drawable.fourfive_photo_9,R.drawable.fourfive_photo_10,R.drawable.fourfive_photo_11,R.drawable.fourfive_photo_12,R.drawable.fourfive_photo_13,R.drawable.fourfive_photo_14};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
         if(id.equals("5-7")){
-            final Integer[] IMAGES = {R.drawable.fiveseven_photo_1,R.drawable.fiveseven_photo_2,R.drawable.fiveseven_photo_3,R.drawable.fiveseven_photo_4,R.drawable.fiveseven_photo_5,R.drawable.fiveseven_photo_6,R.drawable.fiveseven_photo_7,R.drawable.fiveseven_photo_8,R.drawable.fiveseven_photo_9,R.drawable.fiveseven_photo_10,R.drawable.fiveseven_photo_11,R.drawable.fiveseven_photo_12,R.drawable.fiveseven_photo_13,R.drawable.fiveseven_photo_14,R.drawable.fiveseven_photo_15,R.drawable.fiveseven_photo_16,R.drawable.fiveseven_photo_17,R.drawable.fourfive_photo_13};
+            final Integer[] IMAGES = {R.drawable.fiveseven_photo_1,R.drawable.fiveseven_photo_2,R.drawable.fiveseven_photo_3,R.drawable.fiveseven_photo_4,R.drawable.fiveseven_photo_5,R.drawable.fiveseven_photo_6,R.drawable.fiveseven_photo_7,R.drawable.fiveseven_photo_8,R.drawable.fiveseven_photo_9,R.drawable.fiveseven_photo_10,R.drawable.fiveseven_photo_11,R.drawable.fiveseven_photo_12,R.drawable.fiveseven_photo_13,R.drawable.fiveseven_photo_14,R.drawable.fiveseven_photo_15,R.drawable.fiveseven_photo_16,R.drawable.fiveseven_photo_17,R.drawable.fiveseven_photo_18};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
         if(id.equals("7-10")){
-            final Integer[] IMAGES = {R.drawable.seventen_photo_1,R.drawable.tenfourteen_photo_1,R.drawable.tenfourteen_photo_2,R.drawable.tenfourteen_photo_3,R.drawable.tenfourteen_photo_4,R.drawable.tenfourteen_photo_5};
+            final Integer[] IMAGES = {R.drawable.seventen_photo_1,R.drawable.seventen_photo_2,R.drawable.seventen_photo_3,R.drawable.seventen_photo_4,R.drawable.seventen_photo_5,R.drawable.seventen_photo_6};
             ImagesArray.addAll(Arrays.asList(IMAGES));
         }
         if(id.equals("10+")){

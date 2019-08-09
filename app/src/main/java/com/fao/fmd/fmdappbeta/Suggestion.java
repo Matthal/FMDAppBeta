@@ -25,20 +25,11 @@ public class Suggestion extends FragmentActivity {
         animal = bundle.getInt("id");
 
         String val1 = bundle.getString("Q1");
-        String val3 = bundle.getString("Q3");
-        String val4 = bundle.getString("Q4");
 
         if(val1.equals("a")){
             bundle.putString("res","1");
             fragmentComplete(bundle);
         }else{
-            /*
-            if(val3.equals("c") && val4.equals("b")){
-                bundle.putString("res","Lesions with a white or grey base indicates advanced healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions.");
-                fragmentError(bundle);
-            }else{
-                algorithmResult(bundle);
-            }*/
             algorithmResult(bundle);
         }
 
@@ -81,18 +72,9 @@ public class Suggestion extends FragmentActivity {
             fragmentComplete(bundle);
         }
 
-        /*
-        if(val3.equals("b") && val4.equals("b")){
-            bundle.putString("res","Lesions with a pink base indicates healing. Usually the edges would also show evidence of healing so appear smooth or rounded. Sharp edges are typically seen with fresher lesions.");
-            fragmentError(bundle);
-        }*/
-
         if(val2.equals("b")){
             algorithmB(bundle);
         }
-        /*else{
-            algorithmB(bundle);
-        }*/
 
     }
 
@@ -112,32 +94,6 @@ public class Suggestion extends FragmentActivity {
         ft.replace(R.id.placeholder, fragment);
         ft.commit();
     }
-
-    public void fragmentError(Bundle complete){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ErrorFragment fragment = new ErrorFragment();
-        fragment.setArguments(complete);
-        ft.replace(R.id.placeholder, fragment);
-        ft.commit();
-    }
-
-    /*
-    public void algorithmA(Bundle bundle){
-
-        String val3 = bundle.getString("Q3");
-        String val4 = bundle.getString("Q4");
-
-        if(val3.equals("a") && val4.equals("a")){
-            bundle.putString("res","3-4");
-            fragmentComplete(bundle);
-        }
-
-        if(val3.equals("a") && val4.equals("b")){
-            bundle.putString("res","3");
-            fragmentComplete(bundle);
-        }
-
-    }*/
 
     public void algorithmB(Bundle bundle){
 

@@ -141,7 +141,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v12 -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
-                //builder.setTitle("Choose an animal");
                 String[] types = {"Specific Date", "Daily", "Weekly"};
                 builder.setItems(types, new DialogInterface.OnClickListener() {
                     @Override
@@ -254,7 +253,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v12 -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
-                //builder.setTitle("Choose an animal");
                 String[] types = {"Specific Date", "Daily", "Weekly"};
                 builder.setItems(types, new DialogInterface.OnClickListener() {
                     @Override
@@ -368,7 +366,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v12 -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
-                //builder.setTitle("Choose an animal");
                 String[] types = {"Specific Date", "Daily", "Weekly"};
                 builder.setItems(types, new DialogInterface.OnClickListener() {
                     @Override
@@ -488,7 +485,6 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             date = customView.findViewById(R.id.date);
             date.setOnClickListener(v12 -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(Tracing.this);
-                //builder.setTitle("Choose an animal");
                 String[] types = {"Specific Date", "Daily", "Weekly"};
                 builder.setItems(types, new DialogInterface.OnClickListener() {
                     @Override

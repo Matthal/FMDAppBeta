@@ -27,7 +27,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(Animal.CREATE_ANIMAL_TABLE);
         db.execSQL(Lesion.CREATE_LESION_TABLE);
         db.execSQL(Tracings.CREATE_TRACINGS_TABLE);
-        db.execSQL(Photo.CREATE_PHOTO_TABLE);
 
     }
 
@@ -48,7 +47,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(Animal.DELETE_ENTRIES);
         db.execSQL(Lesion.DELETE_ENTRIES);
         db.execSQL(Tracings.DELETE_ENTRIES);
-        db.execSQL(Photo.DELETE_ENTRIES);
 
         // Create tables again
         onCreate(db);

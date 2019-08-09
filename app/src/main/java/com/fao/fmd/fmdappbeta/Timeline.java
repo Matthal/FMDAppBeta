@@ -383,7 +383,6 @@ public class Timeline extends AppCompatActivity {
             if (!Environment.MEDIA_MOUNTED.equals(state)) {
             }
             //Create a directory for your PDF
-            //File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-OI/" + id);
             if (!pdfDir.exists()){
                 boolean i = pdfDir.mkdirs();
                 if(!i){
@@ -417,8 +416,6 @@ public class Timeline extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            //Toast.makeText(this, "You must create a pdf file first", Toast.LENGTH_SHORT).show();
-            //return;
         }
         File[] dirFiles = pdfDir.listFiles();
         Date lastModDate = new Date(dirFiles[0].lastModified());

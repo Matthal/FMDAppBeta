@@ -1,10 +1,7 @@
 package com.fao.fmd.fmdappbeta;
 
 import android.Manifest;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,21 +9,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,9 +25,6 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -53,8 +38,6 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
-
-import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -83,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         TextView syncDate = findViewById(R.id.syncDate);
         syncDate.setText(prefs.getString(syncDateKey,"Click to Sync DB"));
 
-        //getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
-
         cFarm.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, FarmCreation.class);
             startActivity(intent);
@@ -101,23 +82,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, InfoPage.class);
             intent.putExtras(b);
             startActivity(intent);
-            /*DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            getApplicationContext().deleteDatabase(DatabaseHelper.DATABASE_NAME);
-                            break;
-
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            //No button clicked
-                            break;
-                    }
-                }
-            };
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setMessage("Are you sure to delete the DB?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();*/
         });
 
         dBtn.setOnClickListener(v -> {

@@ -289,7 +289,6 @@ public class AnimalCreation extends Activity implements AdapterView.OnItemSelect
     }
 
     public void onCheckboxClicked(View view) {
-        // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
 
         // Check which checkbox was clicked
