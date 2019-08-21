@@ -291,6 +291,7 @@ public class Timeline extends AppCompatActivity {
                         File pdfDir = new File(Environment.getExternalStorageDirectory(), "FMD-OI/" + id);
                         if(!pdfDir.exists()){
                             Toast.makeText(getApplication(), "You must create a pdf file first", Toast.LENGTH_SHORT).show();
+                            return;
                         }
                         File[] dirFiles = pdfDir.listFiles();
                         String imagepath = dirFiles[0].getAbsolutePath();

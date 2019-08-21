@@ -37,8 +37,8 @@ public class FarmCreation extends Activity implements AdapterView.OnItemSelected
 
     LocationManager mLocationManager;
 
-    double longitude;
-    double latitude;
+    double longitude = 0.0;
+    double latitude = 0.0;
     LocationManager lm;
 
     Spinner position;

@@ -404,7 +404,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(Tracing.this);
 
-            String[] cont = new String[]{"Direct contact", "Indirect contact"};
+            String[] cont = new String[]{"Dir. contact", "Ind. contact"};
             final Spinner contact = customView.findViewById(R.id.contact);
             ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
             contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -523,7 +523,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(Tracing.this);
 
-            String[] cont = new String[]{"Direct contact", "Indirect contact"};
+            String[] cont = new String[]{"Dir. contact", "Ind. contact"};
             final Spinner contact = customView.findViewById(R.id.contact);
             ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
             contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -878,7 +878,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     spinner.setAdapter(adapter);
                     spinner.setOnItemSelectedListener(Tracing.this);
 
-                    String[] cont = new String[]{"Direct contact", "Indirect contact"};
+                    String[] cont = new String[]{"Dir. contact", "Ind. contact"};
                     final Spinner contact = customView.findViewById(R.id.contact);
                     ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
                     contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -997,7 +997,7 @@ public class Tracing extends Activity implements AdapterView.OnItemSelectedListe
                     spinner.setAdapter(adapter);
                     spinner.setOnItemSelectedListener(Tracing.this);
 
-                    String[] cont = new String[]{"Direct contact", "Indirect contact"};
+                    String[] cont = new String[]{"Dir. contact", "Ind. contact"};
                     final Spinner contact = customView.findViewById(R.id.contact);
                     ArrayAdapter<String> contAdapter = new ArrayAdapter<>(Tracing.this, android.R.layout.simple_spinner_dropdown_item, cont);
                     contAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
